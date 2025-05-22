@@ -32,7 +32,11 @@ body {
   font-style: normal;
 }
 
-
+.separator {
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  height: 24px;
+  margin: auto 10px;
+}
 
 .user-avatar {
   width: 40px;
