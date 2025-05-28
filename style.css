@@ -7,7 +7,7 @@
 
 body {
     font-family: serif;
-    background: #000000;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,14 +27,19 @@ header {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 1rem;
-    width: 90vw;
-    max-width: 800px;
+    width: clamp(70vw, 80vw, 100vw);
+    height: clamp(65vh, 85vh, 100vh);
+    overflow-y: auto;
+    justify-content: center;
+    align-content: start;
+    padding: 1rem;
 }
+
 
 .card {
     width: 100%;
     padding-top: 140%;
-    /* proporción para cuadrado */
+    /* proporción para mantener forma */
     position: relative;
     perspective: 1000px;
 }
@@ -93,9 +98,24 @@ header {
     text-align: center;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+/* ============================== */
+/*         MEDIA QUERIES         */
+/* ============================== */
+
+@media (max-width: 1024px) {
     .game-board {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .game-board {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .game-board {
+        grid-template-columns: repeat(3, 1fr);
     }
 }

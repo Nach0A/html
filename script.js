@@ -24,6 +24,11 @@ function initGame() {
     startTimer();
     winModal.classList.add('hidden');
 
+    // Reiniciar estado del juego
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+
     // Generar cartas aleatorias
     const cards = generateDeck();
     boardEl.innerHTML = '';
@@ -49,8 +54,8 @@ function shuffle(array) {
     return array;
 }
 
-// Crea elemento DOM de carta || si se quieren implementar otro tipo de cartas de debe modificar este metodo 
-function createCardElement({value }) {
+// Crea elemento DOM de carta
+function createCardElement({ value }) {
     const card = document.createElement('div');
     card.className = 'card';
     card.dataset.value = value;
@@ -65,30 +70,55 @@ function createCardElement({value }) {
     return card;
 }
 
+// === NUEVA LÓGICA DE SELECCIÓN DE CARTAS CORREGIDA ===
+
 let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
 
 function onCardClick(e) {
     const clicked = e.currentTarget;
-    if (clicked.classList.contains('flipped') || firstCard && secondCard) return;
+
+    // Prevenir selección si ya fue volteada, es la misma carta o el tablero está bloqueado
+    if (lockBoard || clicked === firstCard || clicked.classList.contains('flipped')) return;
 
     clicked.classList.add('flipped');
+
     if (!firstCard) {
         firstCard = clicked;
-    } else {
-        const secondCard = clicked;
-        if (firstCard.dataset.value === secondCard.dataset.value) {
-            matches++;
-            matchesEl.textContent = `Pares: ${matches}`;
-            if (matches === totalPairs) showWinModal();
-            firstCard = null;
-        } else {
-            setTimeout(() => {
-                firstCard.classList.remove('flipped');
-                secondCard.classList.remove('flipped');
-                firstCard = null;
-            }, 1000);
-        }
+        return;
     }
+
+    secondCard = clicked;
+    lockBoard = true;
+
+    if (firstCard.dataset.value === secondCard.dataset.value) {
+        matches++;
+        matchesEl.textContent = `Pares: ${matches}`;
+        disableMatchedCards();
+        if (matches === totalPairs) showWinModal();
+    } else {
+        unflipCards();
+    }
+}
+
+function disableMatchedCards() {
+    firstCard.removeEventListener('click', onCardClick);
+    secondCard.removeEventListener('click', onCardClick);
+    resetTurn();
+}
+
+function unflipCards() {
+    setTimeout(() => {
+        firstCard.classList.remove('flipped');
+        secondCard.classList.remove('flipped');
+        resetTurn();
+    }, 1000);
+}
+
+function resetTurn() {
+    [firstCard, secondCard] = [null, null];
+    lockBoard = false;
 }
 
 // Temporizador en formato mm:ss
