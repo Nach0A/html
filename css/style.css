@@ -69,7 +69,7 @@ header {
 }
 
 .card-front {
-    background: #fff url('img/reves.jpg') center/cover;
+    background: #fff url('../img/cartas/reves.jpg') center/cover;
 }
 
 .card-back {

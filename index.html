@@ -5,10 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory - Naipes Españoles</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="imagenes/logo.jpg" type="img/jpeg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <!-- Carga de la página -->
+    <div id="preloader">
+        <img src="imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
+    </div>
+       <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg shadow-sm py-3">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold fs-4" href="#"><img src="img/menu/logo.png" alt="Logo" width="30" height="30"
+                    class="d-inline-block align-text-top">&nbsp;Zentryx</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <!--Botón inicio-->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="mostrarInicio()">Inicio</a>
+                    </li>
+                    <!---->
+                    <li class="nav-item separator"></li>
+                    <!--Botón juegos-->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="mostrarJuegos()">Juegos</a>
+                    </li>
+                    <!---->
+                </ul>
+
+
+                <!-- perfil -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="img/menu/usuario2.png" alt="User" class="user-avatar shadow-sm" />
+                        </a>
+                        <!--dropdown al clickear perfil-->
+                        <ul class="dropdown-menu dropdown-menu-end fade-menu" id="userMenu">
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <header>
         <h1>Memory</h1>
         <div class="scoreboard">

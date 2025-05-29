@@ -54,7 +54,7 @@ function shuffle(array) {
     return array;
 }
 
-// Crea elemento DOM de carta
+// Crea elemento DOM de carta || si se quieren implementar otro tipo de cartas de debe modificar este metodo
 function createCardElement({ value }) {
     const card = document.createElement('div');
     card.className = 'card';
@@ -63,7 +63,7 @@ function createCardElement({ value }) {
     card.innerHTML = `
     <div class="card-inner">
       <div class="card-front"></div>
-      <div class="card-back" style="background: url('img/${value}-de-copa.jpg') center/contain no-repeat;"></div>
+      <div class="card-back" style="background: url('img/cartas/${value}-de-copa.jpg') center/contain no-repeat;"></div>
     </div>`;
 
     card.addEventListener('click', onCardClick);
