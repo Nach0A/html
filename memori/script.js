@@ -62,8 +62,8 @@ function createCardElement({ value }) {
 
     card.innerHTML = `
     <div class="card-inner">
-      <div class="card-front"></div>
-      <div class="card-back" style="background: url('img/cartas/${value}-de-copa.jpg') center/contain no-repeat;"></div>
+        <div class="card-front"></div>
+        <div class="card-back" style="background: url('img/${value}-de-copa.jpg') center/contain no-repeat;"></div>
     </div>`;
 
     card.addEventListener('click', onCardClick);
