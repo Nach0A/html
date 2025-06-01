@@ -3,11 +3,13 @@
 let timerInterval;
 let startTime;
 let matches = 0;
+let attempts = 0; // Nueva variable para contar intentos
 const totalPairs = 12;
 
 // Referencias al DOM
 const timerEl = document.getElementById('timer');
 const matchesEl = document.getElementById('matches');
+const attemptsEl = document.getElementById('intenos'); // Referencia al elemento de intentos
 const boardEl = document.querySelector('.game-board');
 const restartBtn = document.getElementById('restart-btn');
 const winModal = document.getElementById('win-modal');
@@ -19,7 +21,9 @@ const playAgainBtn = document.getElementById('play-again-btn');
 function initGame() {
     // Reiniciar contadores
     matches = 0;
+    attempts = 0; // Reiniciar intentos
     matchesEl.textContent = `Pares: ${matches}`;
+    attemptsEl.textContent = `Intentos: ${attempts}`; // Actualizar display de intentos
     resetTimer();
     startTimer();
     winModal.classList.add('hidden');
@@ -91,6 +95,8 @@ function onCardClick(e) {
 
     secondCard = clicked;
     lockBoard = true;
+    attempts++; // Incrementar intentos cuando se selecciona la segunda carta
+    attemptsEl.textContent = `Intentos: ${attempts}`; // Actualizar display
 
     if (firstCard.dataset.value === secondCard.dataset.value) {
         matches++;
@@ -128,7 +134,7 @@ function startTimer() {
         const elapsed = Date.now() - startTime;
         const minutes = String(Math.floor(elapsed / 60000)).padStart(2, '0');
         const seconds = String(Math.floor((elapsed % 60000) / 1000)).padStart(2, '0');
-        timerEl.textContent = `${minutes}:${seconds}`;
+        timerEl.textContent = `Tiempo ${minutes}:${seconds}`;
     }, 500);
 }
 
@@ -140,6 +146,11 @@ function resetTimer() {
 function showWinModal() {
     clearInterval(timerInterval);
     finalTimeEl.textContent = timerEl.textContent;
+    // Agregar el número de intentos al modal
+    const modalContent = document.querySelector('.modal-content');
+    const attemptsInfo = document.createElement('p');
+    attemptsInfo.textContent = `Intentos realizados: ${attempts}`;
+    modalContent.insertBefore(attemptsInfo, modalContent.querySelector('#play-again-btn'));
     winModal.classList.remove('hidden');
 }
 
