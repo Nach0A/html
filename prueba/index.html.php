@@ -16,7 +16,7 @@
         <button type="submit" onclick="mandarPremio()">Enviar</button>
     </form>
     <br>
-    <button onclick="jugar()">Jugar</button>
+    <button onclick="jugar()" id="boton">Jugar</button>
     <div class="vaso" id="0" style="left: 0px;">
         <div class="pelota" id="pelota_0"></div>
     </div>
@@ -46,6 +46,8 @@
         }    
 
         function jugar() {
+            let boton = document.getElementById("boton");
+            boton.disabled = true;
             pelota.style.display = "block";
             setTimeout(() => {
             pelota.style.display = "none";
