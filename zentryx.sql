@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2025 a las 14:50:16
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Jun 01, 2025 at 03:16 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,24 +18,25 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `zentryx`
+-- Database: `zentryx`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `administra`
+-- Table structure for table `administra`
 --
 
 CREATE TABLE `administra` (
   `nom_usuario` varchar(20) NOT NULL,
-  `id_grupo` int(100) NOT NULL
+  `id_grupo` int(100) NOT NULL,
+  `id_root` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `grupo`
+-- Table structure for table `grupo`
 --
 
 CREATE TABLE `grupo` (
@@ -46,7 +47,7 @@ CREATE TABLE `grupo` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `habla`
+-- Table structure for table `habla`
 --
 
 CREATE TABLE `habla` (
@@ -59,7 +60,7 @@ CREATE TABLE `habla` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `juega`
+-- Table structure for table `juega`
 --
 
 CREATE TABLE `juega` (
@@ -72,7 +73,7 @@ CREATE TABLE `juega` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `juego`
+-- Table structure for table `juego`
 --
 
 CREATE TABLE `juego` (
@@ -84,7 +85,7 @@ CREATE TABLE `juego` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `root`
+-- Table structure for table `root`
 --
 
 CREATE TABLE `root` (
@@ -96,17 +97,17 @@ CREATE TABLE `root` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `root`
+-- Dumping data for table `root`
 --
 
 INSERT INTO `root` (`id_root`, `passwd_root`, `calle`, `num_calle`, `departamento`) VALUES
-(1, '12345678', 'papu', 2, 'papudepartamento'),
-(2, '12345678', 'papucalle', 3, 'papudepartamento');
+(1, '12345678', 'calle', 2, 'Montevideo'),
+(2, '12345678', 'calle', 3, 'Montevideo');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `root_tel`
+-- Table structure for table `root_tel`
 --
 
 CREATE TABLE `root_tel` (
@@ -115,44 +116,45 @@ CREATE TABLE `root_tel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `root_tel`
+-- Dumping data for table `root_tel`
 --
 
 INSERT INTO `root_tel` (`id_root`, `tel`) VALUES
-(2, 99444),
-(1, 996543);
+(1, 996543),
+(2, 99444);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
   `nom_usuario` varchar(20) NOT NULL,
-  `passwd_usuario` varchar(40) NOT NULL
+  `passwd` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `administra`
+-- Indexes for table `administra`
 --
 ALTER TABLE `administra`
-  ADD PRIMARY KEY (`nom_usuario`,`id_grupo`),
+  ADD PRIMARY KEY (`nom_usuario`,`id_grupo`,`id_root`),
+  ADD KEY `id_root` (`id_root`),
   ADD KEY `id_grupo` (`id_grupo`);
 
 --
--- Indices de la tabla `grupo`
+-- Indexes for table `grupo`
 --
 ALTER TABLE `grupo`
   ADD PRIMARY KEY (`id_grupo`,`nom_usuario`),
   ADD KEY `nom_usuario` (`nom_usuario`);
 
 --
--- Indices de la tabla `habla`
+-- Indexes for table `habla`
 --
 ALTER TABLE `habla`
   ADD PRIMARY KEY (`nom_usuario_emisor`,`nom_usuario_receptor`,`id_juego`),
@@ -160,102 +162,56 @@ ALTER TABLE `habla`
   ADD KEY `id_juego` (`id_juego`);
 
 --
--- Indices de la tabla `juega`
+-- Indexes for table `juega`
 --
 ALTER TABLE `juega`
   ADD PRIMARY KEY (`id_juego`,`nom_usuario`),
   ADD KEY `nom_usuario` (`nom_usuario`);
 
 --
--- Indices de la tabla `juego`
+-- Indexes for table `juego`
 --
 ALTER TABLE `juego`
   ADD PRIMARY KEY (`id_juego`);
 
 --
--- Indices de la tabla `root`
+-- Indexes for table `root`
 --
 ALTER TABLE `root`
   ADD PRIMARY KEY (`id_root`);
 
 --
--- Indices de la tabla `root_tel`
+-- Indexes for table `root_tel`
 --
 ALTER TABLE `root_tel`
-  ADD PRIMARY KEY (`tel`,`id_root`),
-  ADD KEY `id_root` (`id_root`);
+  ADD PRIMARY KEY (`id_root`,`tel`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`nom_usuario`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `administra`
+-- Constraints for table `administra`
 --
 ALTER TABLE `administra`
-  MODIFY `id_grupo` int(100) NOT NULL AUTO_INCREMENT;
+  ADD CONSTRAINT `administra_ibfk_1` FOREIGN KEY (`id_root`) REFERENCES `root` (`id_root`),
+  ADD CONSTRAINT `administra_ibfk_2` FOREIGN KEY (`id_grupo`) REFERENCES `grupo` (`id_grupo`),
+  ADD CONSTRAINT `administra_ibfk_3` FOREIGN KEY (`nom_usuario`) REFERENCES `usuarios` (`nom_usuario`);
 
 --
--- AUTO_INCREMENT de la tabla `grupo`
---
-ALTER TABLE `grupo`
-  MODIFY `id_grupo` int(100) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `habla`
---
-ALTER TABLE `habla`
-  MODIFY `id_juego` int(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `juega`
---
-ALTER TABLE `juega`
-  MODIFY `id_juego` int(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `juego`
---
-ALTER TABLE `juego`
-  MODIFY `id_juego` int(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `root`
---
-ALTER TABLE `root`
-  MODIFY `id_root` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `root_tel`
---
-ALTER TABLE `root_tel`
-  MODIFY `id_root` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `administra`
---
-ALTER TABLE `administra`
-  ADD CONSTRAINT `administra_ibfk_1` FOREIGN KEY (`nom_usuario`) REFERENCES `usuarios` (`nom_usuario`),
-  ADD CONSTRAINT `administra_ibfk_2` FOREIGN KEY (`id_grupo`) REFERENCES `grupo` (`id_grupo`);
-
---
--- Filtros para la tabla `grupo`
+-- Constraints for table `grupo`
 --
 ALTER TABLE `grupo`
   ADD CONSTRAINT `grupo_ibfk_1` FOREIGN KEY (`nom_usuario`) REFERENCES `usuarios` (`nom_usuario`);
 
 --
--- Filtros para la tabla `habla`
+-- Constraints for table `habla`
 --
 ALTER TABLE `habla`
   ADD CONSTRAINT `habla_ibfk_1` FOREIGN KEY (`nom_usuario_emisor`) REFERENCES `usuarios` (`nom_usuario`),
@@ -263,14 +219,14 @@ ALTER TABLE `habla`
   ADD CONSTRAINT `habla_ibfk_3` FOREIGN KEY (`id_juego`) REFERENCES `juego` (`id_juego`);
 
 --
--- Filtros para la tabla `juega`
+-- Constraints for table `juega`
 --
 ALTER TABLE `juega`
-  ADD CONSTRAINT `juega_ibfk_1` FOREIGN KEY (`id_juego`) REFERENCES `juego` (`id_juego`),
-  ADD CONSTRAINT `juega_ibfk_2` FOREIGN KEY (`nom_usuario`) REFERENCES `usuarios` (`nom_usuario`);
+  ADD CONSTRAINT `juega_ibfk_1` FOREIGN KEY (`nom_usuario`) REFERENCES `usuarios` (`nom_usuario`),
+  ADD CONSTRAINT `juega_ibfk_2` FOREIGN KEY (`id_juego`) REFERENCES `juego` (`id_juego`);
 
 --
--- Filtros para la tabla `root_tel`
+-- Constraints for table `root_tel`
 --
 ALTER TABLE `root_tel`
   ADD CONSTRAINT `root_tel_ibfk_1` FOREIGN KEY (`id_root`) REFERENCES `root` (`id_root`);
