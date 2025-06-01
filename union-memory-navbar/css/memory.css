@@ -64,12 +64,12 @@ header {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border: 2px solid #333;
+    border: 0; /* Eliminar el borde */
     border-radius: 8px;
 }
 
 .card-front {
-    background: #fff url('../imagenes/cartas-españolas-clasicas-copa/reves.jpg') center/cover;
+    background: transparent url('../imagenes/cartas-españolas-clasicas-copa/reves.jpg') center/cover;
 }
 
 .card-back {
