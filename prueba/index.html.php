@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mosqueta</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>Mosqueta</title>
 </head>
 
 <body>
@@ -15,7 +16,7 @@
         <button type="submit" onclick="mandarPremio()">Enviar</button>
     </form>
     <br>
-    <button onclick="mezclar()">Mezclar</button>
+    <button onclick="jugar()">Jugar</button>
     <div class="vaso" id="0" style="left: 0px;">
         <div class="pelota" id="pelota_0"></div>
     </div>
@@ -26,36 +27,6 @@
         <div class="pelota" id="pelota_2"></div>
     </div>
 
-    <style>
-        body {
-            text-align: center;
-            font-family: sans-serif;
-            margin-top: 50px;
-        }
-
-        .vaso {
-            width: 100px;
-            height: 150px;
-            background: aqua;
-            border-radius: 10px;
-            position: absolute; 
-            bottom: 0;
-            transition: left 0.5s ease; /* Habilita el movimiento de los vasos y dice que se muevan al destino en medio segundo*/
-            left: 140px;
-        }
-
-        .pelota {
-            width: 30px;
-            height: 30px;
-            background: red;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 10px;
-            left: 35px;
-            display: none;
-        }
-    </style>
-
     <script type="text/javascript">
         var premio = Math.floor(Math.random() * 3);          
         var vaso_0 = document.getElementById('0');
@@ -65,11 +36,6 @@
         var vasos = [vaso_0, vaso_1, vaso_2];
         var pelotas = ['0', '0', '0']
         pelotas.splice(premio, 1, '1');
-        console.log(pelotas);
-        pelota.style.display = "block";
-        setTimeout(() => {
-            pelota.style.display = "none";
-        }, 2000);
         function mandarPremio() {
             for (let i = 0; i < 3; i++) {
                 if(pelotas[i] == '1') {
@@ -79,21 +45,27 @@
             document.getElementById('premio').value = premio;
         }    
 
-        function mezclar() {
+        function jugar() {
+            pelota.style.display = "block";
+            setTimeout(() => {
+            pelota.style.display = "none";
+            }, 2000);
+            setTimeout(() => {
             for (let i=0; i < 5; i++) {                       
-                setTimeout(() => {
-                    let j = Math.floor(Math.random() * 3); // Valor aleatorio de una variable j
+            setTimeout(() => {
+            let j = Math.floor(Math.random() * 3); // Valor aleatorio de una variable j
             let k;
-            do {                                          //
-                k = Math.floor(Math.random() * 3);        // Si j es igual a k, k toma otro valor aleatorio
-            }while(j == k);                               //
+            do {                                   //
+            k = Math.floor(Math.random() * 3);     // Si j es igual a k, k toma otro valor aleatorio
+            }while(j == k);                        //
             const leftJ = window.getComputedStyle(vasos[j]).left; // lee la posicion del vaso j 
             const leftK = window.getComputedStyle(vasos[k]).left; // lee la posicion del vaso k
             vasos[j].style.left = leftK; //mueve el vaso j a la posicion del vaso k
             vasos[k].style.left = leftJ; // mueve el vaso k a la posicion del vaso j
             [pelotas[j], pelotas[k]] = [pelotas[k], pelotas[j]]; // las pelotas siguen a su vaso
-              }, i*500);
+              }, i*500);//Se multiplica el tiempo de espera por i, para que cada ejecucion espere a que termine la anterior
         }
+            }, 2000);
         }
     </script>
 </body>
