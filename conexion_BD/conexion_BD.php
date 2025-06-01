@@ -1,14 +1,14 @@
 <?php
 const $servidor = "localhost";
 const $usuario = "root";
-const $passwd = "";
+const $pass = "";
 const $base = "zentryx";
 $nombre_usuario = $_POST["nombre_usuario"];
 $passwd = $_POST["passwd"];
 
-function nueva($server,$user,$pass,$base) {
+function nueva($servidor,$usuario,$pass,$base) {
     try {
-        $conectar = mysqli_connect($server,$user,$pass,$base);
+        $conectar = mysqli_connect($servidor,$usuario,$pass,$base);
     } catch (Exception $ex) {
         die($ex->getMessage());
     }
