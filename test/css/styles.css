@@ -1,0 +1,214 @@
+body {
+    background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #ffffff;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+body {
+  background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #ffffff;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+/**/
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000; /* Color de fondo de carga */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#preloader-logo {
+  width: 100px;
+  height: 100px;
+  animation: logoFade 2s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+@keyframes logoFade {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+}
+
+/**/
+
+
+/* animación */
+@keyframes float {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  100% {
+    transform: translate(20px, -30px) scale(1.1);
+  }
+}
+
+
+.Contenido {
+  margin-left: 10px;
+}
+@font-face {
+  font-family: 'Ethnocentric';
+  src: url('../letra/EthnocentricRg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.separator {
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  height: 24px;
+  margin: auto 10px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: box-shadow 0.3s ease;
+}
+
+.user-avatar:hover {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+#loginForm {
+  display: none;
+  max-width: 400px;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar {
+  background-color: rgb(20, 20, 20);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  /* position: fixed;*/
+}
+
+.navbar .navbar-nav .nav-link,  
+.navbar .navbar-brand {
+  font-family: 'Ethnocentric', sans-serif;
+  color: white !important;
+  font-weight: 500;
+
+}
+
+.navbar .nav-link:hover {
+  color: #d6c4ff !important;
+}
+
+.navbar .dropdown-item {
+  color: black !important;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: rgba(73, 4, 138, 0.1);
+  color: rgb(73, 4, 138) !important;
+}
+
+.fade-menu {
+  animation: fadeInDropdown 0.3s ease forwards;
+}
+
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#loginForm {
+  display: none;
+}
+
+#mainContent {
+  display: none;
+}
+
+.custom-close {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  background-color: white;
+  padding: 6px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
