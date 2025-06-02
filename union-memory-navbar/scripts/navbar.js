@@ -95,13 +95,3 @@ function mostrarJuegos() {
     document.getElementById("juegosContent").classList.add("fade-in");
     document.getElementById("juegosContent").style.display = "block";
 }
-
-renderMenu();
-
-/* Esconder el icono de carga */
-window.addEventListener("load", () => {
-    const preloader = document.getElementById("preloader");
-    preloader.style.opacity = "0";
-    preloader.style.visibility = "hidden";
-    preloader.style.pointerEvents = "none";
-});

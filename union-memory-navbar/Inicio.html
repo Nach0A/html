@@ -13,9 +13,20 @@
 
 <body>
     <!-- Carga de la página -->
-    <!-- <div id="preloader"> -->
-    <!-- <img src="imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo"> -->
-    <!-- </div> -->
+    <div id="preloader">
+        <img src="imagenes/navbar/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
+    </div>
+
+    <script>
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                const preloader = document.getElementById("preloader");
+                preloader.style.opacity = "0";
+                preloader.style.visibility = "hidden";
+                preloader.style.pointerEvents = "none";
+            }, 700);
+        });
+    </script>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg shadow-sm py-3">
@@ -66,6 +77,7 @@
         <button class="btn btn-secondary w-100" onclick="register()">Registrarse</button>
     </div>
 
+    <!-- h1, estadisticas y boton reiniciar -->
     <header>
         <h1>Memory</h1>
         <div class="scoreboard">
@@ -75,13 +87,13 @@
             <!-- cuando este la base de datos llamar los datos del usuario y poner su mejor tiempo -->
             <span id="mejor-tiempo">Mejor tiempo: --:--</span>
         </div>
+        <button id="restart-btn">Reiniciar</button>
     </header>
 
     <main>
         <section class="game-board">
-            <!-- Aquí se generarán 3 columnas × 8 filas de cartas -->
+        <!-- Aquí se generarán 3 columnas × 8 filas de cartas -->
         </section>
-        <button id="restart-btn">Reiniciar</button>
     </main>
 
     <!-- Popup al ganar -->
