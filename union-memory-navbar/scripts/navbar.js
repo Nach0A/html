@@ -5,28 +5,28 @@ const mainContent = document.getElementById("mainContent");
 const loginError = document.getElementById("loginError");
 
 function renderMenu() {
-                const loggedInUser = localStorage.getItem("loggedInUser");
+    const loggedInUser = localStorage.getItem("loggedInUser");
 
-                loginForm.style.display = "none";
-                mainContent.style.display = "none";
-                document.getElementById("juegosContent").style.display = "none";
+    loginForm.style.display = "none";
+    mainContent.style.display = "none";
+    document.getElementById("juegosContent").style.display = "none";
 
-                if (loggedInUser) {
-                    userMenu.innerHTML = `
+    if (loggedInUser) {
+        userMenu.innerHTML = `
             <li><a class="dropdown-item" href="#">Perfil (${loggedInUser})</a></li>
             <li><a class="dropdown-item" href="#">Configuración</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
         `;
-                    loginForm.style.display = "none";
-                    mainContent.style.display = "block";
-                } else {
-                    userMenu.innerHTML = `
+        loginForm.style.display = "none";
+        mainContent.style.display = "block";
+    } else {
+        userMenu.innerHTML = `
             <li><a class="dropdown-item" href="#" onclick="showLogin()">Iniciar sesión / Registrarse</a></li>
         `;
-                    mainContent.style.display = "block";
-                }
-            }
+        mainContent.style.display = "block";
+    }
+}
 
 /* mostrar login y registrar */
 function showLogin() {

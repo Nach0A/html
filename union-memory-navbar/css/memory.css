@@ -75,6 +75,7 @@ header h1 {
 
 
 .card {
+    --bs-card-bg: #000000;
     width: 100%;
     padding-top: 140%;
     /* proporción para mantener forma */

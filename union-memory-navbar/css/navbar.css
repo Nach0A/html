@@ -111,6 +111,7 @@ body {
     top: 0; /* Alinear en la parte superior */
     left: 0; /* Alinear desde la izquierda */
     z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+    background-color: rgba(0, 0, 0, 0.3); /* opacidad del navbar 0=transparente */
 }
 
 .navbar .navbar-nav .nav-link,
