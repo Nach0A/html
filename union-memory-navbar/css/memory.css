@@ -7,7 +7,7 @@
 
 body {
     font-family: serif;
-    background: #ffffff;
+    background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,7 +75,7 @@ header h1 {
 
 
 .card {
-    --bs-card-bg: #000000;
+    --bs-card-bg: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
     width: 100%;
     padding-top: 140%;
     /* proporción para mantener forma */
