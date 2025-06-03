@@ -1,34 +1,17 @@
 <?php
-const $servidor = "localhost";
-const $usuario = "root";
-const $pass = "";
-const $base = "zentryx";
-$nombre_usuario = $_POST["nombre_usuario"];
-$passwd = $_POST["passwd"];
+$servidor = "localhost";
+$usuario = "root";
+$pass = "";
+$base = "zentryx";
 
-function nueva($servidor,$usuario,$pass,$base) {
-    try {
-        $conectar = mysqli_connect($servidor,$usuario,$pass,$base);
-    } catch (Exception $ex) {
-        die($ex->getMessage());
-    }
-    return $conectar;
-}	
-function seleccionarUsuarios() {
-    $resultado = mysqli_query($this->conexion, "select * from usuarios");
-    $arreglo = mysqli_fetch_all($resultado,MYSQLI_ASSOC);
-    return $arreglo;
+$conexion = new mysqli($servidor, $usuario, $pass);
+if ($conexion->connect_error) {
+    die("No se pudo conectar a la base: " . $conn->connect_error);
+  }
+ $prueba = mysqli_select_db($conexion, $base);
+ $consulta = mysqli_query($conexion, "SELECT * FROM usuarios WHERE nom_usuario='Juan' AND passwd='1234567'");
+if (mysqli_data_seek($consulta, 0) == true) {
+  echo "Bienvenido";
+} else {
+  echo "Nombre o contrasenia incorrectos";
 }
-function ingresarUsuario($nombre_usuario, $passwd) {
-    $insertar = "insert into cuenta values('$nombre_usuario','$passwd')";
-    return mysqli_query($this->conexion, $insertar);
-}
-public function validar($nombre_usuario, $passwd) {
-    $consulta = mysqli_prepare{$this->conexion,
-    "SELECT * FROM usuarios WHERE nombre_usuario = '$nombre_usuario' AND passwd = '$passwd'"}
-    mysqli_start_bind_param(consulta, "ss", $numero, $nip);
-    mysqli_stat_execute($consulta);
-    $resultado = mysqli_stat_get_result($consulta);
-    return (mysqli_num_rows($resultado) > 0);
-}
-?>
