@@ -15,24 +15,24 @@ body {
 
 header {
     text-align: center;
-    margin: 2rem 0;
-    padding: 1.5rem;
-    width: 90%;
-    max-width: 800px;
+    margin: 1.5rem 0 0.5rem 0;
+    padding: 0.5rem;
+    width: 80%;
+    max-width: 600px;
     background: rgba(20, 20, 20, 0.8);
     backdrop-filter: blur(10px);
-    border-radius: 15px;
+    border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 header h1 {
-    font-size: 3.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
     color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
     font-family: 'Ethnocentric', sans-serif;
     text-shadow: 
         0 0 10px rgba(255, 255, 255, 0.5),
@@ -57,28 +57,40 @@ header h1 {
 }
 
 .scoreboard {
-    margin-top: 0.5rem;
-    font-size: 1.2rem;
+    margin-top: 0.2rem;
+    font-size: 1.1rem;
+    display: flex;
+    gap: 0.7rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.score-item {
+    padding: 0.15rem 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    color: white;
 }
 
 .game-board {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    gap: 1rem;
-    width: clamp(70vw, 80vw, 100vw);
-    height: clamp(65vh, 85vh, 100vh);
+    gap: 0.8rem;
+    width: clamp(60vw, 70vw, 90vw);
+    height: clamp(55vh, 70vh, 80vh);
     overflow-y: auto;
     justify-content: center;
     align-content: start;
-    padding: 1rem;
+    padding: 0.8rem;
 }
 
 
 .card {
     --bs-card-bg: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
     width: 100%;
-    padding-top: 140%;
-    /* proporción para mantener forma */
+    padding-top: 130%;
     position: relative;
     perspective: 1000px;
 }
@@ -108,7 +120,7 @@ header h1 {
 }
 
 .card-front {
-    background: transparent url('../imagenes/cartas-españolas-clasicas-copa/reves.jpg') center/cover;
+    background: transparent url('../imagenes/cartas-diseño-con-el-logo/reves.png') center/cover;
 }
 
 .card-back {
@@ -139,16 +151,16 @@ header h1 {
 
 /* Estilos para el botón de reinicio */
 #restart-btn {
-    background: rgba(20, 20, 20, 0.8);
+    background: rgba(255, 255, 255, 0.1);
     color: white;
-    padding: 10px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
+    padding: 7px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
     cursor: pointer;
-    margin: 10px 10px 0 10px;
+    margin: 6px 6px 0 6px;
     transition: background-color 0.3s ease;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    font-size: 1rem;
 }
 
 #restart-btn:hover {
