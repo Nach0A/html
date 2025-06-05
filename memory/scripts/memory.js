@@ -148,7 +148,11 @@ function showWinModal() {
     finalTimeEl.textContent = timerEl.textContent;
     // Agregar el número de intentos al modal
     const modalContent = document.querySelector('.modal-content');
+    // Eliminar cualquier intento previo agregado
+    const prevAttempts = modalContent.querySelector('.attempts-info');
+    if (prevAttempts) prevAttempts.remove();
     const attemptsInfo = document.createElement('p');
+    attemptsInfo.className = 'attempts-info';
     attemptsInfo.textContent = `Intentos realizados: ${attempts}`;
     modalContent.insertBefore(attemptsInfo, modalContent.querySelector('#play-again-btn'));
     winModal.classList.remove('hidden');
