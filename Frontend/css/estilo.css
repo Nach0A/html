@@ -142,7 +142,7 @@ body {
 }
 
 #loginForm {
-  display: none;
+  display: block !important;
 }
 
 #mainContent {
