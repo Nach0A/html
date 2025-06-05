@@ -199,15 +199,15 @@ header h1 {
     border-radius: 14px;
     /* Borde neón solo en el modal */
     box-shadow:
-        0 0 16px 4px #00fff7,
-        0 0 32px 8px #00fff7,
+        0 0 16px 4px #a259ff,
+        0 0 32px 8px #a259ff,
         0 0 0 6px #000 inset; /* Borde interior negro para separar el glow del texto */
     min-width: 0;
     width: 80%;
     max-width: 600px;
     text-align: center;
     position: relative;
-    animation: modalPopIn 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+    animation: modalPopIn 1.5s cubic-bezier(.68,-0.55,.27,1.55);
     margin: 0 auto;
     font-size: 1rem;
     /* Igualar ancho y padding al header */
@@ -225,15 +225,33 @@ header h1 {
 }
 
 #win-modal h2 {
-    color: #00fff7; /* Neon cyan como el borde */
+    /* Texto multicolor arcoíris animado (sin verdes ni amarillo) */
+    background: linear-gradient(
+        90deg,
+        #ff4fa3,
+        #4acaff,
+        #a259ff,
+        #ff4fa3 80%
+    );
+    background-size: 300% 300%;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: rainbowText 8s linear infinite;
     margin-bottom: 1rem;
     font-size: 2rem;
     font-family: 'Ethnocentric', sans-serif;
     letter-spacing: 1px;
-    text-shadow:
-        0 0 8px #00fff7,
-        0 0 16px #00fff7,
-        0 0 32px #00fff7;
+    text-shadow: none;
+}
+
+@keyframes rainbowText {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
 }
 
 #win-modal p {
