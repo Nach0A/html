@@ -225,27 +225,27 @@ header h1 {
 }
 
 #win-modal h2 {
-    /* Texto multicolor arcoíris animado (sin verdes ni amarillo) */
+    /* Gradiente animado de color salmón a celeste y regreso */
     background: linear-gradient(
         90deg,
-        #ff4fa3,
-        #4acaff,
-        #a259ff,
-        #ff4fa3 80%
+        #ff4fa3 0%,   /* salmón/rosado */
+        #4acaff 100%  /* celeste */
     );
-    background-size: 300% 300%;
+    background-size: 200% 200%;
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
-    animation: rainbowText 8s linear infinite;
+    animation: salmonToCeleste 4s ease-in-out infinite alternate;
     margin-bottom: 1rem;
     font-size: 2rem;
     font-family: 'Ethnocentric', sans-serif;
     letter-spacing: 1px;
     text-shadow: none;
+    transition: background-position 1.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.7s;
+    filter: brightness(1.15) drop-shadow(0 0 8px #a259ff88);
 }
 
-@keyframes rainbowText {
+@keyframes salmonToCeleste {
     0% {
         background-position: 0% 50%;
     }
