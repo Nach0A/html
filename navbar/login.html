@@ -88,7 +88,7 @@
                 localStorage.setItem("loggedInUser", username);
                 loginError.style.display = "none";
                 // Redirijo a “Inicio” (hash #inicio)
-                window.location.href = "inicio.html#inicio";
+                window.location.href = "../pagina-principal/inicio.html#inicio";
             } else {
                 loginError.textContent = "Nombre de usuario o contraseña incorrectos.";
                 loginError.style.display = "block";
@@ -116,7 +116,7 @@
                 localStorage.setItem("loggedInUser", username);
                 loginError.style.display = "none";
                 // Después de registrarse, lo mando a “Inicio”
-                window.location.href = "inicio.html#inicio";
+                window.location.href = "../pagina-principal/inicio.html#inicio";
             }
         }
 
