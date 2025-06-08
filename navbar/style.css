@@ -64,7 +64,7 @@ body {
 }
 @font-face {
     font-family: 'Ethnocentric';
-    src: url('../letra/EthnocentricRg.otf') format('opentype');
+    src: url('./letra/EthnocentricRg.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
