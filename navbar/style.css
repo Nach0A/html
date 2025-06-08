@@ -97,21 +97,15 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* .navbar { */
-    /* background-color: rgb(20, 20, 20); */
-    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); */
-    /* position: fixed;*/
-/* } */
-
 .navbar {
-            background-color: rgb(20, 20, 20);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-            position: fixed; /* Fijar el navbar */
-            width: 100%; /* Ocupar todo el ancho */
-            top: 0; /* Alinear en la parte superior */
-            left: 0; /* Alinear desde la izquierda */
-            z-index: 1000; /* Asegurar que esté por encima de otros elementos */
-            background-color: rgba(0, 0, 0, 0.3); /* opacidad del navbar 0=transparente */
+    background-color: rgb(20, 20, 20);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    position: fixed; /* Fijar el navbar */
+    width: 100%; /* Ocupar todo el ancho */
+    top: 0; /* Alinear en la parte superior */
+    left: 0; /* Alinear desde la izquierda */
+    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+    background-color: rgba(0, 0, 0, 0.3); /* opacidad del navbar 0=transparente */
         }
 
 .navbar .navbar-nav .nav-link,  
