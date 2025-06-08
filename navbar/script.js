@@ -1,5 +1,3 @@
-
-    
         // Obtengo referencias a los elementos
         const userMenu = document.getElementById("userMenu");
         const mainContent = document.getElementById("mainContent");
@@ -26,7 +24,7 @@
             } else {
                 // Si NO está logueado, muestro el enlace a login.html
                 userMenu.innerHTML = `
-                    <li><a class="dropdown-item" href="login.html">Iniciar sesión / Registrarse</a></li>
+                    <li><a class="dropdown-item" href="../navbar/login.html">Iniciar sesión / Registrarse</a></li>
                 `;
                 // Ya que no hay sesión, por defecto muestro “Inicio” (que es el contenido principal)
                 mostrarInicio();

@@ -6,7 +6,7 @@ body {
     position: relative;
     min-height: 100vh;
     overflow-x: hidden;
-    padding-top: 80px; /* Ajustar según la altura de tu navbar */
+                padding-top: 80px; /* Ajustar según la altura de tu navbar */
 }
 
 /**/
@@ -68,12 +68,12 @@ body {
     margin-left: 10px;
 }
 
-@font-face {
-    font-family: 'Ethnocentric';
-    /* src: url('../letra/EthnocentricRg.otf') format('opentype'); */
-    font-weight: normal;
-    font-style: normal;
-}
+        @font-face {
+            font-family: 'Ethnocentric';
+            /* src: url('../letra/EthnocentricRg.otf') format('opentype'); */
+            font-weight: normal;
+            font-style: normal;
+        }
 
 .separator {
     border-left: 1px solid rgba(255, 255, 255, 0.3);
@@ -103,16 +103,16 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.navbar {
-    background-color: rgb(20, 20, 20);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    position: fixed; /* Fijar el navbar */
-    width: 100%; /* Ocupar todo el ancho */
-    top: 0; /* Alinear en la parte superior */
-    left: 0; /* Alinear desde la izquierda */
-    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
-    background-color: rgba(0, 0, 0, 0.3); /* opacidad del navbar 0=transparente */
-}
+        .navbar {
+            background-color: rgb(20, 20, 20);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            position: fixed; /* Fijar el navbar */
+            width: 100%; /* Ocupar todo el ancho */
+            top: 0; /* Alinear en la parte superior */
+            left: 0; /* Alinear desde la izquierda */
+            z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+            background-color: rgba(0, 0, 0, 0.3); /* opacidad del navbar 0=transparente */
+        }
 
 .navbar .navbar-nav .nav-link,
 .navbar .navbar-brand {
@@ -152,9 +152,9 @@ body {
     }
 }
 
-#loginForm {
-    display: none;
-}
+                #loginForm {
+                    display: none;
+                }
 
 #mainContent {
     display: none;

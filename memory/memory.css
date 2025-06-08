@@ -120,7 +120,7 @@ header h1 {
 }
 
 .card-front {
-    background: transparent url('../imagenes/cartas-diseño-con-el-logo/reves.png') center/cover;
+    background: transparent url('./imagenes/cartas-diseño-con-el-logo/reves.png') center/cover;
 }
 
 .card-back {
