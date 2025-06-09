@@ -65,10 +65,9 @@ function createCardElement({ value }) {
     card.dataset.value = value;
 
     card.innerHTML = `
-    <div class="card-inner">
+<div class="card-inner">
         <div class="card-front"></div>
-        <div class="card-back" style="background: url("./imagenes/cartas-diseño-con-el-logo/diseño-pagina-${value}.png"
-) center/contain no-repeat;"></div>
+        <div class="card-back" style="background: url(./imagenes/cartas-diseño-con-el-logo/diseño-pagina-${value}.png) center/contain no-repeat;"></div>
     </div>`;
 
     card.addEventListener('click', onCardClick);

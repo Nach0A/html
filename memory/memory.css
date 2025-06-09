@@ -118,6 +118,9 @@ header h1 {
     backface-visibility: hidden;
     border: 0; /* Eliminar el borde */
     border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .card-front {
@@ -127,6 +130,7 @@ header h1 {
 .card-back {
     transform: rotateY(180deg);
     /* Aquí se mostrará la imagen de las cartas */
+    /* El fondo se asigna dinámicamente en el HTML/JS */
 }
 
 /* Modal de victoria */
