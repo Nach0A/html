@@ -16,7 +16,7 @@ if ($conexion->connect_error) {
 
   function inicio($conexion, $nombre, $contrasenia) {
     $consulta = mysqli_query($conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nombre}' AND passwd='{$contrasenia}'");
-    if (mysqli_data_seek($consulta, 0) == 1) {
+    if (mysqli_data_seek($consulta, 0) == true) {
       echo "Bienvenido, usuario";
     } else {
       echo "Nombre o contrasenia incorrectos";
