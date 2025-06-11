@@ -5,7 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Iniciar sesión - Zentryx</title>
+    <!-- Icono de la página -->
     <link rel="icon" href="imagenes/logo.jpg" type="img/jpeg">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../navbar/style.css" />
 </head>
@@ -15,16 +17,18 @@
     <div id="preloader">
         <img src="../navbar/imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
     </div>
+    <!-- ======== FIN PRELOADER ======== -->
 
     <!-- ======== NAVBAR (idéntico a inicio.html) ======== -->
     <nav class="navbar navbar-expand-lg shadow-sm py-3">
         <div class="container-fluid">
-            <!-- El logo lleva a inicio.html sin hash → mostrará “Inicio” -->
+            <!-- Logo que lleva a la página de inicio -->
             <a class="navbar-brand fw-bold fs-4" href="../pagina-principal/Inicio.html#inicio">
                 <img src="../navbar/imagenes/logo.jpg" alt="Logo" width="30" height="30"
                     class="d-inline-block align-text-top">
                 &nbsp;Zentryx
             </a>
+            <!-- Botón para menú colapsable en móviles -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -35,7 +39,8 @@
                         <!-- nav link "Inicio" en el navbar, que al clickearlo, te lleva a la seccion de inicio en la pagina principal-->
                         <a class="nav-link" href="../pagina-principal/Inicio.html#inicio">Inicio</a>
                     </li>
-                    <li class="nav-item separator"></li> <!-- Separador entre "Inicio" y "Juegos" -->
+                    <!-- Separador entre "Inicio" y "Juegos" -->
+                    <li class="nav-item separator"></li>
                     <!-- Item “Juegos” dentro del navbar -->
                     <li class="nav-item">
                         <!-- nav link "Juegos" en el navbar, que al clickearlo, te lleva a la seccion de juegos en la pagina principal-->
@@ -59,6 +64,7 @@
             </div>
         </div>
     </nav>
+    <!-- ======== FIN NAVBAR ======== -->
 
     <!-- ======== FORMULARIO DE LOGIN (centrado) ======== -->
     <div class="container mt-5 position-relative" id="loginForm">
@@ -70,59 +76,73 @@
             <input type="password" id="password" class="form-control" placeholder="Contraseña">
         </div>
         <div id="loginError" class="text-danger mb-2" style="display: none;"></div>
+        <!-- Botón para iniciar sesión -->
         <button class="btn btn-primary w-100 mb-2" onclick="login()">Iniciar sesión</button>
+        <!-- Botón para registrarse -->
         <button class="btn btn-secondary w-100" onclick="register()">Registrarse</button>
     </div>
+    <!-- ======== FIN FORMULARIO DE LOGIN ======== -->
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Referencia al elemento de error
         const loginError = document.getElementById("loginError");
 
+        // Función para iniciar sesión
         function login() {
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value;
 
+            // Obtener usuarios guardados en localStorage
             const users = JSON.parse(localStorage.getItem("users")) || {};
             const storedPassword = users[username];
 
+            // Validar usuario y contraseña
             if (storedPassword && storedPassword === password) {
-                // Guardo sesión y redirijo a inicio.html
+                // Guardar sesión y redirigir a inicio.html
                 localStorage.setItem("loggedInUser", username);
                 loginError.style.display = "none";
-                // Redirijo a “Inicio” (hash #inicio)
+                // Redirigir a “Inicio” (hash #inicio)
                 window.location.href = "../pagina-principal/inicio.html#inicio";
             } else {
+                // Mostrar error si los datos no coinciden
                 loginError.textContent = "Nombre de usuario o contraseña incorrectos.";
                 loginError.style.display = "block";
             }
         }
 
+        // Función para registrar un nuevo usuario
         function register() {
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value;
 
+            // Validar campos vacíos
             if (!username || !password) {
                 loginError.textContent = "Por favor, completa ambos campos para registrarte.";
                 loginError.style.display = "block";
                 return;
             }
 
+            // Obtener usuarios guardados en localStorage
             const users = JSON.parse(localStorage.getItem("users")) || {};
 
+            // Verificar si el usuario ya existe
             if (users[username]) {
                 loginError.textContent = "El nombre de usuario ya está registrado.";
                 loginError.style.display = "block";
             } else {
+                // Guardar nuevo usuario y redirigir a inicio
                 users[username] = password;
                 localStorage.setItem("users", JSON.stringify(users));
                 localStorage.setItem("loggedInUser", username);
                 loginError.style.display = "none";
-                // Después de registrarse, lo mando a “Inicio”
+                // Después de registrarse, redirigir a “Inicio”
                 window.location.href = "../pagina-principal/inicio.html#inicio";
             }
         }
 
-        // Al cargar, ocultar preloader
+        // Al cargar la página, ocultar el preloader
         window.addEventListener("load", () => {
             const preloader = document.getElementById("preloader");
             preloader.style.opacity = "0";
