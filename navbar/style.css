@@ -1,3 +1,4 @@
+/* Fondo animado general del body */
 body {
     background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
     background-size: 400% 400%;
@@ -7,7 +8,8 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 }
-/**/
+
+/* Preloader: pantalla de carga centrada */
 #preloader {
     position: fixed;
     top: 0;
@@ -22,6 +24,7 @@ body {
     transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
+/* Logo animado del preloader */
 #preloader-logo {
     width: 100px;
     height: 100px;
@@ -29,6 +32,7 @@ body {
     border-radius: 50%;
 }
 
+/* Animación de aparición/desaparición del logo del preloader */
 @keyframes logoFade {
     0% {
         opacity: 0.4;
@@ -75,6 +79,7 @@ body {
     margin: auto 10px;
 }
 
+/* Avatar de usuario en el navbar */
 .user-avatar {
     width: 40px;
     height: 40px;
@@ -83,10 +88,12 @@ body {
     transition: box-shadow 0.3s ease;
 }
 
+/* Sombra al pasar el mouse sobre el avatar */
 .user-avatar:hover {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
+/* Formulario de login (puede que se obre escriba mas abajo) */
 #loginForm {
     display: none;
     max-width: 400px;
@@ -97,12 +104,14 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Barra de navegación superior */
 .navbar {
     background-color: rgb(20, 20, 20);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     /* position: fixed;*/
 }
 
+/* Estilo de los links y la marca en el navbar */
 .navbar .navbar-nav .nav-link,  
 .navbar .navbar-brand {
     font-family: 'Ethnocentric', sans-serif;
@@ -111,10 +120,12 @@ body {
 
 }
 
+/* Efecto hover en los links del navbar */
 .navbar .nav-link:hover {
     color: #d6c4ff !important;
 }
 
+/* Estilo de los ítems del menú desplegable */
 .navbar .dropdown-item {
     color: black !important;
     transition: background-color 0.2s, color 0.2s;
@@ -141,6 +152,7 @@ body {
     }
 }
 
+/* Formulario de login (estilo moderno) */
 #loginForm {
     display: block !important;
     max-width: 400px;
