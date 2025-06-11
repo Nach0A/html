@@ -1,20 +1,20 @@
 // Lógica de selección, temporizador y control de pares
 
-let timerInterval;
-let startTime;
-let matches = 0;
-let attempts = 0; // Nueva variable para contar intentos
-const totalPairs = 12;
+let timerInterval; // Intervalo del temporizador
+let startTime;     // Marca de tiempo de inicio
+let matches = 0;   // Contador de pares encontrados
+let attempts = 0;  // Contador de intentos realizados
+const totalPairs = 12; // Total de pares en el juego
 
 // Referencias al DOM
-const timerEl = document.getElementById('timer');
-const matchesEl = document.getElementById('matches');
-const attemptsEl = document.getElementById('intenos'); // Referencia al elemento de intentos
-const boardEl = document.querySelector('.game-board');
-const restartBtn = document.getElementById('restart-btn');
-const winModal = document.getElementById('win-modal');
-const finalTimeEl = document.getElementById('final-time');
-const playAgainBtn = document.getElementById('play-again-btn');
+const timerEl = document.getElementById('timer');           // Elemento del temporizador
+const matchesEl = document.getElementById('matches');       // Elemento de pares encontrados
+const attemptsEl = document.getElementById('intenos');      // Elemento de intentos
+const boardEl = document.querySelector('.game-board');      // Tablero de juego
+const restartBtn = document.getElementById('restart-btn');  // Botón de reinicio
+const winModal = document.getElementById('win-modal');      // Modal de victoria
+const finalTimeEl = document.getElementById('final-time');  // Elemento para mostrar el tiempo final
+const playAgainBtn = document.getElementById('play-again-btn'); // Botón para jugar de nuevo
 // const homeBtn = document.getElementById('home-btn'); // Para futura navegación
 
 // Inicialización del juego
@@ -33,13 +33,13 @@ function initGame() {
     secondCard = null;
     lockBoard = false;
 
-    // Generar cartas aleatorias
+    // Generar cartas aleatorias y agregarlas al tablero
     const cards = generateDeck();
     boardEl.innerHTML = '';
     cards.forEach(cardData => boardEl.appendChild(createCardElement(cardData)));
 }
 
-// Genera array de 24 cartas mezcladas
+// Genera array de 24 cartas mezcladas (12 pares)
 function generateDeck() {
     const deck = [];
     for (let i = 1; i <= 12; i++) {
@@ -58,12 +58,13 @@ function shuffle(array) {
     return array;
 }
 
-// Crea elemento DOM de carta || si se quieren implementar otro tipo de cartas de debe modificar este metodo
+// Crea elemento DOM de carta
 function createCardElement({ value }) {
     const card = document.createElement('div');
     card.className = 'card';
     card.dataset.value = value;
 
+    // Estructura de la carta: frente y reves 
     card.innerHTML = `
 <div class="card-inner">
         <div class="card-front"></div>
@@ -74,12 +75,13 @@ function createCardElement({ value }) {
     return card;
 }
 
-// === NUEVA LÓGICA DE SELECCIÓN DE CARTAS CORREGIDA ===
+// === LÓGICA DE SELECCIÓN DE CARTAS ===
 
-let firstCard = null;
-let secondCard = null;
-let lockBoard = false;
+let firstCard = null;   // Primera carta seleccionada
+let secondCard = null;  // Segunda carta seleccionada
+let lockBoard = false;  // Bloquea el tablero mientras se resuelven pares
 
+// Maneja el clic en una carta
 function onCardClick(e) {
     const clicked = e.currentTarget;
 
@@ -98,6 +100,7 @@ function onCardClick(e) {
     attempts++; // Incrementar intentos cuando se selecciona la segunda carta
     attemptsEl.textContent = `Intentos: ${attempts}`; // Actualizar display
 
+    // Comparar valores de las cartas
     if (firstCard.dataset.value === secondCard.dataset.value) {
         matches++;
         matchesEl.textContent = `Pares: ${matches}`;
@@ -108,12 +111,14 @@ function onCardClick(e) {
     }
 }
 
+// Deshabilita las cartas que han sido emparejadas
 function disableMatchedCards() {
     firstCard.removeEventListener('click', onCardClick);
     secondCard.removeEventListener('click', onCardClick);
     resetTurn();
 }
 
+// Voltea las cartas si no son iguales
 function unflipCards() {
     setTimeout(() => {
         firstCard.classList.remove('flipped');
@@ -122,6 +127,7 @@ function unflipCards() {
     }, 1000);
 }
 
+// Reinicia la selección de cartas
 function resetTurn() {
     [firstCard, secondCard] = [null, null];
     lockBoard = false;
@@ -138,11 +144,13 @@ function startTimer() {
     }, 500);
 }
 
+// Reinicia el temporizador
 function resetTimer() {
     clearInterval(timerInterval);
     timerEl.textContent = '00:00';
 }
 
+// Muestra el modal de victoria
 function showWinModal() {
     clearInterval(timerInterval);
     finalTimeEl.textContent = timerEl.textContent;
@@ -158,9 +166,9 @@ function showWinModal() {
     winModal.classList.remove('hidden');
 }
 
-// Eventos
+// Eventos de botones
 restartBtn.addEventListener('click', initGame);
 playAgainBtn.addEventListener('click', initGame);
 
-// Arrancar al cargar
+// Arrancar el juego al cargar la página
 window.addEventListener('load', initGame);
