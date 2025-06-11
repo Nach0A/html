@@ -111,6 +111,27 @@ body {
 
 }
 
+/* Aplica solo a enlaces que NO están dentro de un dropdown ni contienen imágenes */
+.navbar .navbar-nav.me-auto .nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar .navbar-nav.me-auto .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #d6c4ff;
+    transition: width 0.3s ease;
+}
+
+.navbar .navbar-nav.me-auto .nav-link:hover::after {
+    width: 100%;
+}
+    
 .navbar .nav-link:hover {
     color: #d6c4ff !important;
 }
