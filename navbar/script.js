@@ -53,15 +53,7 @@ function mostrarJuegos() {
     }
 }
 
-// Asigna eventos a los links del navbar para cambiar de sección sin recargar la página
-document.getElementById("linkInicio").addEventListener("click", (e) => {
-    e.preventDefault();
-    mostrarInicio();
-});
-document.getElementById("linkJuegos").addEventListener("click", (e) => {
-    e.preventDefault();
-    mostrarJuegos();
-});
+
 
 // Cierra la sesión del usuario y vuelve a renderizar el menú
 function logout() {
