@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión - Zentryx</title>
+    <!-- Icono de la página -->
+    <link rel="icon" href="imagenes/logo.jpg" type="img/jpeg">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./estilo.css" />
+</head>
+
+<body>
+    <!-- ======== PRELOADER ======== -->
+    <div id="preloader">
+        <img src="../navbar/imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
+    </div>
+    <!-- ======== FIN PRELOADER ======== -->
+
+    <!-- ======== NAVBAR ======== -->
+    <nav class="navbar navbar-expand-lg shadow-sm py-3">
+        <div class="container-fluid">
+            <!-- Logo que lleva a la página de inicio -->
+            <a class="navbar-brand fw-bold fs-4" href="../pagina-principal/Inicio.html#inicio">
+                <img src="../navbar/imagenes/logo.jpg" alt="Logo" width="30" height="30"
+                    class="d-inline-block align-text-top">
+                &nbsp;Zentryx
+            </a>
+            <!-- Botón para menú colapsable en móviles -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <!-- Item “Inicio” dentro del navbar -->
+                    <li class="nav-item">
+                        <!-- nav link "Inicio" en el navbar, que al clickearlo, te lleva a la seccion de inicio en la pagina principal-->
+                        <a class="nav-link" href="../pagina-principal/Inicio.html#inicio">Inicio</a>
+                    </li>
+                    <!-- Separador entre "Inicio" y "Juegos" -->
+                    <li class="nav-item separator"></li>
+                    <!-- Item “Juegos” dentro del navbar -->
+                    <li class="nav-item">
+                        <!-- nav link "Juegos" en el navbar, que al clickearlo, te lleva a la seccion de juegos en la pagina principal-->
+                        <a class="nav-link" href="inicio.html#juegos">Juegos</a>
+                    </li>
+                </ul>
+
+                <!-- PERFIL (en login.html, no tiene sentido mostrar nombre de usuario aún) -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="../navbar/imagenes/usuario2.jpg" alt="User" class="user-avatar shadow-sm" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end fade-menu" id="userMenu">
+                            <!-- Sólo mostramos el enlace a login (estamos en login.html), o podríamos dejarlo vacío -->
+                            <li><a class="dropdown-item" href="login.html">Iniciar sesión / Registrarse</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- ======== FIN NAVBAR ======== -->
+
+    <!-- ======== FORMULARIO DE LOGIN (centrado) ======== -->
+    <div class="container mt-5 position-relative" id="loginForm">
+        <h5 class="card-title text-center">Iniciar sesión / Registrarse</h5>
+        <div class="mb-3">
+            <input type="text" id="username" class="form-control" placeholder="Nombre de usuario">
+        </div>
+        <div class="mb-3">
+            <input type="password" id="password" class="form-control" placeholder="Contraseña">
+        </div>
+        <div id="loginError" class="text-danger mb-2" style="display: none;"></div>
+        <!-- Botón para iniciar sesión -->
+        <button class="btn btn-primary w-100 mb-2" onclick="login()">Iniciar sesión</button>
+        <!-- Botón para registrarse -->
+        <button class="btn btn-secondary w-100" onclick="register()">Registrarse</button>
+    </div>
+    <!-- ======== FIN FORMULARIO DE LOGIN ======== -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Referencia al elemento de error
+        const loginError = document.getElementById("loginError");
+
+        // Función para iniciar sesión
+        function login() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+
+            // Obtener usuarios guardados en localStorage
+            const users = JSON.parse(localStorage.getItem("users")) || {};
+            const storedPassword = users[username];
+
+            // Validar usuario y contraseña
+            if (storedPassword && storedPassword === password) {
+                // Guardar sesión y redirigir a inicio.html
+                localStorage.setItem("loggedInUser", username);
+                loginError.style.display = "none";
+                // Redirigir a “Inicio” (hash #inicio)
+                window.location.href = "../pagina-principal/inicio.html#inicio";
+            } else {
+                // Mostrar error si los datos no coinciden
+                loginError.textContent = "Nombre de usuario o contraseña incorrectos.";
+                loginError.style.display = "block";
+            }
+        }
+
+        // Función para registrar un nuevo usuario
+        function register() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+
+            // Validar campos vacíos
+            if (!username || !password) {
+                loginError.textContent = "Por favor, completa ambos campos para registrarte.";
+                loginError.style.display = "block";
+                return;
+            }
+
+            // Obtener usuarios guardados en localStorage
+            const users = JSON.parse(localStorage.getItem("users")) || {};
+
+            // Verificar si el usuario ya existe
+            if (users[username]) {
+                loginError.textContent = "El nombre de usuario ya está registrado.";
+                loginError.style.display = "block";
+            } else {
+                // Guardar nuevo usuario y redirigir a inicio
+                users[username] = password;
+                localStorage.setItem("users", JSON.stringify(users));
+                localStorage.setItem("loggedInUser", username);
+                loginError.style.display = "none";
+                // Después de registrarse, redirigir a “Inicio”
+                window.location.href = "../pagina-principal/inicio.html#inicio";
+            }
+        }
+
+        // Al cargar la página, ocultar el preloader
+        window.addEventListener("load", () => {
+            const preloader = document.getElementById("preloader");
+            preloader.style.opacity = "0";
+            preloader.style.visibility = "hidden";
+            preloader.style.pointerEvents = "none";
+        });
+    </script>
+</body>
+
+</html>
