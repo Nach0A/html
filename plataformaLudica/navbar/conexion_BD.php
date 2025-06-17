@@ -16,15 +16,21 @@ if ($conexion->connect_error) {
     return mysqli_data_seek($consulta, 0) == true;
 }
  function registro($conexion, $nombre, $contrasenia) {
+  if (inicio($conexion, $nombre, $contrasenia) == false) {
   $consulta = mysqli_query($conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`) VALUES ('{$nombre}', '{$contrasenia}');" );
-  echo "Usuario {$nombre} fue registrado";
+  } else {
+    include "login.html";
+    echo '<script type="text/javascript">
+          alert("El usuario ya existe");
+          </script>';
+  }
  }
 if ($ini == 1) {
   inicio($conexion, $nombre, $contrasenia);
   if (inicio($conexion,$nombre, $contrasenia) == true) {
-    include "Inicio.html";
+    include "Inicio.html"; //Es  conexion_BD.php pero se ve como Inicio.html
+    include "conexion_BD.php#inicio"; //Cargamos el inicio de conexion_BD.php
   }
 } else {
   registro($conexion, $nombre, $contrasenia);
-  include "login.html";
 }

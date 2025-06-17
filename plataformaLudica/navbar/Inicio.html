@@ -134,13 +134,12 @@
 
             // Función para renderizar el dropdown del avatar (perfil) según si hay usuario logueado
             function renderMenu() {
-                //const loggedInUser = localStorage.getItem("loggedInUser");
+                const loggedInUser = localStorage.getItem("loggedInUser");
 
                 // Oculto siempre ambas secciones; luego mostraré la que corresponda
                 mainContent.style.display = "none";
                 juegosContent.style.display = "none";
 
-                if (loggedInUser) {
                     // Si está logueado, muestro opciones de perfil y Cerrar Sesión
                     userMenu.innerHTML = `
                     <li><a class="dropdown-item" href="#">Perfil (${loggedInUser})</a></li>
@@ -150,14 +149,12 @@
                 `;
                     // Si el usuario está logueado, por defecto muestro “Inicio”
                     mostrarInicio();
-                } else {
                     // Si NO está logueado, muestro el enlace a login.html
                     userMenu.innerHTML = `
                     <li><a class="dropdown-item" href="../navbar/login.html">Iniciar sesión / Registrarse</a></li>
                 `;
                     // Ya que no hay sesión, por defecto muestro “Inicio” (que es el contenido principal)
                     mostrarInicio();
-                }
             }
 
             // Funciones para mostrar/ocultar secciones
