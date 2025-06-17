@@ -65,8 +65,8 @@
         <h5 class="card-title text-center">Iniciar sesión / Registrarse</h5>
         <div class="mb-3">
             <form action="conexion_BD.php" method="post">
-                <input type="text" id="username" class="form-control mb-2" placeholder="Nombre de usuario" name="nombre">
-                <input type="password" id="password" class="form-control mb-3" placeholder="Contraseña" name="contrasenia">
+                <input type="text" id="username" class="form-control mb-2" placeholder="Nombre de usuario" name="nombre" required>
+                <input type="password" id="password" class="form-control mb-3" placeholder="Contraseña" name="contrasenia" required>
                 <div id="loginError" class="text-danger mb-2" style="display: none;"></div>
                 <button class="btn btn-primary w-100 mb-2" type="submit" name="ini" value="1">Iniciar sesión</button>
                 <button class="btn btn-secondary w-100" type="submit" name="ini" value="0">Registrarse</button>
