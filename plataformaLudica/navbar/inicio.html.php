@@ -118,7 +118,7 @@ session_start();
             // Si NO está logueado, muestro el enlace a login.html
             userMenu.innerHTML = `
                     <li><a class="dropdown-item" href="#">Perfil (<?php echo $_SESSION['nombre'] ?>)</a></li>
-                    <li><a class="dropdown-item" href="../navbar/login.html">Cerrar Sesión</a></li>
+                    <li><a class="dropdown-item" href="../navbar/login.html.php">Cerrar Sesión</a></li>
                 `;
             // Ya que no hay sesión, por defecto muestro “Inicio” (que es el contenido principal)
             mostrarInicio();
