@@ -388,3 +388,84 @@ body {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+.juegos-wrapper {
+    min-height: 100vh;
+    padding: 60px 20px;
+    background: radial-gradient(circle at top left, #1b1b1b 0%, #000 100%);
+    backdrop-filter: blur(3px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo-juegos {
+    font-family: 'Ethnocentric', sans-serif;
+    color: #ea00ff;
+    text-shadow: 0 0 15px #5500ff, 0 0 30px #81004c;
+    margin-bottom: 50px;
+}
+
+.grid-juegos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    padding: 20px;
+}
+
+.tarjeta-juego {
+    background: linear-gradient(135deg, #111, #1a1a1a);
+    border: 2px solid #ea00ff;
+    box-shadow: 0 0 20px #81004c, inset 0 0 10px #5500ff;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+
+    width: 90%;           /* Ocupará el 90% del contenedor */
+    max-width: 700px;     /* Pero no pasará de 700px de ancho */
+}
+
+
+.tarjeta-juego::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(234, 0, 255, 0.15) 0%, transparent 70%);
+    animation: pulseNeon 6s infinite alternate;
+    z-index: 0;
+}
+
+@keyframes pulseNeon {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(20px, 20px) rotate(360deg); }
+}
+
+.tarjeta-juego h2 {
+    color: #c300ff;
+    font-family: 'Ethnocentric', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 10px #5500ff;
+}
+
+.tarjeta-juego p {
+    color: #ccc;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.tarjeta-juego .play-btn {
+    position: relative;
+    z-index: 1;
+}

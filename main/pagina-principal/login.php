@@ -120,7 +120,7 @@ $user = $_SESSION['usuario'] ?? null;
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link text-white" href="inicio.php#inicio">Inicio</a></li>
-                <li class="nav-item separator"></li>
+                
                 <li class="nav-item"><a class="nav-link text-white" href="inicio.php#juegos">Juegos</a></li>
             </ul>
 
