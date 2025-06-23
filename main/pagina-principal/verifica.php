@@ -10,14 +10,22 @@ if ($bd->getIni() == 1) {
         $bd->cerrarConexion();
         header("Location: inicio.html.php");
         exit();
+    } else {
+  //      $_SESSION['ini'] = 1; prar implementar en la caja de errores mas adelante
+        echo '<script type="text/javascript">
+        alert("Nombre o contrasenia incorrectos.");
+        window.location.href = "login.html.php";
+        </script>';
     }
 } else {
     if ($bd->inicio($bd->getConexion(), $nombre, $contrasenia) == false) {
         $bd->registro($bd->getConexion(), $nombre, $contrasenia);
         $bd->cerrarConexion();
-        header("Location: login.html.php");
+        $_SESSION['nombre'] = $nombre;
+        header("Location: inicio.html.php");
         exit();
     } else {
+   //     $_SESSION['reg'] = 1; para implementar en la caja de errores mas adelante
         echo '<script type="text/javascript">
         alert("El usuario ya está registrado.");
         window.location.href = "login.html.php";

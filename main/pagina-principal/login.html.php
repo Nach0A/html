@@ -1,6 +1,6 @@
 <?php
 session_start();
-session_destroy(); // Aseguramos que la sesión esté limpia al iniciar el login
+session_destroy();
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ session_destroy(); // Aseguramos que la sesión esté limpia al iniciar el login
     <div class="container-fluid">
         
         <!-- Logo y nombre de Zentryx -->
-        <a class="navbar-brand fw-bold fs-4 text-white" href="login.php">
+        <a class="navbar-brand fw-bold fs-4 text-white" href="login.html.php">
             <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top">
             &nbsp;Zentryx
         </a>
@@ -47,9 +47,9 @@ session_destroy(); // Aseguramos que la sesión esté limpia al iniciar el login
         <!-- Menú de navegación -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link text-white" href="#">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="login.html.php">Inicio</a></li>
                 <li class="nav-item separator"></li>
-                <li class="nav-item"><a class="nav-link text-white" href="#">Juegos</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="login.html.php">Juegos</a></li>
             </ul>
 
             <!-- Ícono de usuario y dropdown -->
