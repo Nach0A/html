@@ -1,97 +1,145 @@
 <?php
-session_start();            // Inicia o continúa la sesión del usuario
-require 'db.php';           // Conecta a la base de datos (aunque no se usa en esta página, se puede dejar preparado)
+session_start();
+require 'db.php';
 
-$user = $_SESSION['usuario'] ?? null;  // Obtiene el nombre del usuario desde la sesión (si está logueado)
-
-// Si no hay usuario en sesión, redirige al login
+// Si no hay usuario en sesión, va al login
+$user = $_SESSION['usuario'] ?? null;
 if (!$user) {
     header("Location: login.php");
-    exit;                   // Termina la ejecución del script
+    exit;
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Zentryx</title>
-
-    <!-- Ícono en la pestaña -->
-    <link rel="icon" href="imagenes/logo.jpg" type="image/jpeg">
-
-    <!-- Bootstrap para estilos rápidos -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Tus estilos personalizados -->
-    <link rel="stylesheet" href="estilo.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio - Zentryx</title>
+  <link rel="icon" href="imagenes/logo.jpg" type="image/jpeg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <img src="../navbar/imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
+  </div>
 
-<!-- NAVBAR Bootstrap igual en todas las páginas -->
-<nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
     <div class="container-fluid">
-        
-        <!-- Logo y nombre de Zentryx que lleva al inicio -->
-        <a class="navbar-brand fw-bold fs-4 text-white" href="inicio.php#inicio">
-            <img src="../navbar/imagenes/logo.jpg" width="30" height="30">
-            &nbsp;Zentryx
-        </a>
+      <a class="navbar-brand fw-bold fs-4 text-white" href="#inicio">
+        <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top">
+        &nbsp;Zentryx
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <!-- Botón hamburguesa en móviles -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Botones Inicio / Juegos -->
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#" id="linkInicio">Inicio</a>
+          </li>
+          <li class="nav-item separator"></li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#" id="linkJuegos">Juegos</a>
+          </li>
+        </ul>
 
-        <!-- Menú de navegación -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            
-            <!-- Enlaces principales -->
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="inicio.php#inicio">Inicio</a>
-                </li>
-                <li class="nav-item separator"></li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="inicio.php#juegos">Juegos</a>
-                </li>
+        <!-- Dropdown perfil -->
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white"
+               id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <img src="../navbar/imagenes/usuario2.jpg" class="user-avatar shadow-sm">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end fade-menu">
+              <li>
+                <a class="dropdown-item" href="#">Perfil (<?php echo htmlspecialchars($user); ?>)</a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+              </li>
             </ul>
-
-            <!-- Icono de usuario y menú desplegable -->
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white" id="userDropdown" data-bs-toggle="dropdown">
-                        <img src="../navbar/imagenes/usuario2.jpg" class="user-avatar shadow-sm">
-                    </a>
-
-                    <!-- Menú desplegable con opciones -->
-                    <ul class="dropdown-menu dropdown-menu-end fade-menu">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Perfil (<?php echo htmlspecialchars($user); ?>)
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-        </div>
+          </li>
+        </ul>
+      </div>
     </div>
-</nav>
+  </nav>
 
-<!-- Contenido principal -->
-<div class="container mt-5">
-    <h1 class="text-center">Bienvenido, <?php echo htmlspecialchars($user); ?>, a Zentryx</h1>
-    <p class="text-center">Explora nuestros juegos y contenidos exclusivos.</p>
-</div>
+  <!-- CONTENIDO GENERAL -->
+  <div class="Contenido" id="Contenido">
+    <!-- SECCIÓN INICIO: saludo al usuario -->
+    <div id="mainContent" class="container mt-5" style="display: none;">
+      <h1 class="text-center">Bienvenido, <?php echo htmlspecialchars($user); ?>, a Zentryx</h1>
+      <p class="text-center">Aquí encontrarás noticias y tus juegos favoritos.</p>
+    </div>
 
-<!-- Bootstrap JS para el funcionamiento del navbar y componentes -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SECCIÓN JUEGOS: lista de juegos -->
+    <div class="container mt-5 position-relative" id="juegosContent" style="display: none;">
+      <h1 class="mb-4">Juegos disponibles</h1>
+      <div class="game-box">
+        <div class="game-title">Memory</div>
+        <div class="game-desc">Pon a prueba tu memoria</div>
+        <button class="play-btn" onclick="location.href='../memory/memory.php'">Jugar</button>
+      </div>
+      <!-- Aquí puedes agregar más tarjetas de juegos -->
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Referencias
+    const mainContent = document.getElementById("mainContent");
+    const juegosContent = document.getElementById("juegosContent");
+    const linkInicio = document.getElementById("linkInicio");
+    const linkJuegos = document.getElementById("linkJuegos");
+
+    // Función que muestra la sección de Inicio y oculta Juegos
+    function mostrarInicio() {
+      mainContent.classList.add("fade-in");
+      mainContent.style.display = "block";
+      juegosContent.style.display = "none";
+      history.replaceState(null, "", "#inicio");
+    }
+
+    // Función que muestra Juegos y oculta Inicio
+    function mostrarJuegos() {
+      juegosContent.classList.add("fade-in");
+      juegosContent.style.display = "block";
+      mainContent.style.display = "none";
+      history.replaceState(null, "", "#juegos");
+    }
+
+    // Eventos para los links
+    linkInicio.addEventListener("click", e => {
+      e.preventDefault();
+      mostrarInicio();
+    });
+    linkJuegos.addEventListener("click", e => {
+      e.preventDefault();
+      mostrarJuegos();
+    });
+
+    // Al cargar la página: ocultar preloader y mostrar sección según hash
+    window.addEventListener("load", () => {
+      const pre = document.getElementById("preloader");
+      pre.style.opacity = "0";
+      pre.style.visibility = "hidden";
+      pre.style.pointerEvents = "none";
+
+      if (location.hash === "#juegos") {
+        mostrarJuegos();
+      } else {
+        mostrarInicio();
+      }
+    });
+  </script>
 </body>
 </html>
