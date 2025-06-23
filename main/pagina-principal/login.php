@@ -1,10 +1,10 @@
 
 <?php
-session_start();               // Inicia o continúa la sesión, necesario para recordar al usuario
-require 'db.php';              // Incluye el archivo que conecta a la base de datos MySQL
+session_start();       // Inicia o continúa la sesión, necesario para recordar al usuario
+require 'db.php';      // Incluye el archivo que conecta a la base de datos MySQL
 
-$alert = '';                   // Variable para almacenar mensajes de error o éxito
-$username = '';                // Guarda temporalmente el nombre de usuario ingresado
+$alert = '';          // Variable para almacenar mensajes de error o éxito
+$username = '';       // Guarda temporalmente el nombre de usuario ingresado
 
 // Si se envió el formulario (por método POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -88,10 +88,10 @@ $user = $_SESSION['usuario'] ?? null;
     <!-- Bootstrap 5.3 para estilos rápidos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Fuente tecnológica Orbitron -->
+    <!-- Fuente Orbitron -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
     
-    <!-- Tu archivo de estilos personalizados -->
+    <!-- css -->
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
@@ -101,7 +101,7 @@ $user = $_SESSION['usuario'] ?? null;
     <img src="../navbar/imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
 </div>
 
-<!-- NAVBAR fijo, igual en todas las páginas -->
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
     <div class="container-fluid">
         
@@ -112,7 +112,7 @@ $user = $_SESSION['usuario'] ?? null;
         </a>
 
         <!-- Botón de hamburguesa en móviles -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" color="white">
             <span class="navbar-toggler-icon"></span>
         </button>
 

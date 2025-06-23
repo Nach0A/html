@@ -103,7 +103,7 @@ if (!$user) {
                     <button class="play-btn" onclick="location.href='../buscaminas/buscaminas.php'">Jugar</button>
                 </div>
 
-                <!-- Más tarjetas si querés -->
+                <!-- aca ponemos más tarjetas para el futuro -->
             </div>
 
         </div>
