@@ -92,10 +92,15 @@ class conexion_BD
     public function inicio($conexion, $nombre, $contrasenia)
     {
         $consulta = mysqli_query($conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nombre}' AND passwd='{$contrasenia}'");
-        return mysqli_data_seek($consulta, 0) == true;
+        return mysqli_num_rows($consulta) > 0;
     }
     public function registro($conexion, $nombre, $contrasenia)
     {
-            $consulta = mysqli_query($conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`) VALUES ('{$nombre}', '{$contrasenia}');");
+        $consulta = mysqli_query($conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`) VALUES ('{$nombre}', '{$contrasenia}');");
+    }
+
+    public function nombreUsado($conexion, $nombre){
+        $consulta = mysqli_query($conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nombre}'");
+        return mysqli_num_rows($consulta) > 0;
     }
 }

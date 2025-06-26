@@ -1,5 +1,6 @@
 <?php
 require_once "conexion_BD.php";
+include "login.html.php";
 session_start();
 $nombre = $_POST["nombre"];
 $contrasenia = $_POST["contrasenia"];
@@ -11,11 +12,12 @@ if ($bd->getIni() == 1) {
         header("Location: inicio.html.php");
         exit();
     } else {
-  //      $_SESSION['ini'] = 1; prar implementar en la caja de errores mas adelante
         echo '<script type="text/javascript">
-        alert("Nombre o contrasenia incorrectos.");
         window.location.href = "login.html.php";
+        alert("Nombre o contrasenia incorrectos.");
         </script>';
+        $bd->cerrarConexion();
+        exit();
     }
 } else {
     if ($bd->inicio($bd->getConexion(), $nombre, $contrasenia) == false) {
@@ -24,13 +26,18 @@ if ($bd->getIni() == 1) {
         $_SESSION['nombre'] = $nombre;
         header("Location: inicio.html.php");
         exit();
-    } else {
-   //     $_SESSION['reg'] = 1; para implementar en la caja de errores mas adelante
-        echo '<script type="text/javascript">
-        alert("El usuario ya está registrado.");
-        window.location.href = "login.html.php";
-        </script>';
+    }elseif($bd->nombreUsado($bd->getConexion(), $nombre)) {
         $bd->cerrarConexion();
+        echo '<script type="text/javascript">
+        window.location.href = "login.html.php";
+        alert("El nombre ya esta usado.");
+        </script>';
         exit();
+    } else {
+        $bd->cerrarConexion();
+        echo '<script type="text/javascript">
+        window.location.href = "login.html.php";
+        alert("El usuario ya esta registrado.");
+        </script>';
     }
 }

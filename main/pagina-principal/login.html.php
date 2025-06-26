@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_destroy();
 ?>
 
 <!DOCTYPE html>
@@ -60,6 +59,7 @@ session_destroy();
 <!-- Formulario de inicio de sesión / registro -->
 <div class="container mt-5" id="loginForm">
     <h5 class="card-title text-center">Iniciar sesión / Registrarse</h5>
+    <?php echo "{$alerta}"; ?>
     <form action="verifica.php" method="post">
                 <input type="text" id="username" class="form-control mb-2" placeholder="Nombre de usuario" name="nombre" required>
                 <input type="password" id="password" class="form-control mb-3" placeholder="Contraseña" name="contrasenia" required>
