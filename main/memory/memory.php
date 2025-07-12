@@ -94,7 +94,7 @@ if (!$user) {
             <h1>Memory</h1>
             <div class="game-desc">
                 <h3>Memory es un juego de cartas por parejas:<br>
-                -Se colocan todas boca abajo y por turnos se giran dos cartas.<br>
+                -Se colocan todas boca abajo y por turno se giran dos cartas.<br>
                 -Si coinciden, se quedan dadas vuelta.<br>
                 -Si no coinciden, se vuelven a voltear.<br>
                 -Se gana cuando se tiene todas las parejas.</h3>
@@ -133,115 +133,7 @@ if (!$user) {
         </div>
     </div>
     <!-- fin popup al ganar -->
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iste excepturi quae assumenda. Incidunt velit error perspiciatis culpa quos id blanditiis eaque libero ab. Excepturi quibusdam at debitis eveniet non?
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, in molestias est, eius dolorem quia fuga nihil optio doloribus tempore nesciunt officiis debitis earum eos suscipit aspernatur minus sint consectetur.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, deserunt. Eveniet repudiandae dolor doloremque facilis veniam excepturi, iste fugit accusantium voluptates ab incidunt esse! Veniam beatae corrupti atque maiores unde!
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi dolorem error, debitis veritatis nemo cum dignissimos sint eveniet dicta placeat temporibus nisi minima perferendis iste ratione quam et ipsa.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, vitae sit doloremque est debitis aut praesentium corporis inventore nostrum fugit nesciunt reiciendis officia culpa ea aperiam incidunt obcaecati optio cumque?v
-
-
-
-     
+    
     <script src="/memory/memory.css echo time(); ?>"></script>
     <script src="/memory/memory.js echo time(); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
