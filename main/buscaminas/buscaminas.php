@@ -16,7 +16,7 @@ $user = $_SESSION['usuario'];
     <!-- Estilos del buscaminas -->
     <link rel="stylesheet" href="buscaminas.css" />
     <!-- Estilos del navbar -->
-    <link rel="stylesheet" href="../navbar/style.css" />
+    <link rel="stylesheet" href="../navbar/navbar.css" />
     <!-- Bootstrap CSS para dropdown -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>

@@ -19,7 +19,7 @@ if (!$user) {
     <link rel="icon" href="../navbar/imagenes/logo.jpg" type="img/jpeg" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./memory.css" />
-    <link rel="stylesheet" href="../navbar/style.css" />
+    <link rel="stylesheet" href="../navbar/navbar.css" />
 </head>
 
 <body>
