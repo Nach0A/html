@@ -104,6 +104,7 @@ body {
 
 /* Barra de navegación superior */
 .navbar {
+    z-index: 100;
     opacity: 0.9;
     background-color: rgb(20, 20, 20);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);

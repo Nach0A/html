@@ -27,7 +27,7 @@ header {
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: -1;
+    z-index: 1;
 }
 
 /* Título del juego con animación de brillo */
@@ -166,7 +166,7 @@ header {
 
 /* Carta individual */
 .card {
-    z-index: -1;
+    z-index: 1;
     --bs-card-bg: #231E25;
     width: 100%;
     padding-top: 130%;
