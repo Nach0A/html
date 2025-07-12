@@ -26,8 +26,8 @@ body {
 
 /* Logo animado del preloader */
 #preloader-logo {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     animation: logoFade 2s ease-in-out infinite;
     border-radius: 50%;
 }
@@ -47,8 +47,6 @@ body {
         transform: scale(0.9);
     }
 }
-
-/**/
 
 
 /* animación */
@@ -106,6 +104,7 @@ body {
 
 /* Barra de navegación superior */
 .navbar {
+    opacity: 0.9;
     background-color: rgb(20, 20, 20);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     position:fixed;
