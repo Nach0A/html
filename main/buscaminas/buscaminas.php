@@ -21,55 +21,56 @@ $user = $_SESSION['usuario'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <!-- PRELOADER -->
+    <!-- ======== PRELOADER ======== -->
     <div id="preloader">
         <img src="../navbar/imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
     </div>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
+    <!-- ======= FIN PRELOADER ===== -->
+    
+    <!-- ======== NAVBAR ======== -->
+    <nav class="navbar navbar-expand-lg shadow-sm py-3">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold fs-4 text-white d-flex align-items-center" href="inicio.php">
-                <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top me-2" alt="Logo" />
-                Zentryx
+            <a class="navbar-brand fw-bold fs-4" href="../pagina-principal/Inicio.php#inicio">
+                <img src="../navbar/imagenes/logo.jpg" alt="Logo" width="30" height="30"
+                    class="d-inline-block align-text-top">
+                &nbsp;Zentryx
             </a>
-
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarContent"
-                aria-controls="navbarContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <!-- Botón “Inicio” -->
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="../pagina-principal/inicio.php#inicio">Inicio</a>
+                        <a class="nav-link" href="../pagina-principal/Inicio.php#inicio" id="linkInicio">Inicio</a>
                     </li>
+                    <li class="nav-item separator"></li>
+                    <!-- Botón “Juegos” -->
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="../pagina-principal/inicio.php#juegos">Juegos</a>
+                        <a class="nav-link" href="../pagina-principal/Inicio.php#juegos" id="linkJuegos">Juegos</a>
                     </li>
                 </ul>
 
+                <!-- PERFIL -->
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white"
-                            id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <img src="../navbar/imagenes/usuario2.jpg" class="user-avatar shadow-sm">
+                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="../navbar/imagenes/usuario2.jpg" alt="User" class="user-avatar shadow-sm" />
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">
                             <li>
-                                <a class="dropdown-item" href="#">Perfil (<?php echo htmlspecialchars($user); ?>)</a>
+                                <a class="dropdown-item" href="#">
+                                    Perfil (<?php echo htmlspecialchars($user); ?>)
+                                </a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a class="dropdown-item" href="../pagina-principal/logout.php">Cerrar sesión</a>
+                                <a class="dropdown-item" href="../pagina-principal/logout.php">
+                                    Cerrar sesión
+                                </a>
                             </li>
                         </ul>
                     </li>
@@ -77,6 +78,12 @@ $user = $_SESSION['usuario'];
             </div>
         </div>
     </nav>
+    <!-- CONTENIDO GENERAL (sin login) -->
+        <div class="Contenido" id="Contenido">
+            <div id="mainContent" class="container mt-5" style="display: none;"></div>
+            <div class="container mt-5 position-relative" id="juegosContent" style="display: none;"></div>
+        </div>
+    <!-- FIN NAVBAR -->
 
     <!-- Buscaminas -->
     <header>
