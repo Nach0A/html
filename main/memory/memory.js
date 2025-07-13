@@ -15,7 +15,7 @@ const restartBtn = document.getElementById('restart-btn');  // Botón de reinici
 const winModal = document.getElementById('win-modal');      // Modal de victoria
 const finalTimeEl = document.getElementById('final-time');  // Elemento para mostrar el tiempo final
 const playAgainBtn = document.getElementById('play-again-btn'); // Botón para jugar de nuevo
-// const homeBtn = document.getElementById('home-btn'); // Para futura navegación
+const homeBtn = document.getElementById('home-btn'); // Para navegación al inicio
 
 // Inicialización del juego
 function initGame() {
@@ -169,6 +169,12 @@ function showWinModal() {
 // Eventos de botones
 restartBtn.addEventListener('click', initGame);
 playAgainBtn.addEventListener('click', initGame);
+
+if (homeBtn) {
+    homeBtn.addEventListener('click', function() {
+        window.location.href = '../pagina-principal/inicio.php#inicio';
+    });
+}
 
 // Arrancar el juego al cargar la página
 window.addEventListener('load', initGame);
