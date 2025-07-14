@@ -1,6 +1,5 @@
 <?php
 require_once "conexion_BD.php";
-include "login.html.php";
 session_start();
 $nombre = $_POST["nombre"];
 $contrasenia = $_POST["contrasenia"];
@@ -20,24 +19,19 @@ if ($bd->getIni() == 1) {
         exit();
     }
 } else {
-    if ($bd->inicio($bd->getConexion(), $nombre, $contrasenia) == false) {
+    if ($bd->nombreUsado($bd->getConexion(), $nombre)) {
+        $bd->cerrarConexion();
+        echo "hola"; 
+        echo '<script type="text/javascript">
+        window.location.href = "login.html.php";
+        alert("El usuario ya existe."); 
+        </script>';
+        exit();
+    } else {
         $bd->registro($bd->getConexion(), $nombre, $contrasenia);
         $bd->cerrarConexion();
         $_SESSION['nombre'] = $nombre;
         header("Location: inicio.html.php");
         exit();
-    }elseif($bd->nombreUsado($bd->getConexion(), $nombre)) {
-        $bd->cerrarConexion();
-        echo '<script type="text/javascript">
-        window.location.href = "login.html.php";
-        alert("El nombre ya esta usado.");
-        </script>';
-        exit();
-    } else {
-        $bd->cerrarConexion();
-        echo '<script type="text/javascript">
-        window.location.href = "login.html.php";
-        alert("El usuario ya esta registrado.");
-        </script>';
     }
 }
