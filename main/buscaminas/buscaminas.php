@@ -44,7 +44,6 @@ $user = $_SESSION['usuario'];
                     <li class="nav-item">
                         <a class="nav-link" href="../pagina-principal/Inicio.php#inicio" id="linkInicio">Inicio</a>
                     </li>
-                    <li class="nav-item separator"></li>
                     <!-- Botón “Juegos” -->
                     <li class="nav-item">
                         <a class="nav-link" href="../pagina-principal/Inicio.php#juegos" id="linkJuegos">Juegos</a>
