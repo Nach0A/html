@@ -33,7 +33,7 @@ if (!$user) {
         <!-- ======== NAVBAR ======== -->
         <nav class="navbar navbar-expand-lg shadow-sm py-3">
             <div class="container-fluid">
-                <a class="navbar-brand fw-bold fs-4" href="../pagina-principal/Inicio.html#inicio">
+                <a class="navbar-brand fw-bold fs-4" href="../pagina-principal/Inicio.php#inicio">
                     <img src="../navbar/imagenes/logo.jpg" alt="Logo" width="30" height="30"
                         class="d-inline-block align-text-top">
                     &nbsp;Zentryx
@@ -45,12 +45,12 @@ if (!$user) {
                     <ul class="navbar-nav me-auto">
                         <!-- Botón “Inicio” -->
                         <li class="nav-item">
-                            <a class="nav-link" href="../pagina-principal/Inicio.html#inicio" id="linkInicio">Inicio</a>
+                            <a class="nav-link" href="../pagina-principal/Inicio.php#inicio" id="linkInicio">Inicio</a>
                         </li>
                         <li class="nav-item separator"></li>
                         <!-- Botón “Juegos” -->
                         <li class="nav-item">
-                            <a class="nav-link" href="../pagina-principal/Inicio.html#juegos" id="linkJuegos">Juegos</a>
+                            <a class="nav-link" href="../pagina-principal/Inicio.php#juegos" id="linkJuegos">Juegos</a>
                         </li>
                     </ul>
 
