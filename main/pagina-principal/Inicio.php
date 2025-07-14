@@ -31,7 +31,7 @@ if (!$user) {
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold fs-4 text-white" href="#inicio">
+            <a class="navbar-brand fw-bold fs-4 text-white" href="#inicio" id="linkLogo">
                 <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top">
                 &nbsp;Zentryx
             </a>
@@ -46,7 +46,7 @@ if (!$user) {
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#" id="linkInicio">Inicio</a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#" id="linkJuegos">Juegos</a>
                     </li>
@@ -99,7 +99,7 @@ if (!$user) {
                     <h2>Buscaminas</h2>
                     <p>Intenta identificar el lugar de todas las minas lo más rapido posible.<br>
                         Cuenta con 3 niveles de dificultad: fácil, medio y difícil.</p>
-                    
+
                     <button class="play-btn" onclick="location.href='../buscaminas/buscaminas.php'">Jugar</button>
                 </div>
 
@@ -117,6 +117,7 @@ if (!$user) {
         const juegosContent = document.getElementById("juegosContent");
         const linkInicio = document.getElementById("linkInicio");
         const linkJuegos = document.getElementById("linkJuegos");
+        const linkLogo = document.getElementById("linkLogo");
 
         // Función que muestra la sección de Inicio y oculta Juegos
         function mostrarInicio() {
@@ -142,6 +143,10 @@ if (!$user) {
         linkJuegos.addEventListener("click", e => {
             e.preventDefault();
             mostrarJuegos();
+        });
+        linkLogo.addEventListener("click", e => {
+            e.preventDefault();
+            mostrarInicio();
         });
 
         // Al cargar la página: ocultar preloader y mostrar sección según hash
