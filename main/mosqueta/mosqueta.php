@@ -15,11 +15,11 @@ if (!$user) {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Mosqueta</title>
+        <title>Mosqueta - Zentryx</title>
         <link rel="icon" href="../navbar/imagenes/logo.jpg" type="img/jpeg" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="mosqueta.css" />
-        <link rel="stylesheet" href="../navbar/style.css" />
+        <link rel="stylesheet" href="../navbar/navbar.css" />
     </head>
 
     <body>
