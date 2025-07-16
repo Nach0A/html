@@ -67,16 +67,18 @@ function createCardElement({ value }) {
 // Selección de cartas
 let firstCard = null, secondCard = null, lockBoard = false;
 function onCardClick(e) {
-    const clicked = e.currentTarget;
-    if (lockBoard || clicked === firstCard || clicked.classList.contains('flipped')) return;
-    clicked.classList.add('flipped');
-    if (!firstCard) { firstCard = clicked; return; }
-    secondCard = clicked; lockBoard = true;
-    attempts++; attemptsEl.textContent = `Intentos: ${attempts}`;
-    if (firstCard.dataset.value === secondCard.dataset.value) {
-        matches++; matchesEl.textContent = `Pares: ${matches}`; disableMatchedCards();
-        if (matches === totalPairs) showWinModal();
-    } else unflipCards();
+    if(attempts < 5) {
+        const clicked = e.currentTarget;
+        if (lockBoard || clicked === firstCard || clicked.classList.contains('flipped')) return;
+        clicked.classList.add('flipped');
+        if (!firstCard) { firstCard = clicked; return; }
+        secondCard = clicked; lockBoard = true;
+        attempts++; attemptsEl.textContent = `Intentos: ${attempts}`;
+        if (firstCard.dataset.value === secondCard.dataset.value) {
+            matches++; matchesEl.textContent = `Pares: ${matches}`; disableMatchedCards();
+            if (matches === totalPairs) showWinModal();
+        } else unflipCards();
+    }
 }
 
 function disableMatchedCards() {
@@ -89,7 +91,7 @@ function unflipCards() {
         firstCard.classList.remove('flipped');
         secondCard.classList.remove('flipped');
         resetTurn();
-    }, 1000);
+    }, 11000);
 }
 function resetTurn() { [firstCard, secondCard] = [null, null]; lockBoard = false; }
 

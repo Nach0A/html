@@ -84,7 +84,7 @@ header h1 {
 /* Tablero de juego con grid */
 .game-board {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.8rem;
     width: clamp(60vw, 70vw, 90vw);
     height: clamp(55vh, 70vh, 80vh);
@@ -135,7 +135,9 @@ header h1 {
 
 /* Imagen del reverso de la carta */
 .card-front {
-    background: transparent url('./imagenes/cartas-diseño-con-el-logo/reves.png') center/cover;
+    /* transition: transform 0.6s; */
+    /* transform-style: preserve-3d; */
+    background: transparent url('./imagenes/cartas-españolas-clasicas-copa/reves.jpg') center/cover;
 }
 
 /* Imagen del frente de la carta (asignada dinámicamente) */
