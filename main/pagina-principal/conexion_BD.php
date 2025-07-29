@@ -97,8 +97,7 @@ class conexion_BD
     public function registro($conexion, $nombre, $contrasenia)
     {
         /* IMPLEMENTAR HASH PARA LAS CONTRASENIAS */
-        $passwd = md5($contrasenia);
-        $consulta = mysqli_query($conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`) VALUES ('{$nombre}', '{$passwd}')");
+        $consulta = mysqli_query($conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`) VALUES ('{$nombre}', '{hash('sha256', $contrasenia)}');");
     }
 
     public function nombreUsado($conexion, $nombre){
