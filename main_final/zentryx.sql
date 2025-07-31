@@ -7,9 +7,6 @@
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
-create database if not exists `zentryx`;
-USE `zentryx`;
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -44,8 +41,7 @@ CREATE TABLE `administra` (
 
 CREATE TABLE `grupo` (
   `id_grupo` int(100) NOT NULL,
-  `nom_usuario` varchar(20) NOT NULL,
-  'nom_grupo' varchar(20) NOT NULL
+  `nom_usuario` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

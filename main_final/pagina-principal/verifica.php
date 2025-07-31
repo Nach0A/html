@@ -1,11 +1,9 @@
 <?php
-require_once "Conexion_BD.php";
+require_once "conexion_BD.php";
 session_start();
-$nombre = $_POST['nombre'];
-$contrasenia = $_POST['contrasenia'];
-$bd = new Conexion_BD();
+$bd = new conexion_BD();
 if ($bd->getIni() == 1) {
-    if ($bd->inicio($bd->getConexion(), md5($bd->getNombre()), md5($bd->getContrasenia()))) {
+if ($bd->inicio()) {
         $_SESSION['usuario'] = $bd->getNombre();
         $bd->cerrarConexion();
         header("Location: Inicio.php");
@@ -18,9 +16,10 @@ if ($bd->getIni() == 1) {
         $bd->cerrarConexion();
         exit();
     }
-} else {
-        $bd->registro($bd->getConexion(), md5($bd->getNombre()), md5($bd->getContrasenia()));
+    } else {
+        $bd->registro();
         $bd->cerrarConexion();
-        header("Location: login.php");
+        $_SESSION['usuario'] = $bd->getNombre();
+        header("Location: Inicio.php");
         exit();
     }

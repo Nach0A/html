@@ -1,3 +1,4 @@
+/* Fondo animado general del body */
 body {
     background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
     background-size: 400% 400%;
@@ -8,15 +9,14 @@ body {
     overflow-x: hidden;
 }
 
-/**/
+/* Preloader: pantalla de carga centrada */
 #preloader {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #000;
-    /* Color de fondo de carga */
+    background-color: #000; /* Color de fondo de carga */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,6 +24,7 @@ body {
     transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
+/* Logo animado del preloader */
 #preloader-logo {
     width: 100px;
     height: 100px;
@@ -31,17 +32,16 @@ body {
     border-radius: 50%;
 }
 
+/* Animación de aparición/desaparición del logo del preloader */
 @keyframes logoFade {
     0% {
         opacity: 0.4;
         transform: scale(0.9);
     }
-
     50% {
         opacity: 1;
         transform: scale(1.1);
     }
-
     100% {
         opacity: 0.4;
         transform: scale(0.9);
@@ -66,10 +66,9 @@ body {
 .Contenido {
     margin-left: 10px;
 }
-
 @font-face {
     font-family: 'Ethnocentric';
-    src: url('../navbar/letra/EthnocentricRg.otf') format('opentype');
+    src: url('./letra/EthnocentricRg.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
@@ -80,6 +79,7 @@ body {
     margin: auto 10px;
 }
 
+/* Avatar de usuario en el navbar */
 .user-avatar {
     width: 40px;
     height: 40px;
@@ -88,10 +88,12 @@ body {
     transition: box-shadow 0.3s ease;
 }
 
+/* Sombra al pasar el mouse sobre el avatar */
 .user-avatar:hover {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
+/* Formulario de login (puede que se obre escriba mas abajo) */
 #loginForm {
     display: none;
     max-width: 400px;
@@ -102,13 +104,18 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Barra de navegación superior */
 .navbar {
     background-color: rgb(20, 20, 20);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    position:fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
     /* position: fixed;*/
 }
 
-.navbar .navbar-nav .nav-link,
+.navbar .navbar-nav .nav-link,  
 .navbar .navbar-brand {
     font-family: 'Ethnocentric', sans-serif;
     color: white !important;
@@ -136,7 +143,7 @@ body {
 .navbar .navbar-nav.me-auto .nav-link:hover::after {
     width: 100%;
 }
-
+    
 .navbar .nav-link:hover {
     color: #d6c4ff !important;
 }
@@ -150,7 +157,6 @@ body {
     background-color: rgba(73, 4, 138, 0.1);
     color: rgb(73, 4, 138) !important;
 }
-
 .fade-menu {
     animation: fadeInDropdown 0.3s ease forwards;
 }
@@ -167,6 +173,7 @@ body {
     }
 }
 
+/* Formulario de login (estilo moderno) */
 #loginForm {
     display: block !important;
     max-width: 400px;
@@ -187,7 +194,6 @@ body {
         opacity: 0;
         transform: translateY(30px) scale(0.95);
     }
-
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -205,23 +211,15 @@ body {
     background: linear-gradient(45deg, #000000, #d400ff, #000000);
     background-size: 600% 600%;
     animation: animatedBorder 6s linear infinite;
-    border-radius: 18px;
+    border-radius: 18px;    
     filter: blur(6px);
     z-index: -1;
 }
 
 @keyframes animatedBorder {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Título del login */
@@ -295,6 +293,8 @@ body {
     color: #ff5c8a !important;
 }
 
+
+
 #mainContent {
     display: none;
 }
@@ -338,53 +338,3 @@ body {
         background-position: 0% 50%;
     }
 }
-
-.game-box {
-    background: linear-gradient(135deg, #111, #1a1a1a);
-    border: 2px solid #ea00ff;
-    box-shadow: 0 0 20px #81004c, inset 0 0 10px #5500ff;
-    border-radius: 20px;
-    padding: 30px;
-    width: 350px;
-    text-align: center;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.game-box:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 30px #9900ff, inset 0 0 15px #5500ff;
-}
-
-.game-title {
-    color: #c300ff;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-shadow: 0 0 5px #c4c4c4, 0 0 10px #5500ff;
-}
-
-.game-desc {
-    color: #cccccc;
-    font-size: 1rem;
-    margin-bottom: 30px;
-}
-
-.play-btn {
-    background: #5500ff;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 10px #5500ff;
-}
-
-.play-btn:hover {
-    background: #a401b9;
-    color: #000;
-    box-shadow: 0 0 20px #dd0081;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
