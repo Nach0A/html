@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 // Si no hay usuario en sesión, va al login
 $user = $_SESSION['usuario'] ?? null;
 if (!$user) {

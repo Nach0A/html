@@ -33,7 +33,7 @@ session_start();
     <div class="container-fluid">
         
         <!-- Logo y nombre de Zentryx -->
-        <a class="navbar-brand fw-bold fs-4 text-white" href="login.php">
+        <a class="navbar-brand fw-bold fs-4 text-white" href="login.html.php">
             <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top">
             &nbsp;Zentryx
         </a>
@@ -46,9 +46,9 @@ session_start();
         <!-- Menú de navegación -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link text-white" href="login.php">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="login.html.php">Inicio</a></li>
                 <li class="nav-item separator"></li>
-                <li class="nav-item"><a class="nav-link text-white" href="login.php">Juegos</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="login.html.php">Juegos</a></li>
             </ul>
 
             <!-- Ícono de usuario y dropdown -->
@@ -59,6 +59,7 @@ session_start();
 <!-- Formulario de inicio de sesión / registro -->
 <div class="container mt-5" id="loginForm">
     <h5 class="card-title text-center">Iniciar sesión / Registrarse</h5>
+    <p><?php  ?></p>
     <form action="verifica.php" method="post">
                 <input type="text" id="username" class="form-control mb-2" placeholder="Nombre de usuario" name="nombre" required>
                 <input type="password" id="password" class="form-control mb-3" placeholder="Contraseña" name="contrasenia" required>

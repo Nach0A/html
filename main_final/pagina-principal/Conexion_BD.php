@@ -100,17 +100,32 @@ class conexion_BD
         return $this->ini;
     }
 
-    public function inicio($conexion, $nombre, $contrasenia) {
-        $consulta = mysqli_query($conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nombre}' AND passwd='{$contrasenia}'");
+    public function inicio() {
+        $nom = trim(hash('sha256',$this->nombre));
+        $contra = trim(hash('sha256',$this->contrasenia));
+        $consulta = mysqli_query($this->conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nom}' AND passwd='{$contra}'");
         return mysqli_num_rows($consulta) > 0;
     }
-    public function registro($conexion, $nombre, $contrasenia)
-    {
-        $consulta = mysqli_query($conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`) VALUES ('{$nombre}', '{$contrasenia}')");
-    }
 
-    public function nombreUsado($conexion, $nombre){
-        $consulta = mysqli_query($conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nombre}'");
+    public function registro()
+    {
+        if ($this->nombreUsado()) {
+            echo '<script type="text/javascript">
+            alert("El nombre de usuario ya está en uso.");
+            window.location.href = "login.php";
+            </script>';
+            $this->cerrarConexion();
+            exit();
+        } else {
+        $nombre = trim(hash('sha256',$this->nombre));
+        $contrasenia = trim(hash('sha256',$this->contrasenia));
+        // Verificar si el nombre de usuario ya está en uso
+        $consulta = mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`) VALUES ('{$nombre}', '{$contrasenia}')");
+    }
+}
+    public function nombreUsado(){
+        $nom = trim(hash('sha256',$this->nombre));
+        $consulta = mysqli_query($this->conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nom}'");
         return mysqli_num_rows($consulta) > 0;
     }
 
