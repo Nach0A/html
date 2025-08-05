@@ -5,6 +5,7 @@ $bd = new conexion_BD();
 if ($bd->getIni() == 1) {
 if ($bd->inicio()) {
         $_SESSION['usuario'] = $bd->getNombre();
+       // $bd->listarUsuarios();
         $bd->cerrarConexion();
         header("Location: Inicio.php");
         exit();
