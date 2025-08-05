@@ -74,18 +74,13 @@ if (!$user) {
         </div>
     </nav>
 
-    <!-- SECCIÓN INICIO -->
-    <div id="mainContent" class="fade-in inicio-bienvenida" style="display: none;">
-        <div class="bienvenida-box">
-            <h1>¡Hola, <span class="usuario"><?php echo htmlspecialchars($user); ?></span>!</h1>
-            <h2>Bienvenido a <span class="resaltado">Zentryx</span></h2>
-            <p class="descripcion-inicio">
-                En esta plataforma podés explorar juegos, competir en rankings y desafiar tu mente. <br>
-                ¡Demostrá tus habilidades y subí en la tabla!
-            </p>
-            <a href="#juegos" class="btn-inicio-jugar" onclick="mostrarJuegos()">🎮 Ver Juegos</a>
+    <!-- CONTENIDO GENERAL -->
+    <div class="Contenido" id="Contenido">
+        <!-- SECCIÓN INICIO: saludo al usuario -->
+        <div id="mainContent" class="container mt-5" style="display: none;">
+            <h1 class="text-center">Bienvenido, <?php echo htmlspecialchars($user); ?>, a Zentryx</h1>
+            <p class="text-center">(Página de inicio)</p>
         </div>
-    </div>
 
         <!-- SECCIÓN JUEGOS: lista de juegos -->
         <div class="container-fluid juegos-wrapper" id="juegosContent" style="display: none;">
