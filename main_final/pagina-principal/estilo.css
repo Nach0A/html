@@ -6,6 +6,7 @@ body {
     position: relative;
     min-height: 100vh;
     overflow-x: hidden;
+    padding-top: 70px;
 }
 
 /**/
@@ -103,9 +104,15 @@ body {
 }
 
 .navbar {
-    background-color: rgb(20, 20, 20);
+   position: fixed; /* Fija el navbar arriba */
+    top: 0;           /* Se asegura de que esté pegado al borde superior */
+    left: 0;
+    right: 0;
+    z-index: 1030;    /* Asegura que esté por encima de otros elementos */
+    background-color: rgba(20, 20, 20, 0.85); /* Color con transparencia */
+    backdrop-filter: blur(6px); /* Difumina el fondo que se ve detrás */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    /* position: fixed;*/
+    opacity: 0.9;
 }
 
 .navbar .navbar-nav .nav-link,
@@ -388,3 +395,181 @@ body {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+.juegos-wrapper {
+    min-height: 100vh;
+    padding: 60px 20px;
+    background: radial-gradient(circle at top left, #1b1b1b 0%, #000 100%);
+    backdrop-filter: blur(3px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo-juegos {
+    font-family: 'Ethnocentric', sans-serif;
+    color: #ea00ff;
+    text-shadow: 0 0 15px #5500ff, 0 0 30px #81004c;
+    margin-bottom: 50px;
+}
+
+.grid-juegos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    padding: 20px;
+}
+
+.tarjeta-juego {
+    background: linear-gradient(135deg, #111, #1a1a1a);
+    border: 2px solid #ea00ff;
+    box-shadow: 0 0 20px #81004c, inset 0 0 10px #5500ff;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+
+    width: 90%;           /* Ocupará el 90% del contenedor */
+    max-width: 700px;     /* Pero no pasará de 700px de ancho */
+}
+
+
+.tarjeta-juego::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(234, 0, 255, 0.15) 0%, transparent 70%);
+    animation: pulseNeon 6s infinite alternate;
+    z-index: 0;
+}
+
+@keyframes pulseNeon {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(20px, 20px) rotate(360deg); }
+}
+
+.tarjeta-juego h2 {
+    color: #c300ff;
+    font-family: 'Ethnocentric', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 10px #5500ff;
+}
+
+.tarjeta-juego p {
+    color: #ccc;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.tarjeta-juego .play-btn {
+    position: relative;
+    z-index: 1;
+}
+@keyframes logoClickAnimation {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 2px #c57eff;
+    }
+    50% {
+        transform: scale(1.05);
+        text-shadow: 0 0 6px #d6c4ff;
+    }
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 2px #c57eff;
+    }
+}
+
+.navbar-brand.animate-click {
+    animation: logoClickAnimation 0.4s ease-in-out;
+}
+/*--------------------------------CONTENIDO--------------------------------*/
+.inicio-bienvenida {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Asegura que ocupa toda la fila */
+    min-height: calc(100vh - 90px);
+    padding: 20px;
+}
+
+
+.bienvenida-box {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.05));
+    border: 2px solid #ea00ff44;
+    border-radius: 20px;
+    padding: 40px 30px;
+    max-width: 800px;
+    box-shadow: 0 0 20px rgba(234, 0, 255, 0.2);
+    animation: fadeInInicio 1s ease;
+    backdrop-filter: blur(6px);
+    margin: 0 auto;
+    text-align: center;
+}
+
+@keyframes fadeInInicio {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bienvenida-box h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: #d6c4ff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #5500ff;
+}
+
+.bienvenida-box h2 {
+    font-family: 'Ethnocentric', sans-serif;
+    color: #ea00ff;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px #a64bf4;
+}
+
+.bienvenida-box .descripcion-inicio {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 30px;
+}
+
+.usuario {
+    color: #00ffe7;
+    text-shadow: 0 0 10px #00ffe7;
+}
+
+.btn-inicio-jugar {
+    background: linear-gradient(90deg, #a64bf4, #ea00ff);
+    color: #000;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 0 10px #a64bf4;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-inicio-jugar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ea00ff;
+}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2025 at 03:16 AM
+-- Generation Time: Aug 05, 2025 at 03:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,9 +28,34 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `administra` (
-  `nom_usuario` varchar(20) NOT NULL,
-  `id_grupo` int(100) NOT NULL,
-  `id_root` int(11) NOT NULL
+  `id_usuario` int(100) NOT NULL,
+  `id_grupo` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `administrador`
+--
+
+CREATE TABLE `administrador` (
+  `id_admin` int(100) NOT NULL,
+  `passwd_admin` varchar(64) NOT NULL,
+  `calle` varchar(64) NOT NULL,
+  `num_calle` varchar(64) NOT NULL,
+  `departamento` varchar(64) NOT NULL,
+  `gmail_admin` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `administrador_tel`
+--
+
+CREATE TABLE `administrador_tel` (
+  `id_admin` int(100) NOT NULL,
+  `tel` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -41,7 +66,9 @@ CREATE TABLE `administra` (
 
 CREATE TABLE `grupo` (
   `id_grupo` int(100) NOT NULL,
-  `nom_usuario` varchar(20) NOT NULL
+  `id_usuario` int(100) NOT NULL,
+  `nom_usuario` varchar(64) NOT NULL,
+  `gmail_usuario` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -51,10 +78,9 @@ CREATE TABLE `grupo` (
 --
 
 CREATE TABLE `habla` (
-  `nom_usuario_emisor` varchar(20) NOT NULL,
-  `nom_usuario_receptor` varchar(20) NOT NULL,
-  `id_juego` int(20) NOT NULL,
-  `contenido` varchar(150) DEFAULT NULL
+  `id_usuario_emisor` int(100) NOT NULL,
+  `id_usuario_receptor` int(100) NOT NULL,
+  `contenido` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -64,10 +90,10 @@ CREATE TABLE `habla` (
 --
 
 CREATE TABLE `juega` (
-  `nom_usuario` varchar(20) NOT NULL,
-  `id_juego` int(20) NOT NULL,
-  `puntos` int(50) DEFAULT NULL,
-  `fecha` date DEFAULT NULL
+  `id_usuario` int(100) NOT NULL,
+  `nom_usuario` varchar(64) NOT NULL,
+  `gmail_usuario` varchar(64) NOT NULL,
+  `id_juego` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -77,51 +103,10 @@ CREATE TABLE `juega` (
 --
 
 CREATE TABLE `juego` (
-  `id_juego` int(20) NOT NULL,
-  `nom_juego` varchar(20) NOT NULL,
-  `reglas` varchar(50) NOT NULL
+  `id_juego` int(100) NOT NULL,
+  `nom_juego` varchar(64) NOT NULL,
+  `desc_juego` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `root`
---
-
-CREATE TABLE `root` (
-  `id_root` int(11) NOT NULL,
-  `passwd_root` varchar(80) NOT NULL,
-  `calle` varchar(20) NOT NULL,
-  `num_calle` int(11) NOT NULL,
-  `departamento` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `root`
---
-
-INSERT INTO `root` (`id_root`, `passwd_root`, `calle`, `num_calle`, `departamento`) VALUES
-(1, '12345678', 'calle', 2, 'Montevideo'),
-(2, '12345678', 'calle', 3, 'Montevideo');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `root_tel`
---
-
-CREATE TABLE `root_tel` (
-  `id_root` int(11) NOT NULL,
-  `tel` int(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `root_tel`
---
-
-INSERT INTO `root_tel` (`id_root`, `tel`) VALUES
-(1, 996543),
-(2, 99444);
 
 -- --------------------------------------------------------
 
@@ -130,8 +115,10 @@ INSERT INTO `root_tel` (`id_root`, `tel`) VALUES
 --
 
 CREATE TABLE `usuarios` (
-  `nom_usuario` varchar(20) NOT NULL,
-  `passwd` varchar(40) NOT NULL
+  `id_usuario` int(100) NOT NULL,
+  `nom_usuario` varchar(64) NOT NULL,
+  `passwd` varchar(64) NOT NULL,
+  `gmail_usuario` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -142,31 +129,41 @@ CREATE TABLE `usuarios` (
 -- Indexes for table `administra`
 --
 ALTER TABLE `administra`
-  ADD PRIMARY KEY (`nom_usuario`,`id_grupo`,`id_root`),
-  ADD KEY `id_root` (`id_root`),
+  ADD PRIMARY KEY (`id_usuario`,`id_grupo`),
   ADD KEY `id_grupo` (`id_grupo`);
+
+--
+-- Indexes for table `administrador`
+--
+ALTER TABLE `administrador`
+  ADD PRIMARY KEY (`id_admin`,`gmail_admin`);
+
+--
+-- Indexes for table `administrador_tel`
+--
+ALTER TABLE `administrador_tel`
+  ADD PRIMARY KEY (`id_admin`,`tel`);
 
 --
 -- Indexes for table `grupo`
 --
 ALTER TABLE `grupo`
-  ADD PRIMARY KEY (`id_grupo`,`nom_usuario`),
-  ADD KEY `nom_usuario` (`nom_usuario`);
+  ADD PRIMARY KEY (`id_grupo`,`id_usuario`,`nom_usuario`,`gmail_usuario`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indexes for table `habla`
 --
 ALTER TABLE `habla`
-  ADD PRIMARY KEY (`nom_usuario_emisor`,`nom_usuario_receptor`,`id_juego`),
-  ADD KEY `nom_usuario_receptor` (`nom_usuario_receptor`),
-  ADD KEY `id_juego` (`id_juego`);
+  ADD PRIMARY KEY (`id_usuario_emisor`,`id_usuario_receptor`),
+  ADD KEY `id_usuario_receptor` (`id_usuario_receptor`);
 
 --
 -- Indexes for table `juega`
 --
 ALTER TABLE `juega`
-  ADD PRIMARY KEY (`id_juego`,`nom_usuario`),
-  ADD KEY `nom_usuario` (`nom_usuario`);
+  ADD PRIMARY KEY (`id_usuario`,`nom_usuario`,`gmail_usuario`,`id_juego`),
+  ADD KEY `id_juego` (`id_juego`);
 
 --
 -- Indexes for table `juego`
@@ -175,22 +172,50 @@ ALTER TABLE `juego`
   ADD PRIMARY KEY (`id_juego`);
 
 --
--- Indexes for table `root`
---
-ALTER TABLE `root`
-  ADD PRIMARY KEY (`id_root`);
-
---
--- Indexes for table `root_tel`
---
-ALTER TABLE `root_tel`
-  ADD PRIMARY KEY (`id_root`,`tel`);
-
---
 -- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`nom_usuario`);
+  ADD PRIMARY KEY (`id_usuario`,`nom_usuario`,`gmail_usuario`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `administrador`
+--
+ALTER TABLE `administrador`
+  MODIFY `id_admin` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `administrador_tel`
+--
+ALTER TABLE `administrador_tel`
+  MODIFY `id_admin` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `grupo`
+--
+ALTER TABLE `grupo`
+  MODIFY `id_grupo` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `juega`
+--
+ALTER TABLE `juega`
+  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `juego`
+--
+ALTER TABLE `juego`
+  MODIFY `id_juego` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -200,36 +225,34 @@ ALTER TABLE `usuarios`
 -- Constraints for table `administra`
 --
 ALTER TABLE `administra`
-  ADD CONSTRAINT `administra_ibfk_1` FOREIGN KEY (`id_root`) REFERENCES `root` (`id_root`),
-  ADD CONSTRAINT `administra_ibfk_2` FOREIGN KEY (`id_grupo`) REFERENCES `grupo` (`id_grupo`),
-  ADD CONSTRAINT `administra_ibfk_3` FOREIGN KEY (`nom_usuario`) REFERENCES `usuarios` (`nom_usuario`);
+  ADD CONSTRAINT `administra_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+  ADD CONSTRAINT `administra_ibfk_2` FOREIGN KEY (`id_grupo`) REFERENCES `grupo` (`id_grupo`);
+
+--
+-- Constraints for table `administrador_tel`
+--
+ALTER TABLE `administrador_tel`
+  ADD CONSTRAINT `administrador_tel_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `administrador` (`id_admin`);
 
 --
 -- Constraints for table `grupo`
 --
 ALTER TABLE `grupo`
-  ADD CONSTRAINT `grupo_ibfk_1` FOREIGN KEY (`nom_usuario`) REFERENCES `usuarios` (`nom_usuario`);
+  ADD CONSTRAINT `grupo_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 
 --
 -- Constraints for table `habla`
 --
 ALTER TABLE `habla`
-  ADD CONSTRAINT `habla_ibfk_1` FOREIGN KEY (`nom_usuario_emisor`) REFERENCES `usuarios` (`nom_usuario`),
-  ADD CONSTRAINT `habla_ibfk_2` FOREIGN KEY (`nom_usuario_receptor`) REFERENCES `usuarios` (`nom_usuario`),
-  ADD CONSTRAINT `habla_ibfk_3` FOREIGN KEY (`id_juego`) REFERENCES `juego` (`id_juego`);
+  ADD CONSTRAINT `habla_ibfk_1` FOREIGN KEY (`id_usuario_emisor`) REFERENCES `usuarios` (`id_usuario`),
+  ADD CONSTRAINT `habla_ibfk_2` FOREIGN KEY (`id_usuario_receptor`) REFERENCES `usuarios` (`id_usuario`);
 
 --
 -- Constraints for table `juega`
 --
 ALTER TABLE `juega`
-  ADD CONSTRAINT `juega_ibfk_1` FOREIGN KEY (`nom_usuario`) REFERENCES `usuarios` (`nom_usuario`),
+  ADD CONSTRAINT `juega_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
   ADD CONSTRAINT `juega_ibfk_2` FOREIGN KEY (`id_juego`) REFERENCES `juego` (`id_juego`);
-
---
--- Constraints for table `root_tel`
---
-ALTER TABLE `root_tel`
-  ADD CONSTRAINT `root_tel_ibfk_1` FOREIGN KEY (`id_root`) REFERENCES `root` (`id_root`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
