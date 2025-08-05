@@ -133,4 +133,13 @@ class conexion_BD
         /*Agregar un nombre del grupo */
         $consulta = mysqli_query($conexion, "INSERT INTO 'grupos'(id_grupo, nom_grupo, nom_usuario) VALUES ('1', '{$nombre}', '{$nombre_grupo}')");
     }
+
+    public function listarUsuarios() {
+        $consulta = mysqli_query($this->conexion, "SELECT nom_usuario FROM usuarios");
+        if ($consulta) {
+            while ($row = mysqli_fetch_assoc($consulta)) {
+                echo $row['nom_usuario'] . "<br>";
+            }
+        } 
+    }
 }
