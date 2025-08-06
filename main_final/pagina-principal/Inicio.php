@@ -82,36 +82,39 @@ if (!$user) {
             <p class="text-center">(Página de inicio)</p>
         </div>
 
-        <!-- SECCIÓN JUEGOS: lista de juegos -->
-        <div class="container-fluid juegos-wrapper" id="juegosContent" style="display: none;">
-            <h1 class="titulo-juegos text-center">Juegos Disponibles</h1>
 
-            <div class="grid-juegos">
-                <div class="tarjeta-juego">
-                    <h2>Memory</h2>
-                    <p>Pon a prueba tu memoria encontrando pares en el menor tiempo posible.</p>
-                    <button class="play-btn" onclick="location.href='../memory/memory.php'">Jugar</button>
-                </div>
 
-                <div class="tarjeta-juego">
-                    <h2>Buscaminas</h2>
-                    <p>Intenta identificar el lugar de todas las minas lo más rapido posible.<br>
-                        Cuenta con 3 niveles de dificultad: fácil, medio y difícil.</p>
-                    <button class="play-btn" onclick="location.href='../buscaminas/buscaminas.php'">Jugar</button>
-                </div>
+    <!-- SECCIÓN JUEGOS: lista de juegos -->
+    <div class="container-fluid juegos-wrapper" id="juegosContent" style="display: none;">
+        <h1 class="titulo-juegos text-center">Juegos Disponibles</h1>
 
-                <div class="tarjeta-juego">
-                    <h2>Mosqueta</h2>
-                    <p>Intenta seguir el ritmo de los vasos sin perder de vista la pelota</p>
-                    <button class="play-btn" onclick="location.href='../mosqueta/mosqueta.php'">Jugar</button>
-                </div>
+        <div class="grid-juegos">
+            <div class="tarjeta-juego">
+                <h2>Memory</h2>
+                <p>Pon a prueba tu memoria encontrando pares en el menor tiempo posible.</p>
+                <button class="play-btn" onclick="location.href='../memory/memory.php'">Jugar</button>
+            </div>
 
-                <div class="tarjeta-juego">
-                    <h2>Juego de Monti</h2>
-                    <p>Pon a prueba tu suerte y astusia para encontrar el premio</p>
-                    <button class="play-btn" onclick="location.href='../juego-de-monti/juego-de-monti.php'">Jugar</button>
-                </div>
+            <div class="tarjeta-juego">
+                <h2>Buscaminas</h2>
+                <p>Intenta identificar el lugar de todas las minas lo más rapido posible.<br>
+                    Cuenta con 3 niveles de dificultad: fácil, medio y difícil.</p>
+                <button class="play-btn" onclick="location.href='../buscaminas/buscaminas.php'">Jugar</button>
+            </div>
 
+            <div class="tarjeta-juego">
+                <h2>Mosqueta</h2>
+                <p>Intenta seguir el ritmo de los vasos sin perder de vista la pelota</p>
+                <button class="play-btn" onclick="location.href='../mosqueta/mosqueta.php'">Jugar</button>
+            </div>
+
+            <div class="tarjeta-juego">
+                <h2>Juego de Monti</h2>
+                <p>Pon a prueba tu suerte y astusia para encontrar el premio</p>
+                <button class="play-btn" onclick="location.href='../juego-de-monti/juego-de-monti.php'">Jugar</button>
+            </div>
+
+    
 
                 <!-- aca ponemos más tarjetas para el futuro -->
             </div>
