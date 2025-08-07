@@ -1,5 +1,5 @@
 <?php
-require_once "conexion_BD.php";
+require_once "Conexion_BD.php";
 session_start();
 $bd = new conexion_BD();
 if ($bd->getIni() == 1) {
