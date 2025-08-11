@@ -173,6 +173,7 @@ body {
         transform: translateY(0);
     }
 }
+/* ------------------login------------------ */
 
 #loginForm {
     display: block !important;
@@ -368,6 +369,16 @@ body {
     transform: scale(1.03);
     box-shadow: 0 0 20px #a64bf4;
 }
+/* Placeholder forzado sobre Bootstrap */
+#form-container .form-control::placeholder {
+  color: #ccc !important;
+  opacity: 1 !important;
+}
+#form-container .form-control::-webkit-input-placeholder { color: #ccc !important; opacity: 1 !important; }
+#form-container .form-control::-moz-placeholder { color: #ccc !important; opacity: 1 !important; }
+#form-container .form-control:-ms-input-placeholder { color: #ccc !important; opacity: 1 !important; }
+#form-container .form-control::-ms-input-placeholder { color: #ccc !important; opacity: 1 !important; }
+
 
 
 /* Mensaje de error */
@@ -648,36 +659,3 @@ body {
     transform: scale(1.05);
     box-shadow: 0 0 20px #ea00ff;
 }   
-/* Estilo para el texto ingresado en los campos */
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    color: #fff;
-    background-color: #111; /* Fondo oscuro */
-    border: 1px solid #555;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-/* Estilo para el placeholder (texto dentro del input antes de escribir) */
-input::placeholder {
-    color: #ccc; /* Puedes cambiarlo a blanco puro (#fff) si lo prefieres */
-    opacity: 1;  /* Asegura que el color se aplique totalmente */
-}
-
-/* Compatibilidad para navegadores más antiguos */
-input::-webkit-input-placeholder {
-    color: #ccc;
-}
-
-input::-moz-placeholder {
-    color: #ccc;
-}
-
-input:-ms-input-placeholder {
-    color: #ccc;
-}
-
-input:-moz-placeholder {
-    color: #ccc;
-}

@@ -18,6 +18,7 @@ session_start();
 
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="estilo.css">
+   
 </head>
 <body>
 
@@ -56,7 +57,7 @@ session_start();
 
         <!-- LOGIN CON MAIL -->
         <form id="loginSection" action="verifica.php" method="post">
-            <input type="email" name="mail" class="form-control mb-3" placeholder="Correo electrónico" required>
+            <input type="email" name="mail" class="form-control mb-3" placeholder="Correo electrónico / Nombre de usuario" required>
             <input type="password" name="contrasenia" class="form-control mb-3" placeholder="Contraseña" required>
             <input type="hidden" name="ini" value="1">
             <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
@@ -66,7 +67,7 @@ session_start();
         <form id="registerSection" action="verifica.php" method="post" style="display: none;">
             <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre de usuario" required>
             <input type="email" name="mail" class="form-control mb-2" placeholder="Correo electrónico" required>
-            <input type="password" name="contrasenia" class="form-control mb-3" placeholder="Contraseña" required>
+            <input type="password" name="contrasenia" class="form-control mb-2" placeholder ="Contraseña" required>
             <input type="hidden" name="ini" value="0">
             <button type="submit" class="btn btn-secondary w-100">Registrarse</button>
         </form>
