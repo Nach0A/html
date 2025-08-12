@@ -3,7 +3,7 @@
 session_start();
 require '../pagina-principal/conexion_BD.php';
 if(!isset($_SESSION['nombre'])) {
-    header("Location: ../pagina-principal/login.html.php");
+    header("Location: ../pagina-principal/login.php");
     exit();
 }
 ?>
@@ -32,7 +32,7 @@ if(!isset($_SESSION['nombre'])) {
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold fs-4 text-white" href="../pagina-principal/inicio.html.php#inicio">
+      <a class="navbar-brand fw-bold fs-4 text-white" href="../pagina-principal/inicio.php#inicio">
         <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top">
         &nbsp;Zentryx
       </a>
@@ -43,11 +43,11 @@ if(!isset($_SESSION['nombre'])) {
         <!-- Links Inicio / Juegos -->
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link text-white" href="../pagina-principal/inicio.html.php#inicio">Inicio</a>
+            <a class="nav-link text-white" href="../pagina-principal/inicio.php#inicio">Inicio</a>
           </li>
           <li class="nav-item separator"></li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="../pagina-principal/inicio.html.php#juegos">Juegos</a>
+            <a class="nav-link text-white" href="../pagina-principal/inicio.php#juegos">Juegos</a>
           </li>
         </ul>
         <!-- Dropdown Perfil -->
@@ -65,7 +65,7 @@ if(!isset($_SESSION['nombre'])) {
               </li>
               <li><hr class="dropdown-divider"></li>
               <li>
-                <a class="dropdown-item" href="../pagina-principal/login.html.php">
+                <a class="dropdown-item" href="../pagina-principal/login.php">
                   Cerrar sesión
                 </a>
               </li>
@@ -118,7 +118,7 @@ if(!isset($_SESSION['nombre'])) {
 
     // Volver al inicio desde el modal
     document.getElementById('home-btn').addEventListener('click', () => {
-      window.location.href = '../pagina-principal/inicio.html.php#inicio';
+      window.location.href = '../pagina-principal/inicio.php#inicio';
     });
   </script>
 </body>

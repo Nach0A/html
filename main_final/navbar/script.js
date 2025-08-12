@@ -24,7 +24,7 @@ function renderMenu() {
     } else {
         // Si no hay usuario logueado, muestra solo la opción de iniciar sesión/registrarse
         userMenu.innerHTML = `
-            <li><a class="dropdown-item" href="../navbar/login.html">Iniciar sesión / Registrarse</a></li>
+            <li><a class="dropdown-item" href="../navbar/login.php">Iniciar sesión / Registrarse</a></li>
         `;
         // Por defecto, muestra la sección de inicio
         mostrarInicio();
