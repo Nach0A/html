@@ -7,9 +7,9 @@ class conexion_BD
     private $base;
     private $conexion;
     private $nombre;
-
     private $nombre_grupo;
     private $contrasenia;
+    private $gmail;
     private $ini;
 
     public function __construct()
@@ -21,6 +21,7 @@ class conexion_BD
         $this->nombre = $_POST["nombre"];
         $this->contrasenia = $_POST["contrasenia"];
         $this->ini = $_POST["ini"];
+        $this->gmail = $_POST["gmail"];
         //$this->nombre_grupo = $_POST["nom_grupo"];
         $this->conexion = $this->conectar($this->servidor, $this->usuario, $this->pass, $this->base);
     }
@@ -101,7 +102,7 @@ class conexion_BD
     }
 
     public function inicio() {
-        $nom = trim(hash('sha256',$this->nombre));
+        $nom = $this->nombre;
         $contra = trim(hash('sha256',$this->contrasenia));
         $consulta = mysqli_query($this->conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nom}' AND passwd='{$contra}'");
         return mysqli_num_rows($consulta) > 0;
@@ -117,10 +118,11 @@ class conexion_BD
             $this->cerrarConexion();
             exit();
         } else {
-        $nombre = trim(hash('sha256',$this->nombre));
+        $nombre = $this->nombre;
         $contrasenia = trim(hash('sha256',$this->contrasenia));
+        $gmail = trim(hash('sha256',$this->gmail));
         // Verificar si el nombre de usuario ya está en uso
-        $consulta = mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`) VALUES ('{$nombre}', '{$contrasenia}')");
+        $consulta = mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES ('{$nombre}', '{$contrasenia}', '{$gmail}')");
     }
 }
     public function nombreUsado(){

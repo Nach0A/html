@@ -9,7 +9,7 @@ try {
     $mail->Host = 'smtp.gmail.com'; // Usamos el SMTP de gmail
     $mail->SMTPAuth = true;
     $mail->Username = 'zentryx.correos@gmail.com';
-    $mail->Password = 'xsbp enuy wjcm muee';
+    $mail->Password = 'xsbpenuywjcmmuee';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
