@@ -1,5 +1,5 @@
 <?php
-// mosqueta.php — Control de sesión y protección de la página
+// memory.php — Control de sesión y protección de la página
 session_start();
 require '../pagina-principal/db.php';
 
@@ -16,9 +16,7 @@ if (!$user) {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Mosqueta - Zentryx</title>
-
-        <link rel="icon" href="../navbar/imagenes/logo.jpg" type="image/jpeg" />
-        <!-- Bootstrap -->
+        <link rel="icon" href="../navbar/imagenes/logo.jpg" type="img/jpeg" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="mosqueta.css" />
         <link rel="stylesheet" href="../navbar/navbar.css" />
@@ -30,6 +28,7 @@ if (!$user) {
             <img src="../navbar/imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
         </div>
         <!-- ======= FIN PRELOADER ===== -->
+        
 
         <!-- ======== NAVBAR ======== -->
         <nav class="navbar navbar-expand-lg shadow-sm py-3">
@@ -53,6 +52,7 @@ if (!$user) {
                             <a class="nav-link" href="../pagina-principal/Inicio.php#juegos" id="linkJuegos">Juegos</a>
                         </li>
                     </ul>
+
                     <!-- PERFIL -->
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
@@ -60,20 +60,8 @@ if (!$user) {
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="../navbar/imagenes/usuario2.jpg" alt="User" class="user-avatar shadow-sm" />
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end fade-menu">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Perfil (<?php echo htmlspecialchars($user); ?>)
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="../pagina-principal/logout.php">
-                                        Cerrar sesión
-                                    </a>
-                                </li>
+                            <ul class="dropdown-menu dropdown-menu-end fade-menu" id="userMenu">
+                                <!-- Se renderizará dinámicamente -->
                             </ul>
                         </li>
                     </ul>
@@ -81,41 +69,39 @@ if (!$user) {
             </div>
         </nav>
         <!-- CONTENIDO GENERAL (sin login) -->
-        <div class="Contenido" id="Contenido">
-            <div id="mainContent" class="container mt-5" style="display: none;"></div>
-            <div class="container mt-5 position-relative" id="juegosContent" style="display: none;"></div>
-        </div>
+            <div class="Contenido" id="Contenido">
+                <div id="mainContent" class="container mt-5" style="display: none;"></div>
+                <div class="container mt-5 position-relative" id="juegosContent" style="display: none;"></div>
+            </div>
         <!-- FIN NAVBAR -->
 
-        <!-- HEADER -->
-        <header>
-            <div class="title-box">
-                <h1 tabindex="0">Mosqueta</h1>
-                <div class="game-desc">
-                    <h3>Un juego de habilidad y concentración donde debes seguir en qué vaso se esconde la pelota.</h3>
-                </div>
-            </div>
+
+
+        <!-- Header -->
+        <header style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h1>Mosqueta</h1>
             <div class="scoreboard">
                 <span id="attempts" class="score-item">Intentos: 0</span>
                 <span id="wins" class="score-item">Ganados: 0</span>
-                <span id="streak" class="score-item">Racha: 0</span>
-
-                <div class="difficulty-wrapper">
-                    <button id="difficultyBtn" aria-expanded="false">Dificultad: Normal ▾</button>
+                <div class="difficulty-wrapper" style="display:inline-block;">
+                    <button id="difficultyBtn" aria-expanded="false">
+                        Dificultad ▾
+                    </button>
                     <ul id="difficultyMenu" class="hidden" role="menu">
                         <li data-level="easy" role="menuitem">Fácil</li>
-                        <li data-level="normal" role="menuitem" class="active">Normal</li>
+                        <li data-level="normal" role="menuitem">Normal</li>
                         <li data-level="hard" role="menuitem">Difícil</li>
                         <li data-level="impossible" role="menuitem">Imposible</li>
                     </ul>
                 </div>
             </div>
         </header>
-        <!-- FIN HEADER -->
+        <!-- Fin header -->
 
-        <!-- ÁREA DE JUEGO -->
-        <main class="game-board">
-            <!-- Las posiciones reales se cambian en JS -->
+
+        <!-- Área de juego -->
+        <main class="game-area" style="background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(10px);">
+            <!-- las posiciones importan para la mezcla; flex-row reverse / order harán el resto -->
             <div class="cup" data-pos="0">
                 <img src="imagenes/cup-neon2.svg" alt="Vaso 1" />
                 <div class="ball"></div>
@@ -129,16 +115,10 @@ if (!$user) {
                 <div class="ball"></div>
             </div>
         </main>
-        <!-- FIN ÁREA DE JUEGO -->
+        <!-- Fin de alrea de juego -->
 
-        <!-- BANNERS -->
-        <div id="resultBanner" class="result hidden"></div>
-        <div id="feedbackBanner" class="feedback hidden"></div>
-        <div id="nextBanner" class="next-banner hidden">SIGUIENTE JUEGO</div>
-
-        <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="mosqueta.js"></script>
+        <script src="./mosqueta.js"></script>
         <script src="../navbar/script.js"></script>
     </body>
 </html>
