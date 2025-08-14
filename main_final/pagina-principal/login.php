@@ -57,7 +57,7 @@ session_start();
 
         <!-- LOGIN CON MAIL -->
         <form id="loginSection" action="verifica.php" method="post">
-            <input type="email" name="mail" class="form-control mb-3" placeholder="Correo electrónico / Nombre de usuario" required>
+            <input type="text" name="mail" placeholder="Usuario o correo" required>
             <input type="password" name="contrasenia" class="form-control mb-3" placeholder="Contraseña" required>
             <input type="hidden" name="ini" value="1">
             <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
