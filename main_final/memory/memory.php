@@ -1,13 +1,10 @@
 <?php
-// memory.php — Control de sesión y protección de la página
 session_start();
-require '../pagina-principal/db.php';
-
-$user = $_SESSION['usuario'] ?? null;
-if (!$user) {
+if (!isset($_SESSION['usuario'])) {
     header("Location: ../pagina-principal/login.php");
     exit;
 }
+$user = $_SESSION['usuario'];
 ?>
 
 <!DOCTYPE html>
