@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-require 'vendor/autoload.php';
+require "autoload.php";
 $mail = new PHPMailer(true); 
 try {
     $mail->isSMTP();
