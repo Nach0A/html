@@ -18,7 +18,7 @@ body {
 /* Encabezado del juego */
 header {
     text-align: center;
-    margin: 1.5rem 0 0.5rem 0;
+    margin: 3rem 0 0.5rem 0;
     padding: 0.5rem;
     width: 80%;
     max-width: 600px;
@@ -27,10 +27,11 @@ header {
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1;
 }
 
 /* Título del juego con animación de brillo */
-header h1 {
+h1 {
     font-size: 2.2rem;
     font-weight: 800;
     color: #ffffff;
@@ -38,26 +39,91 @@ header h1 {
     letter-spacing: 2px;
     margin-bottom: 0.5rem;
     font-family: 'Ethnocentric', sans-serif;
-    text-shadow: 
+    text-shadow:
         0 0 10px rgba(255, 255, 255, 0.5),
         0 0 20px rgba(255, 255, 255, 0.3),
         0 0 30px rgba(255, 255, 255, 0.2);
     animation: titleGlow 2s ease-in-out infinite alternate;
+    cursor: pointer;
 }
 
 /* Animación para el brillo del título */
 @keyframes titleGlow {
     from {
-        text-shadow: 
+        text-shadow:
             0 0 10px rgba(255, 255, 255, 0.5),
             0 0 20px rgba(255, 255, 255, 0.3),
             0 0 30px rgba(255, 255, 255, 0.2);
     }
     to {
-        text-shadow: 
+        text-shadow:
             0 0 20px rgba(255, 255, 255, 0.7),
             0 0 30px rgba(255, 255, 255, 0.5),
             0 0 40px rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* inicialmente oculto */
+.title-box .game-desc {
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition:
+        height .5s cubic-bezier(.68, -0.55, .27, 1.55),
+        /* explicacion de como funciona */
+        /* Una Bézier cúbica describe la velocidad de la animación mediante cuatro puntos de control: */
+        /* (0,0) → (x1, y1) → (x2, y2) → (1,1) */
+        /* En este caso: */
+        /* P1: ( 0.68 , -0.55 ) */
+        /* Arranca rápido (pendiente inicial > 1) y, como y1 es negativo, empieza antes de t = 0 (efecto “salto”). */
+        /* P2: ( 0.27 , 1.55 ) */
+        /* Con y2 > 1 la curva rebasa el destino y vuelve, generando un leve overshoot. */
+        /* Visualmente se pasa un poco y rebota suavemente hasta asentarse. */
+        opacity .3s;
+    interpolate-size: allow-keywords;/* permite animar hasta auto (funcion experimental)*/
+
+    font-size: 1rem;
+    color: #e0e0e0;
+    margin-bottom: .5rem;
+    background: rgba(40, 40, 40, .7);
+    border-radius: 0 0 10px 10px;
+    padding: 0 1rem;
+    width: 90%;
+    margin: 0 auto;
+    text-align: justify;
+}
+
+.title-box:hover .game-desc,
+.title-box:focus-within .game-desc {
+    height: auto;/* se anima gracias a interpolate-size */
+    opacity: 1;
+}
+
+/* --- Compatibilidad para navegadores sin interpolate-size */
+@supports not (interpolate-size:allow-keywords) {
+    .title-box .game-desc {
+        height: 0;
+        /* se animará max-height en su lugar */
+        max-height: 0;
+        transition:
+            max-height .5s cubic-bezier(.68, -0.55, .27, 1.55),
+            opacity .3s;
+        
+        font-size: 1rem;
+        color: #e0e0e0;
+        margin-bottom: .5rem;
+        background: rgba(40, 40, 40, .7);
+        border-radius: 0 0 10px 10px;
+        padding: 0 1rem;
+        width: 90%;
+        margin: 0 auto;
+        text-align: justify;
+    }
+
+    .title-box:hover .game-desc,
+    .title-box:focus-within .game-desc {
+        max-height: 10rem;
+        /* ajusta según tu contenido */
     }
 }
 
@@ -92,11 +158,14 @@ header h1 {
     justify-content: center;
     align-content: start;
     padding: 0.8rem;
+    border-radius: 8px;
+
 }
 
 /* Carta individual */
 .card {
-    --bs-card-bg: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
+    z-index: 1;
+    --bs-card-bg: #231E25;
     width: 100%;
     padding-top: 130%;
     position: relative;
@@ -126,7 +195,8 @@ header h1 {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border: 0; /* Eliminar el borde */
+    border: 0;
+    /* Eliminar el borde */
     border-radius: 8px;
     background-size: cover;
     background-position: center;
@@ -141,8 +211,8 @@ header h1 {
 /* Imagen del frente de la carta (asignada dinámicamente) */
 .card-back {
     transform: rotateY(180deg);
-    /* Aquí se mostrará la imagen de las cartas */
-    /* El fondo se asigna dinámicamente en el HTML/JS */
+    /* border-radius: 8px; */
+
 }
 
 /* Modal de victoria */
@@ -196,10 +266,13 @@ header h1 {
 /* Modal de victoria (estilos avanzados) */
 #win-modal {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0, 0, 0, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -226,7 +299,7 @@ header h1 {
     max-width: 600px;
     text-align: center;
     position: relative;
-    animation: modalPopIn 1.5s cubic-bezier(.68,-0.55,.27,1.55);
+    animation: modalPopIn 1.5s cubic-bezier(.68, -0.55, .27, 1.55);
     margin: 0 auto;
     font-size: 1rem;
 }
@@ -237,6 +310,7 @@ header h1 {
         opacity: 0;
         transform: scale(0.85) translateY(40px);
     }
+
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -246,11 +320,9 @@ header h1 {
 /* Título del modal de victoria con gradiente animado */
 #win-modal h2 {
     /* Gradiente animado de color salmón a celeste y regreso */
-    background: linear-gradient(
-        90deg,
-        #ff4fa3 0%,
-        #4acaff 100%
-    );
+    background: linear-gradient(90deg,
+            #ff4fa3 0%,
+            #4acaff 100%);
     background-size: 200% 200%;
     color: transparent;
     -webkit-background-clip: text;
@@ -270,6 +342,7 @@ header h1 {
     0% {
         background-position: 0% 50%;
     }
+
     100% {
         background-position: 100% 50%;
     }
@@ -299,7 +372,7 @@ header h1 {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(74,30,138,0.08);
+    box-shadow: 0 2px 8px rgba(74, 30, 138, 0.08);
     transition: background 0.2s, transform 0.2s;
 }
 

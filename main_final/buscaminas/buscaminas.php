@@ -1,11 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
+    header("Location: ../pagina-principal/login.php");
     exit;
 }
 $user = $_SESSION['usuario'];
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

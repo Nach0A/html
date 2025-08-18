@@ -18,11 +18,10 @@ class conexion_BD
         $this->usuario = "root";
         $this->pass = "";
         $this->base = "zentryx";
-        $this->nombre = $_POST["nombre"];
+        $this->nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : (isset($_POST["mail"]) ? $_POST["mail"] : "");
         $this->contrasenia = $_POST["contrasenia"];
         $this->ini = $_POST["ini"];
-        $this->gmail = $_POST["gmail"];
-        //$this->nombre_grupo = $_POST["nom_grupo"];
+
         $this->conexion = $this->conectar($this->servidor, $this->usuario, $this->pass, $this->base);
     }
 
@@ -104,7 +103,8 @@ class conexion_BD
     public function inicio() {
         $nom = $this->nombre;
         $contra = trim(hash('sha256',$this->contrasenia));
-        $consulta = mysqli_query($this->conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nom}' AND passwd='{$contra}'");
+        $mail = hash('sha256', $nom);
+        $consulta = mysqli_query($this->conexion, "SELECT * FROM usuarios WHERE (nom_usuario='{$nom}' OR gmail_usuario='{$mail}') AND passwd='{$contra}'");
         return mysqli_num_rows($consulta) > 0;
     }
 
