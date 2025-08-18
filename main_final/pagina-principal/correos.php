@@ -1,9 +1,10 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
 require 'vendor/autoload.php';
-$mail = new PHPMailer(true);
+$mail = new PHPMailer(true); 
 try {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com'; // Usamos el SMTP de gmail
