@@ -89,7 +89,7 @@ $user = $_SESSION['usuario'];
             <div class="title-box">
                 <h1 tabindex="0">Mosqueta</h1>
                 <div class="game-desc">
-                    <h3>Un juego de habilidad y concentración donde debes seguir en qué vaso se esconde la pelota.</h3>
+                    <h3>Un juego de concentración donde debes seguir los vaso.</h3>
                 </div>
             </div>
             <div class="scoreboard">
