@@ -20,6 +20,8 @@ class conexion_BD
         $this->base = "zentryx";
         $this->nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : (isset($_POST["mail"]) ? $_POST["mail"] : "");
         $this->contrasenia = $_POST["contrasenia"];
+        $this->gmail = isset($_POST["gmail"]) ? $_POST["gmail"] : "";
+
         $this->ini = $_POST["ini"];
 
         $this->conexion = $this->conectar($this->servidor, $this->usuario, $this->pass, $this->base);
@@ -46,7 +48,8 @@ class conexion_BD
         $this->nombre = $nombre;
     }
 
-    public function setNombreGrupo($nombre_grupo) {
+    public function setNombreGrupo($nombre_grupo)
+    {
         $this->nombre_grupo = $nombre_grupo;
     }
 
@@ -86,7 +89,8 @@ class conexion_BD
         return $this->nombre;
     }
 
-    public function getNombreGrupo() {
+    public function getNombreGrupo()
+    {
         return $this->nombre_grupo;
     }
 
@@ -100,48 +104,68 @@ class conexion_BD
         return $this->ini;
     }
 
-    public function inicio() {
-        $nom = $this->nombre;
-        $contra = trim(hash('sha256',$this->contrasenia));
-        $mail = hash('sha256', $nom);
-        $consulta = mysqli_query($this->conexion, "SELECT * FROM usuarios WHERE (nom_usuario='{$nom}' OR gmail_usuario='{$mail}') AND passwd='{$contra}'");
-        return mysqli_num_rows($consulta) > 0;
+    public function inicio()
+    {
+        $input = $this->nombre; // puede ser usuario o mail
+        $contra = trim(hash('sha256', $this->contrasenia));
+        $gmailHash = hash('sha256', $input);
+
+        $sql = "SELECT nom_usuario 
+            FROM usuarios 
+            WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
+              AND passwd='{$contra}'
+            LIMIT 1";
+        $consulta = mysqli_query($this->conexion, $sql);
+
+        if ($consulta && mysqli_num_rows($consulta) === 1) {
+            $row = mysqli_fetch_assoc($consulta);
+            // guardar SIEMPRE el nom_usuario real
+            $this->nombre = $row['nom_usuario'];
+            return true;
+        }
+        return false;
     }
+
 
     public function registro()
     {
         if ($this->nombreUsado()) {
             echo '<script type="text/javascript">
-            alert("El nombre de usuario ya está en uso.");
-            window.location.href = "login.php";
-            </script>';
+        alert("El nombre de usuario ya está en uso.");
+        window.location.href = "login.php";
+        </script>';
             $this->cerrarConexion();
             exit();
         } else {
-        $nombre = $this->nombre;
-        $contrasenia = trim(hash('sha256',$this->contrasenia));
-        $gmail = trim(hash('sha256',$this->gmail));
-        // Verificar si el nombre de usuario ya está en uso
-        $consulta = mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES ('{$nombre}', '{$contrasenia}', '{$gmail}')");
-    }
-}
-    public function nombreUsado(){
-        $nom = trim(hash('sha256',$this->nombre));
-        $consulta = mysqli_query($this->conexion, "SELECT * FROM usuarios WHERE nom_usuario='{$nom}'");
-        return mysqli_num_rows($consulta) > 0;
+            $nombre = $this->nombre; // nom_usuario en claro
+            $contrasenia = trim(hash('sha256', $this->contrasenia));
+            $gmailHash = trim(hash('sha256', $this->gmail)); // gmail encriptado
+
+            mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES ('{$nombre}', '{$contrasenia}', '{$gmailHash}')");
+        }
     }
 
-    public function grupo($conexion, $nombre, $nombre_grupo) {
+    public function nombreUsado()
+    {
+        $nom = $this->nombre; // sin hash
+        $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE nom_usuario='{$nom}' LIMIT 1");
+        return $consulta && mysqli_num_rows($consulta) > 0;
+    }
+
+
+    public function grupo($conexion, $nombre, $nombre_grupo)
+    {
         /*Agregar un nombre del grupo */
         $consulta = mysqli_query($conexion, "INSERT INTO 'grupos'(id_grupo, nom_grupo, nom_usuario) VALUES ('1', '{$nombre}', '{$nombre_grupo}')");
     }
 
-    public function listarUsuarios() {
+    public function listarUsuarios()
+    {
         $consulta = mysqli_query($this->conexion, "SELECT nom_usuario FROM usuarios");
         if ($consulta) {
             while ($row = mysqli_fetch_assoc($consulta)) {
                 echo $row['nom_usuario'] . "<br>";
             }
-        } 
+        }
     }
 }
