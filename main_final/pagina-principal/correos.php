@@ -11,7 +11,7 @@ try {
     $mail->SMTPAuth = true;
     $mail->Username = 'zentryx.correos@gmail.com';
     $mail->Password = 'xsbpenuywjcmmuee';
-        //aws contraseña Zentryx=1
+    
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
