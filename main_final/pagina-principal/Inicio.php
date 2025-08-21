@@ -59,7 +59,7 @@ if (!isset($_SESSION['usuario'])) {
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">
                             <li>
-                                <a class="dropdown-item" href="#">Perfil (<?php echo htmlspecialchars($_SESSION['usuario']); ?>)</a>
+                                <a class="dropdown-item" href="../pagina-principal/perfil.php">Perfil (<?php echo htmlspecialchars($_SESSION['usuario']);     ?>)</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">

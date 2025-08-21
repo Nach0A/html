@@ -58,7 +58,7 @@ $user = $_SESSION['usuario'];
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end fade-menu">
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="../pagina-principal/perfil.php">
                                         Perfil (<?php echo htmlspecialchars($user); ?>)
                                     </a>
                                 </li>
