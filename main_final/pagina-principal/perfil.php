@@ -127,11 +127,11 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/".$dat
                 <!-- Botones Inicio / Juegos -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" id="linkInicio">Inicio</a>
+                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#inicio" id="linkInicio">Inicio</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" id="linkJuegos">Juegos</a>
+                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#juegos" id="linkJuegos">Juegos</a>
                     </li>
                 </ul>
 
