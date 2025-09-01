@@ -54,7 +54,7 @@ $user = $_SESSION['usuario'];
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="../navbar/imagenes/usuario2.jpg" alt="User" class="user-avatar shadow-sm" />
+                                <img src="../navbar/imagenes/usuario.png" alt="User" class="user-avatar shadow-sm" />
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end fade-menu">
                                 <li>

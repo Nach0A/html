@@ -1,10 +1,10 @@
 <?php
 session_start();
-// Si no hay usuario en sesión, va al login
-$user = $_SESSION['usuario'] ?? null;
-if (!$user) {
-    header("Location: login.php");
-    exit;
+
+if (!isset($_SESSION['usuario'])) {
+    // Si no hay sesión activa, redirigir al login
+    header("Location: ../pagina-principal/login.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -55,11 +55,11 @@ if (!$user) {
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white"
                             id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <img src="../navbar/imagenes/usuario2.jpg" class="user-avatar shadow-sm">
+                            <img src="../navbar/imagenes/usuario.png" class="user-avatar shadow-sm">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">
                             <li>
-                                <a class="dropdown-item" href="#">Perfil (<?php echo htmlspecialchars($user); ?>)</a>
+                                <a class="dropdown-item" href="#">Perfil (<?php echo htmlspecialchars($_SESSION['usuario']); ?>)</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -77,7 +77,7 @@ if (!$user) {
    <!-- SECCIÓN INICIO: saludo al usuario -->
     <div id="mainContent" class="fade-in inicio-bienvenida" style="display: none;">
         <div class="bienvenida-box">
-            <h1>¡Hola, <span class="usuario"><?php echo htmlspecialchars($user); ?></span>!</h1>
+            <h1>¡Hola, <span class="usuario"><?php echo htmlspecialchars($_SESSION['usuario']); ?></span>!</h1>
             <h2>Bienvenido a <span class="resaltado">Zentryx</span></h2>
             <p class="descripcion-inicio">
                 En esta plataforma podés explorar juegos, competir en rankings y desafiar tu mente. <br>
