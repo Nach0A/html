@@ -20,7 +20,7 @@ class conexion_BD
         $this->base = "zentryx";
         $this->nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : (isset($_POST["mail"]) ? $_POST["mail"] : "");
         $this->contrasenia = $_POST["contrasenia"];
-        $this->gmail = isset($_POST["gmail"]) ? $_POST["gmail"] : "";
+        $this->correo = isset($_POST["gmail"]) ? $_POST["gmail"] : "";
 
         $this->ini = $_POST["ini"] ?? null;
 
@@ -126,12 +126,11 @@ class conexion_BD
         return false;
     }
 
-
     public function registro()
     {
-        if ($this->nombreUsado()) {
+        if ($this->nombreUsado() || $this->mailUsado()) {
             echo '<script type="text/javascript">
-        alert("El nombre de usuario ya está en uso.");
+        alert("El nombre de usuario ya está en uso o el correo ya está registrado.");
         window.location.href = "login.php";
         </script>';
             $this->cerrarConexion();
@@ -143,6 +142,13 @@ class conexion_BD
 
             mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES ('{$nombre}', '{$contrasenia}', '{$gmailHash}')");
         }
+    }
+
+    public function mailUsado() {
+        $mail = $this->correo; // sin hash
+        $gmailHash = hash('sha256', $mail);
+        $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
+        return $consulta && mysqli_num_rows($consulta) > 0;
     }
 
     public function nombreUsado()
