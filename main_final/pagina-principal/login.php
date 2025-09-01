@@ -63,7 +63,7 @@ if (isset($_SESSION['usuario'])) {
 
         <!-- LOGIN CON MAIL -->
         <form id="loginSection" action="verifica.php" method="post">
-            <input type="text" name="mail" placeholder="Usuario o correo" required>
+            <input type="text" name="mail" class="form-control mb-3" placeholder="Usuario o correo" required>
             <input type="password" name="contrasenia" class="form-control mb-3" placeholder="Contraseña" required>
             <input type="hidden" name="ini" value="1">
             <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
