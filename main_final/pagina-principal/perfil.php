@@ -20,14 +20,17 @@ $stmt->bind_param("s", $usuario_actual);
 $stmt->execute();
 $resultado = $stmt->get_result();
 $datos = $resultado->fetch_assoc();
+// ================== Procesar cambios ==================
+$mensaje = "";            // para mostrar dentro del modal
+$tipo_alerta = "danger";  // 'success' o 'danger'
+$accion_post = "";        // para saber qué acción disparó el post (ej: 'password')
 
-// Procesar cambios (se envía desde modals con inputs ocultos indicando acción)
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $accion = $_POST["accion"];
+    $accion = $_POST["accion"] ?? "";
 
     // Cambiar nombre usuario
     if ($accion === "usuario") {
-        $nuevo_usuario = $_POST["nuevo_usuario"];
+        $nuevo_usuario = $_POST["nuevo_usuario"] ?? "";
         if (!empty($nuevo_usuario) && $nuevo_usuario !== $usuario_actual) {
             $update_sql = "UPDATE usuarios SET nom_usuario=? WHERE nom_usuario=?";
             $stmt = $conexion->prepare($update_sql);
@@ -36,38 +39,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["usuario"] = $nuevo_usuario;
             $usuario_actual = $nuevo_usuario;
         }
+        // Para estas acciones SÍ redirigimos
+        header("Location: perfil.php");
+        exit();
     }
 
     // Cambiar mail
     if ($accion === "mail") {
-        $nuevo_mail = $_POST["mail"];
+        $nuevo_mail = $_POST["mail"] ?? "";
         if (!empty($nuevo_mail) && $nuevo_mail !== $datos["gmail_usuario"]) {
             $update_sql = "UPDATE usuarios SET gmail_usuario=? WHERE nom_usuario=?";
             $stmt = $conexion->prepare($update_sql);
             $stmt->bind_param("ss", $nuevo_mail, $usuario_actual);
             $stmt->execute();
         }
-    }
-
-    // Cambiar contraseña
-    if ($accion === "password") {
-        $contrasenia_actual = $_POST["contrasenia_actual"];
-        $nueva_contrasenia = $_POST["nueva_contrasenia"];
-        $confirmar_contrasenia = $_POST["confirmar_contrasenia"];
-
-        if (!empty($nueva_contrasenia) && $nueva_contrasenia === $confirmar_contrasenia) {
-            $contraHash = hash("sha256", $contrasenia_actual);
-            $nuevaHash = hash("sha256", $nueva_contrasenia);
-
-            if ($datos["passwd"] === $contraHash) {
-                $update_pass = "UPDATE usuarios SET passwd=? WHERE nom_usuario=?";
-                $stmt = $conexion->prepare($update_pass);
-                $stmt->bind_param("ss", $nuevaHash, $usuario_actual);
-                $stmt->execute();
-            } else {
-                echo "<p style='color:red; text-align:center'>❌ Contraseña actual incorrecta</p>";
-            }
-        }
+        // Redirigimos
+        header("Location: perfil.php");
+        exit();
     }
 
     // Cambiar imagen
@@ -87,34 +75,113 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
             $stmt->execute();
         }
+        // Redirigimos
+        header("Location: perfil.php");
+        exit();
     }
 
-    header("Location: perfil.php");
-    exit();
+    // Cambiar contraseña —> NO redirigimos (mostramos mensaje en el modal)
+    if ($accion === "password") {
+        $accion_post = "password";
+
+        $contrasenia_actual   = $_POST["contrasenia_actual"]   ?? "";
+        $nueva_contrasenia    = $_POST["nueva_contrasenia"]    ?? "";
+        $confirmar_contrasenia = $_POST["confirmar_contrasenia"] ?? "";
+
+        $contraHash = hash("sha256", $contrasenia_actual);
+
+        // 1. Verificar contraseña actual
+        if ($datos["passwd"] !== $contraHash) {
+            $mensaje = "❌ La contraseña actual no es correcta";
+            $tipo_alerta = "danger";
+        }
+        // 2. Verificar vacíos
+        elseif ($nueva_contrasenia === "" || $confirmar_contrasenia === "") {
+            $mensaje = "❌ Debes completar todos los campos";
+            $tipo_alerta = "danger";
+        }
+        // 3. Coincidencia nueva/confirmar
+        elseif ($nueva_contrasenia !== $confirmar_contrasenia) {
+            $mensaje = "❌ La nueva contraseña y la confirmación no coinciden";
+            $tipo_alerta = "danger";
+        }
+        // 4. Que no sea igual a la actual
+        elseif (hash("sha256", $nueva_contrasenia) === $contraHash) {
+            $mensaje = "❌ La nueva contraseña no puede ser igual a la actual";
+            $tipo_alerta = "danger";
+        }
+        // 5. Todo bien → actualizar
+        else {
+            $nuevaHash = hash("sha256", $nueva_contrasenia);
+            $update_pass = "UPDATE usuarios SET passwd=? WHERE nom_usuario=?";
+            $stmt = $conexion->prepare($update_pass);
+            $stmt->bind_param("ss", $nuevaHash, $usuario_actual);
+            if ($stmt->execute()) {
+                $mensaje = "✅ Contraseña actualizada correctamente";
+                $tipo_alerta = "success";
+                // Actualizamos el dato en memoria para siguientes validaciones en esta carga
+                $datos["passwd"] = $nuevaHash;
+            } else {
+                $mensaje = "❌ Ocurrió un error al actualizar la contraseña";
+                $tipo_alerta = "danger";
+            }
+        }
+        // IMPORTANTE: NO redirigimos aquí
+    }
 }
+// ================== FIN Procesar cambios ==================
+
+
+
+
 
 // Foto por defecto o personalizada
-$foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/".$datos['imagen_perfil'])) 
-    ? "uploads/perfiles/".$datos['imagen_perfil'] 
+$foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $datos['imagen_perfil']))
+    ? "uploads/perfiles/" . $datos['imagen_perfil']
     : "../navbar/imagenes/usuario.png";
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Perfil - Zentryx</title>
     <link rel="icon" href="imagenes/logo.jpg" type="image/jpeg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="estilo.css">
+    <style>
+/* Avatar: pega esto temporalmente en el head para probar */
+.avatar {
+  width: 40px;           /* tamaño pequeño como decías (ajustalo) */
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  flex: 0 0 auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+.avatar--lg { width: 100px; height: 100px; } /* para perfil grande */
+.avatar--sm { width: 36px; height: 36px; }   /* navbar */
+.avatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+</style>
+
 </head>
+
 <body>
     <!-- NAVBAR -->
-    <?php // Puedes dejar tu navbar igual al que ya tenías ?>
+    <?php // Puedes dejar tu navbar igual al que ya tenías 
+    ?>
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold fs-4 text-white" href="#inicio" id="linkLogo">
+            <a class="navbar-brand fw-bold fs-4 text-white" href="../pagina-principal/Inicio.php#inicio" id="linkLogo">
                 <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top">
                 &nbsp;Zentryx
             </a>
@@ -127,11 +194,11 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/".$dat
                 <!-- Botones Inicio / Juegos -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" id="linkInicio">Inicio</a>
+                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#inicio" id="linkInicio">Inicio</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" id="linkJuegos">Juegos</a>
+                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#juegos" id="linkJuegos">Juegos</a>
                     </li>
                 </ul>
 
@@ -159,127 +226,168 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/".$dat
         </div>
     </nav>
 
+
+
     <div class="container mt-5 text-white">
         <h2 class="mb-4">Configuración de Perfil</h2>
 
         <!-- Imagen de perfil -->
         <div class="card bg-dark mb-3 p-3 shadow-lg">
-            <h5>Imagen de Perfil</h5>
+            <h5 class="text-white">Imagen de Perfil</h5>
             <div class="d-flex align-items-center">
-                <img src="<?php echo $foto; ?>" width="100" class="rounded-circle shadow me-3">
-                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalImagen">Cambiar</button>
+                <div class="avatar avatar--lg me-3">
+                    <img src="<?php echo $foto; ?>" alt="Foto de perfil">
+                </div>
+
+                <div>
+                    <p class="mb-1 text-secondary">Sube una nueva foto para tu perfil</p>
+                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalImagen">Cambiar</button>
+                </div>
             </div>
+
         </div>
 
         <!-- Nombre de usuario -->
         <div class="card bg-dark mb-3 p-3 shadow-lg">
-            <h5>Nombre de Usuario</h5>
-            <p class="mb-1"><?php echo htmlspecialchars($datos['nom_usuario']); ?></p>
+            <h5 class="text-white">Nombre de Usuario</h5>
+            <p class="mb-1 text-secondary"><?php echo htmlspecialchars($datos['nom_usuario']); ?></p>
+            <p class="mb-1 text-secondary">Modifica el nombre con el que apareces en Zentryx</p>
             <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalUsuario">Editar</button>
         </div>
 
         <!-- Correo -->
         <div class="card bg-dark mb-3 p-3 shadow-lg">
-            <h5>Email</h5>
-            <p class="mb-1"><?php echo htmlspecialchars($datos['gmail_usuario']); ?></p>
+            <h5 class="text-white">Email</h5>
+            <p class="mb-1 text-secondary"><?php echo htmlspecialchars($datos['gmail_usuario']); ?></p>
+            <p class="mb-1 text-secondary">Actualiza tu dirección de correo vinculada</p>
             <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalMail">Editar</button>
         </div>
 
         <!-- Contraseña -->
         <div class="card bg-dark mb-3 p-3 shadow-lg">
-            <h5>Contraseña</h5>
-            <p class="mb-1">********</p>
+            <h5 class="text-white">Contraseña</h5>
+            <p class="mb-1 text-secondary">********</p>
+            <p class="mb-1 text-secondary">Cambia tu clave de acceso de manera segura</p>
             <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalPassword">Cambiar</button>
         </div>
-    </div>
 
-    <!-- MODALS -->
-    <!-- Imagen -->
-    <div class="modal fade" id="modalImagen" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-header">
-            <h5 class="modal-title">Cambiar Imagen</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-          </div>
-          <form method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="accion" value="imagen">
-            <div class="modal-body">
-                <input type="file" class="form-control" name="imagen" required>
+
+        <!-- MODALS -->
+        <!-- Imagen -->
+        <div class="modal fade" id="modalImagen" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cambiar Imagen</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="accion" value="imagen">
+                        <div class="modal-body">
+                            <input type="file" class="form-control" name="imagen" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
 
-    <!-- Usuario -->
-    <div class="modal fade" id="modalUsuario" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-header">
-            <h5 class="modal-title">Editar Usuario</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-          </div>
-          <form method="POST">
-            <input type="hidden" name="accion" value="usuario">
-            <div class="modal-body">
-                <input type="text" class="form-control" name="nuevo_usuario" value="<?php echo htmlspecialchars($datos['nom_usuario']); ?>" required>
+        <!-- Usuario -->
+        <div class="modal fade" id="modalUsuario" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Usuario</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form method="POST">
+                        <input type="hidden" name="accion" value="usuario">
+                        <div class="modal-body">
+                            <input type="text" class="form-control" name="nuevo_usuario" value="<?php echo htmlspecialchars($datos['nom_usuario']); ?>" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
 
-    <!-- Mail -->
-    <div class="modal fade" id="modalMail" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-header">
-            <h5 class="modal-title">Editar Email</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-          </div>
-          <form method="POST">
-            <input type="hidden" name="accion" value="mail">
-            <div class="modal-body">
-                <input type="email" class="form-control" name="mail" value="<?php echo htmlspecialchars($datos['gmail_usuario']); ?>" required>
+        <!-- Mail -->
+        <div class="modal fade" id="modalMail" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Email</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form method="POST">
+                        <input type="hidden" name="accion" value="mail">
+                        <div class="modal-body">
+                            <input type="email" class="form-control" name="mail" value="<?php echo htmlspecialchars($datos['gmail_usuario']); ?>" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
 
-    <!-- Password -->
-    <div class="modal fade" id="modalPassword" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-header">
-            <h5 class="modal-title">Cambiar Contraseña</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-          </div>
-          <form method="POST">
-            <input type="hidden" name="accion" value="password">
-            <div class="modal-body">
-                <input type="password" class="form-control mb-2" name="contrasenia_actual" placeholder="Contraseña actual" required>
-                <input type="password" class="form-control mb-2" name="nueva_contrasenia" placeholder="Nueva contraseña" required>
-                <input type="password" class="form-control" name="confirmar_contrasenia" placeholder="Confirmar nueva contraseña" required>
+        <!-- Password -->
+        <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="modalPasswordLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-white">
+                    <form method="POST" action="">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalPasswordLabel">Cambiar Contraseña</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="accion" value="password">
+
+                            <div class="mb-3">
+                                <label class="form-label">Contraseña actual</label>
+                                <input type="password" class="form-control" name="contrasenia_actual" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nueva contraseña</label>
+                                <input type="password" class="form-control" name="nueva_contrasenia" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirmar nueva contraseña</label>
+                                <input type="password" class="form-control" name="confirmar_contrasenia" required>
+                            </div>
+
+                            <?php if ($accion_post === 'password' && !empty($mensaje)): ?>
+                                <div class="alert alert-<?php echo $tipo_alerta; ?> mt-2 mb-0">
+                                    <?php echo htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8'); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+        <?php if ($accion_post === 'password' && !empty($mensaje)): ?>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var modal = new bootstrap.Modal(document.getElementById('modalPassword'));
+                    modal.show();
+                });
+            </script>
+        <?php endif; ?>
+
 </body>
+
 </html>
