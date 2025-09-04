@@ -18,9 +18,9 @@ class conexion_BD
         $this->usuario = "root";
         $this->pass = "";
         $this->base = "zentryx";
-        $this->nombre = $_POST["nombre"];
-        $this->contrasenia = $_POST["contrasenia"];
-        $this->correo = $_POST["gmail"];
+        $this->nombre = $_POST["nombre"] ?? null; 
+        $this->contrasenia = $_POST["contrasenia"] ?? null;
+        $this->correo = $_POST["gmail"] ?? null;
 
         $this->ini = $_POST["ini"] ?? null;
 
