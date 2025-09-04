@@ -44,20 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-    // Cambiar mail
-    if ($accion === "mail") {
-        $nuevo_mail = $_POST["mail"] ?? "";
-        if (!empty($nuevo_mail) && $nuevo_mail !== $datos["gmail_usuario"]) {
-            $update_sql = "UPDATE usuarios SET gmail_usuario=? WHERE nom_usuario=?";
-            $stmt = $conexion->prepare($update_sql);
-            $stmt->bind_param("ss", $nuevo_mail, $usuario_actual);
-            $stmt->execute();
-        }
-        // Redirigimos
-        header("Location: perfil.php");
-        exit();
-    }
-
     // Cambiar imagen
     if ($accion === "imagen") {
         if (!empty($_FILES["imagen"]["name"])) {
@@ -128,8 +114,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         // IMPORTANTE: NO redirigimos aquí
     }
+    // Eliminar cuenta
+if ($accion === "eliminar") {
+    $delete_sql = "DELETE FROM usuarios WHERE nom_usuario=?";
+    $stmt = $conexion->prepare($delete_sql);
+    $stmt->bind_param("s", $usuario_actual);
+    if ($stmt->execute()) {
+        session_destroy();
+        header("Location: login.php");
+        exit();
+    } else {
+        $mensaje = "No se pudo eliminar la cuenta. Intenta de nuevo.";
+        $tipo_alerta = "danger";
+    }
+}
 }
 // ================== FIN Procesar cambios ==================
+
 
 
 
@@ -255,13 +256,6 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
             <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalUsuario">Editar</button>
         </div>
 
-        <!-- Correo -->
-        <div class="card bg-dark mb-3 p-3 shadow-lg">
-            <h5 class="text-white">Email</h5>
-            <p class="mb-1 text-secondary"><?php echo htmlspecialchars($datos['gmail_usuario']); ?></p>
-            <p class="mb-1 text-secondary">Actualiza tu dirección de correo vinculada</p>
-            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalMail">Editar</button>
-        </div>
 
         <!-- Contraseña -->
         <div class="card bg-dark mb-3 p-3 shadow-lg">
@@ -269,6 +263,15 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
             <p class="mb-1 text-secondary">Cambia tu clave de acceso de manera segura</p>
             <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalPassword">Cambiar</button>
         </div>
+
+        <!-- Eliminar cuenta -->
+<div class="card bg-dark mb-3 p-3 shadow-lg border border-danger">
+    <h5 class="text-danger">Eliminar Cuenta</h5>
+    <p class="mb-1 text-secondary">Borra permanentemente tu cuenta y todos tus datos</p>
+    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">
+        Eliminar Cuenta
+    </button>
+</div>
 
 
         <!-- MODALS -->
@@ -314,26 +317,7 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
             </div>
         </div>
 
-        <!-- Mail -->
-        <div class="modal fade" id="modalMail" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content bg-dark text-white">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar Email</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                    </div>
-                    <form method="POST">
-                        <input type="hidden" name="accion" value="mail">
-                        <div class="modal-body">
-                            <input type="email" class="form-control" name="mail" value="<?php echo htmlspecialchars($datos['gmail_usuario']); ?>" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Password -->
         <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="modalPasswordLabel" aria-hidden="true">
@@ -374,6 +358,30 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
                 </div>
             </div>
         </div>
+
+        <!-- Eliminar cuenta -->
+<div class="modal fade" id="modalEliminar" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header border-danger">
+                <h5 class="modal-title text-danger">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST">
+                <input type="hidden" name="accion" value="eliminar">
+                <div class="modal-body">
+                    <p class="mb-2">¿Estás seguro de que quieres <strong class="text-danger">eliminar tu cuenta</strong>?</p>
+                    <p class="mb-0">Esta acción es <strong>irreversible</strong> y perderás todo tu progreso.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 
