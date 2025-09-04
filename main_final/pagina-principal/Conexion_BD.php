@@ -21,9 +21,7 @@ class conexion_BD
         $this->nombre = $_POST["nombre"];
         $this->contrasenia = $_POST["contrasenia"];
         $this->correo = $_POST["gmail"];
-
         $this->ini = $_POST["ini"] ?? null;
-
         $this->conexion = $this->conectar($this->servidor, $this->usuario, $this->pass, $this->base);
     }
 

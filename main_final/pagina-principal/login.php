@@ -16,7 +16,7 @@ if (isset($_SESSION['usuario'])) {
     <title>Iniciar sesión - Zentryx</title>
 
     <!-- Ícono -->
-    <link rel="icon" href="imagenes/logo.jpg" type="image/jpeg">
+    <link rel="icon" href="../navbar/imagenes/logo.jpg" type="image/jpeg">
     
     <!-- Bootstrap y fuente -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">

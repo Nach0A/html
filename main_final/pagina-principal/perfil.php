@@ -147,7 +147,7 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
 <head>
     <meta charset="UTF-8">
     <title>Perfil - Zentryx</title>
-    <link rel="icon" href="imagenes/logo.jpg" type="image/jpeg">
+    <link rel="icon" href="../navbar/imagenes/logo.jpg" type="image/jpeg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="estilo.css">
     <style>
@@ -266,7 +266,6 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
         <!-- Contraseña -->
         <div class="card bg-dark mb-3 p-3 shadow-lg">
             <h5 class="text-white">Contraseña</h5>
-            <p class="mb-1 text-secondary">********</p>
             <p class="mb-1 text-secondary">Cambia tu clave de acceso de manera segura</p>
             <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalPassword">Cambiar</button>
         </div>
