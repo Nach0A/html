@@ -92,22 +92,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // 1. Verificar contraseña actual
         if ($datos["passwd"] !== $contraHash) {
-            $mensaje = "❌ La contraseña actual no es correcta";
+            $mensaje = "La contraseña actual no es correcta";
             $tipo_alerta = "danger";
         }
         // 2. Verificar vacíos
         elseif ($nueva_contrasenia === "" || $confirmar_contrasenia === "") {
-            $mensaje = "❌ Debes completar todos los campos";
+            $mensaje = "Debes completar todos los campos";
             $tipo_alerta = "danger";
         }
         // 3. Coincidencia nueva/confirmar
         elseif ($nueva_contrasenia !== $confirmar_contrasenia) {
-            $mensaje = "❌ La nueva contraseña y la confirmación no coinciden";
+            $mensaje = "La nueva contraseña y la confirmación no coinciden";
             $tipo_alerta = "danger";
         }
         // 4. Que no sea igual a la actual
         elseif (hash("sha256", $nueva_contrasenia) === $contraHash) {
-            $mensaje = "❌ La nueva contraseña no puede ser igual a la actual";
+            $mensaje = "La nueva contraseña no puede ser igual a la actual";
             $tipo_alerta = "danger";
         }
         // 5. Todo bien → actualizar
@@ -117,12 +117,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt = $conexion->prepare($update_pass);
             $stmt->bind_param("ss", $nuevaHash, $usuario_actual);
             if ($stmt->execute()) {
-                $mensaje = "✅ Contraseña actualizada correctamente";
+                $mensaje = "Contraseña actualizada correctamente";
                 $tipo_alerta = "success";
                 // Actualizamos el dato en memoria para siguientes validaciones en esta carga
                 $datos["passwd"] = $nuevaHash;
             } else {
-                $mensaje = "❌ Ocurrió un error al actualizar la contraseña";
+                $mensaje = "Ocurrió un error al actualizar la contraseña";
                 $tipo_alerta = "danger";
             }
         }

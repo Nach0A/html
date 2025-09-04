@@ -23,7 +23,6 @@ class Correo
         $this->contenido = $contenido;
         $this->asunto = $asunto;
         $this->mail = new PHPMailer(true);
-
     }
 
     public function setHost($host)
@@ -56,7 +55,7 @@ class Correo
             $this->mail->isSMTP();
             $this->mail->Host = $this->host;
             $this->mail->SMTPAuth = false;
-            $this->mail->SMTPAutoTLS = false; // Para que no use TLS por defecto, porque el ServidOR no lo soporta
+            $this->mail->SMTPAutoTLS = false; // Para que no use TLS por defecto, porque el ServidOR no lo soporta :/
             $this->mail->Port = $this->puerto;
 
             $this->mail->setFrom('zentryx@correos.local', 'Zentryx');

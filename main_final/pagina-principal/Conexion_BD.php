@@ -18,9 +18,9 @@ class conexion_BD
         $this->usuario = "root";
         $this->pass = "";
         $this->base = "zentryx";
-        $this->nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : (isset($_POST["mail"]) ? $_POST["mail"] : "");
+        $this->nombre = $_POST["nombre"];
         $this->contrasenia = $_POST["contrasenia"];
-        $this->correo = isset($_POST["gmail"]) ? $_POST["gmail"] : "";
+        $this->correo = $_POST["gmail"];
 
         $this->ini = $_POST["ini"] ?? null;
 
@@ -136,16 +136,15 @@ class conexion_BD
             $this->cerrarConexion();
             exit();
         } else {
-            $nombre = $this->nombre; // nom_usuario en claro
+            $nombre = $this->nombre; 
             $contrasenia = trim(hash('sha256', $this->contrasenia));
-            $gmailHash = trim(hash('sha256', $this->correo)); // gmail encriptado
-
+            $gmailHash = trim(hash('sha256', $this->correo)); 
             mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES ('{$nombre}', '{$contrasenia}', '{$gmailHash}')");
         }
     }
 
     public function mailUsado() {
-        $mail = $this->correo; // sin hash
+        $mail = $this->correo; 
         $gmailHash = hash('sha256', $mail);
         $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
         return $consulta && mysqli_num_rows($consulta) > 0;
@@ -173,5 +172,14 @@ class conexion_BD
                 echo $row['nom_usuario'] . "<br>";
             }
         }
+    }
+    public function obtenerFoto($nombre)
+    {
+        $consulta = mysqli_query($this->conexion, "SELECT imagen_perfil FROM usuarios WHERE nom_usuario='{$nombre}' LIMIT 1");
+        if ($consulta && mysqli_num_rows($consulta) === 1) {
+            $row = mysqli_fetch_assoc($consulta);
+            return $row['foto'];
+        }
+        return null;
     }
 }

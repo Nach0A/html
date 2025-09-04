@@ -5,7 +5,7 @@ $bd = new conexion_BD();
 if ($bd->getIni() == 1) {
 if ($bd->inicio()) {
         $_SESSION['usuario'] = $bd->getNombre();
-       // $bd->listarUsuarios();
+        $_SESSION['foto'] = $bd->obtenerFoto($bd->getNombre());
         $bd->cerrarConexion();
         header("Location: Inicio.php");
         exit();
