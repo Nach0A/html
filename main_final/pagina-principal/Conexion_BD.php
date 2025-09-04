@@ -18,10 +18,9 @@ class conexion_BD
         $this->usuario = "root";
         $this->pass = "";
         $this->base = "zentryx";
-        $this->nombre = $_POST["nombre"] ?? null; 
+        $this->nombre = $_POST["input"] ?? null; 
         $this->contrasenia = $_POST["contrasenia"] ?? null;
         $this->correo = $_POST["gmail"] ?? null;
-
         $this->ini = $_POST["ini"] ?? null;
         $this->conexion = $this->conectar($this->servidor, $this->usuario, $this->pass, $this->base);
     }
@@ -108,7 +107,6 @@ class conexion_BD
         $input = $this->nombre; // puede ser usuario o mail
         $contra = trim(hash('sha256', $this->contrasenia));
         $gmailHash = hash('sha256', $input);
-
         $sql = "SELECT nom_usuario 
             FROM usuarios 
             WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
