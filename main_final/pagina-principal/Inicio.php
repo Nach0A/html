@@ -102,7 +102,7 @@ if (!isset($_SESSION['usuario'])) {
 
             <div class="tarjeta-juego">
                 <h2>Buscaminas</h2>
-                <p>Intenta identificar el lugar de todas las minas lo más rapido posible.<br>
+                <p>Intenta identificar el lugar de todas las minas lo más rápido posible.<br>
                     Cuenta con 3 niveles de dificultad: fácil, medio y difícil.</p>
                 <button class="play-btn" onclick="location.href='../buscaminas/buscaminas.php'">Jugar</button>
             </div>
@@ -115,7 +115,7 @@ if (!isset($_SESSION['usuario'])) {
 
             <div class="tarjeta-juego">
                 <h2>Juego de Monti</h2>
-                <p>Pon a prueba tu suerte y astusia para encontrar el premio</p>
+                <p>Pon a prueba tu suerte y astucia para encontrar el premio</p>
                 <button class="play-btn" onclick="location.href='../juego-de-monti/juego-de-monti.php'">Jugar</button>
             </div>
     
