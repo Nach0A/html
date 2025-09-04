@@ -171,6 +171,9 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
   object-position: center;
   display: block;
 }
+.card{
+    align-items: center;
+}
 </style>
 
 </head>
@@ -232,8 +235,9 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
     <div class="container mt-5 text-white">
         <h2 class="mb-4">Configuración de Perfil</h2>
 
+        
         <!-- Imagen de perfil -->
-        <div class="card bg-dark mb-3 p-3 shadow-lg">
+        <div class="card bg-dark mb-3 p-3 shadow-lg testNachoDiego">
             <h5 class="text-white">Imagen de Perfil</h5>
             <div class="d-flex align-items-center">
                 <div class="avatar avatar--lg me-3">
