@@ -115,19 +115,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // IMPORTANTE: NO redirigimos aquí
     }
     // Eliminar cuenta
-if ($accion === "eliminar") {
-    $delete_sql = "DELETE FROM usuarios WHERE nom_usuario=?";
-    $stmt = $conexion->prepare($delete_sql);
-    $stmt->bind_param("s", $usuario_actual);
-    if ($stmt->execute()) {
-        session_destroy();
-        header("Location: login.php");
-        exit();
-    } else {
-        $mensaje = "No se pudo eliminar la cuenta. Intenta de nuevo.";
-        $tipo_alerta = "danger";
+    if ($accion === "eliminar") {
+        $delete_sql = "DELETE FROM usuarios WHERE nom_usuario=?";
+        $stmt = $conexion->prepare($delete_sql);
+        $stmt->bind_param("s", $usuario_actual);
+        if ($stmt->execute()) {
+            session_destroy();
+            header("Location: login.php");
+            exit();
+        } else {
+            $mensaje = "No se pudo eliminar la cuenta. Intenta de nuevo.";
+            $tipo_alerta = "danger";
+        }
     }
-}
 }
 // ================== FIN Procesar cambios ==================
 
@@ -152,35 +152,144 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="estilo.css">
     <style>
-/* Avatar: pega esto temporalmente en el head para probar */
-.avatar {
-  width: 40px;           /* tamaño pequeño como decías (ajustalo) */
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: inline-block;
-  flex: 0 0 auto;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-}
-.avatar--lg { width: 100px; height: 100px; } /* para perfil grande */
-.avatar--sm { width: 36px; height: 36px; }   /* navbar */
-.avatar > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-.card{
-    align-items: center;
-}
-</style>
+        .titulo-perfil {
+            font-family: 'Ethnocentric', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            color: rgba(255, 0, 200, 0.75);
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.75), 0 0 16px rgba(204, 0, 255, 0.75), 0 0 24px rgba(110, 0, 92, 0.75);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .titulo-perfil::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            margin: 10px auto 0;
+            background: rgba(206, 2, 162, 0.86);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.86), 0 0 16px rgba(114, 0, 108, 0.86);
+            border-radius: 2px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: inline-block;
+            flex: 0 0 auto;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .avatar--lg {
+            width: 100px;
+            height: 100px;
+        }
+
+        .avatar--sm {
+            width: 36px;
+            height: 36px;
+        }
+
+        .avatar>img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #141414, #1f1f1f);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 15px;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card:hover {
+            border-color: rgba(235, 9, 186, 0.88);
+            box-shadow: 0 0 15px rgba(206, 2, 162, 0.64);
+        }
+
+        .btn-outline-light {
+            border: 1px solid rgba(252, 6, 198, 0.86);
+            color: rgba(238, 32, 193, 0.86);
+            transition: all 0.3s;
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(219, 13, 174, 0.83);
+            color: #111;
+            box-shadow: 0 0 10px rgba(206, 2, 162, 0.86), 0 0 20px rgba(170, 4, 247, 0.64);
+        }
+
+        .btn-outline-danger {
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #ff4444;
+            color: #111;
+            box-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444;
+        }
+
+        .avatar--lg {
+            border: 2px rgba(255, 10, 222, 0.82);
+            box-shadow: 0 0 10px rgba(206, 2, 162, 0.64);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(255, 10, 222, 0.82);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(245, 12, 194, 0.84);
+            }
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: 1px solid rgba(255, 0, 255, 0.86);
+            box-shadow: 0 0 20px rgba(255, 7, 152, 0.8);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid rgba(255, 0, 200, 0.75);
+        }
+
+        .modal-title {
+            font-family: 'Ethnocentric', sans-serif;
+            color: rgba(235, 9, 186, 0.88);
+        }
+
+        /* Eliminar cuenta modal */
+        .modal-header.border-danger {
+            border-bottom: 1px solid #ff4444 !important;
+        }
+
+        .modal-title.text-danger {
+            text-shadow: 0 0 10px #ff4444;
+        }
+    </style>
 
 </head>
 
 <body>
-    <!-- NAVBAR -->
-    <?php // Puedes dejar tu navbar igual al que ya tenías 
+    
+    <?php 
     ?>
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
@@ -233,9 +342,10 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
 
 
     <div class="container mt-5 text-white">
-        <h2 class="mb-4">Configuración de Perfil</h2>
+        <h2 class="titulo-perfil">Configuración de Perfil</h2>
 
-        
+
+
         <!-- Imagen de perfil -->
         <div class="card bg-dark mb-3 p-3 shadow-lg testNachoDiego">
             <h5 class="text-white">Imagen de Perfil</h5>
@@ -269,13 +379,13 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
         </div>
 
         <!-- Eliminar cuenta -->
-<div class="card bg-dark mb-3 p-3 shadow-lg border border-danger">
-    <h5 class="text-danger">Eliminar Cuenta</h5>
-    <p class="mb-1 text-secondary">Borra permanentemente tu cuenta y todos tus datos</p>
-    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">
-        Eliminar Cuenta
-    </button>
-</div>
+        <div class="card bg-dark mb-3 p-3 shadow-lg border border-danger">
+            <h5 class="text-danger">Eliminar Cuenta</h5>
+            <p class="mb-1 text-secondary">Borra permanentemente tu cuenta y todos tus datos</p>
+            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">
+                Eliminar Cuenta
+            </button>
+        </div>
 
 
         <!-- MODALS -->
@@ -321,7 +431,7 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
             </div>
         </div>
 
-        
+
 
         <!-- Password -->
         <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="modalPasswordLabel" aria-hidden="true">
@@ -364,27 +474,27 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
         </div>
 
         <!-- Eliminar cuenta -->
-<div class="modal fade" id="modalEliminar" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark text-white">
-            <div class="modal-header border-danger">
-                <h5 class="modal-title text-danger">Confirmar Eliminación</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        <div class="modal fade" id="modalEliminar" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header border-danger">
+                        <h5 class="modal-title text-danger">Confirmar Eliminación</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form method="POST">
+                        <input type="hidden" name="accion" value="eliminar">
+                        <div class="modal-body">
+                            <p class="mb-2">¿Estás seguro de que quieres <strong class="text-danger">eliminar tu cuenta</strong>?</p>
+                            <p class="mb-0">Esta acción es <strong>irreversible</strong> y perderás todo tu progreso.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <form method="POST">
-                <input type="hidden" name="accion" value="eliminar">
-                <div class="modal-body">
-                    <p class="mb-2">¿Estás seguro de que quieres <strong class="text-danger">eliminar tu cuenta</strong>?</p>
-                    <p class="mb-0">Esta acción es <strong>irreversible</strong> y perderás todo tu progreso.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-                </div>
-            </form>
         </div>
-    </div>
-</div>
 
 
 
