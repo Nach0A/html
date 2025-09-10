@@ -9,6 +9,7 @@ $user = $_SESSION['usuario'];
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,13 +22,14 @@ $user = $_SESSION['usuario'];
     <!-- Bootstrap CSS para dropdown -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <!-- ======== PRELOADER ======== -->
     <div id="preloader">
         <img src="../navbar/imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
     </div>
     <!-- ======= FIN PRELOADER ===== -->
-    
+
     <!-- ======== NAVBAR ======== -->
     <nav class="navbar navbar-expand-lg shadow-sm py-3">
         <div class="container-fluid">
@@ -56,7 +58,10 @@ $user = $_SESSION['usuario'];
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="../navbar/imagenes/usuario.png" alt="User" class="user-avatar shadow-sm" />
+                            <img src="<?php echo htmlspecialchars($_SESSION['foto'] ?? '../navbar/imagenes/usuario.png'); ?>"
+                                class="user-avatar shadow-sm"
+                                alt="Usuario">
+
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">
                             <li>
@@ -79,10 +84,10 @@ $user = $_SESSION['usuario'];
         </div>
     </nav>
     <!-- CONTENIDO GENERAL (sin login) -->
-        <div class="Contenido" id="Contenido">
-            <div id="mainContent" class="container mt-5" style="display: none;"></div>
-            <div class="container mt-5 position-relative" id="juegosContent" style="display: none;"></div>
-        </div>
+    <div class="Contenido" id="Contenido">
+        <div id="mainContent" class="container mt-5" style="display: none;"></div>
+        <div class="container mt-5 position-relative" id="juegosContent" style="display: none;"></div>
+    </div>
     <!-- FIN NAVBAR -->
 
     <!-- Buscaminas -->
@@ -126,4 +131,5 @@ $user = $_SESSION['usuario'];
         });
     </script>
 </body>
+
 </html>

@@ -2,7 +2,6 @@
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
-    // Si no hay sesión activa, redirigir al login
     header("Location: ../pagina-principal/login.php");
     exit();
 }
@@ -55,7 +54,10 @@ if (!isset($_SESSION['usuario'])) {
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white"
                             id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <img src="../navbar/imagenes/usuario.png" class="user-avatar shadow-sm">
+                            <img src="<?php echo htmlspecialchars($_SESSION['foto'] ?? '../navbar/imagenes/usuario.png'); ?>"
+                                class="user-avatar shadow-sm"
+                                alt="Usuario">
+
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">
                             <li>
@@ -74,7 +76,7 @@ if (!isset($_SESSION['usuario'])) {
         </div>
     </nav>
 
-   <!-- SECCIÓN INICIO: saludo al usuario -->
+    <!-- SECCIÓN INICIO: saludo al usuario -->
     <div id="mainContent" class="fade-in inicio-bienvenida" style="display: none;">
         <div class="bienvenida-box">
             <h1>¡Hola, <span class="usuario"><?php echo htmlspecialchars($_SESSION['usuario']); ?></span>!</h1>
@@ -118,12 +120,12 @@ if (!isset($_SESSION['usuario'])) {
                 <p>Pon a prueba tu suerte y astucia para encontrar el premio</p>
                 <button class="play-btn" onclick="location.href='../juego-de-monti/juego-de-monti.php'">Jugar</button>
             </div>
-    
 
-                <!-- aca ponemos más tarjetas para el futuro -->
-            </div>
 
+            <!-- aca ponemos más tarjetas para el futuro -->
         </div>
+
+    </div>
     </div>
 
     <!-- SCRIPTS -->
@@ -164,38 +166,38 @@ if (!isset($_SESSION['usuario'])) {
         linkLogo.addEventListener("click", e => {
             e.preventDefault();
             // Agrega la animación
-    linkLogo.classList.add("animate-click");
+            linkLogo.classList.add("animate-click");
 
-    // La quita después de que termina, para que pueda repetirse
-    setTimeout(() => {
-        linkLogo.classList.remove("animate-click");
-    }, 600); // Duración de la animación
+            // La quita después de que termina, para que pueda repetirse
+            setTimeout(() => {
+                linkLogo.classList.remove("animate-click");
+            }, 600); // Duración de la animación
             mostrarInicio();
         });
 
         // Al cargar la página: ocultar preloader y mostrar sección según hash
         window.addEventListener("load", () => {
-    const pre = document.getElementById("preloader");
-    pre.style.opacity = "0";
-    pre.style.visibility = "hidden";
-    pre.style.pointerEvents = "none";
+            const pre = document.getElementById("preloader");
+            pre.style.opacity = "0";
+            pre.style.visibility = "hidden";
+            pre.style.pointerEvents = "none";
 
-    if (location.hash === "#juegos") {
-        mostrarJuegos();
-    } else {
-        mostrarInicio();
+            if (location.hash === "#juegos") {
+                mostrarJuegos();
+            } else {
+                mostrarInicio();
 
-        // Si viene de otra página con animación
-        if (location.hash === "#inicioAnimado") {
-            linkLogo.classList.add("animate-click");
-            setTimeout(() => {
-                linkLogo.classList.remove("animate-click");
-            }, 400); // Tiempo igual al de la animación
-        }
-    }
-});
-</script>
-<script src="../navbar/script.js"></script>
+                // Si viene de otra página con animación
+                if (location.hash === "#inicioAnimado") {
+                    linkLogo.classList.add("animate-click");
+                    setTimeout(() => {
+                        linkLogo.classList.remove("animate-click");
+                    }, 400); // Tiempo igual al de la animación
+                }
+            }
+        });
+    </script>
+    <script src="../navbar/script.js"></script>
 </body>
 
 </html>

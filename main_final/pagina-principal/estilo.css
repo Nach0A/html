@@ -1,662 +1,176 @@
-body {
-    background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: #ffffff;
-    position: relative;
-    min-height: 100vh;
-    overflow-x: hidden;
-    padding-top: 70px;
-}
-
-/**/
-#preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    /* Color de fondo de carga */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-#preloader-logo {
-    width: 100px;
-    height: 100px;
-    animation: logoFade 2s ease-in-out infinite;
-    border-radius: 50%;
-}
-
-@keyframes logoFade {
-    0% {
-        opacity: 0.4;
-        transform: scale(0.9);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-
-    100% {
-        opacity: 0.4;
-        transform: scale(0.9);
-    }
-}
-
-/**/
-
-
-/* animación */
-@keyframes float {
-    0% {
-        transform: translate(0px, 0px) scale(1);
-    }
-
-    100% {
-        transform: translate(20px, -30px) scale(1.1);
-    }
-}
-
-
-.Contenido {
-    margin-left: 10px;
-}
-
+/* ================== FUENTES ================== */
 @font-face {
-    font-family: 'Ethnocentric';
-    src: url('../navbar/letra/EthnocentricRg.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Ethnocentric';
+  src: url('../navbar/letra/EthnocentricRg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+/* ================== GLOBAL ================== */
+body {
+  background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff;
+  min-height: 100vh;
+  padding-top: 70px;
+  overflow-x: hidden;
+}
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.fade-in { animation: fadeIn 0.6s ease-in-out; }
+@keyframes fadeIn { from {opacity:0;transform:translateY(20px);} to {opacity:1;transform:translateY(0);} }
+
+/* ================== PRELOADER ================== */
+#preloader {
+  position: fixed; inset: 0;
+  display: flex; justify-content: center; align-items: center;
+  background: #000; z-index: 9999;
+  transition: opacity .8s ease, visibility .8s ease;
+}
+#preloader-logo {
+  width: 100px; height: 100px; border-radius: 50%;
+  animation: logoFade 2s ease-in-out infinite;
+}
+@keyframes logoFade {
+  0%,100% { opacity: .4; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
-.separator {
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-    height: 24px;
-    margin: auto 10px;
-}
-
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    transition: box-shadow 0.3s ease;
-}
-
-.user-avatar:hover {
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
-}
-
-#loginForm {
-    display: none;
-    max-width: 400px;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
+/* ================== NAVBAR ================== */
 .navbar {
-   position: fixed; /* Fija el navbar arriba */
-    top: 0;           /* Se asegura de que esté pegado al borde superior */
-    left: 0;
-    right: 0;
-    z-index: 1030;    /* Asegura que esté por encima de otros elementos */
-    background-color: rgba(20, 20, 20, 0.85); /* Color con transparencia */
-    backdrop-filter: blur(6px); /* Difumina el fondo que se ve detrás */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    opacity: 0.9;
+  position: fixed; top:0; left:0; right:0;
+  background: rgba(20,20,20,0.85);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 1030;
 }
-
-.navbar .navbar-nav .nav-link,
-.navbar .navbar-brand {
-    font-family: 'Ethnocentric', sans-serif;
-    color: white !important;
-    font-weight: 500;
-
+.navbar .nav-link, .navbar .navbar-brand {
+  font-family: 'Ethnocentric', sans-serif;
+  font-weight: 500;
+  color: #fff !important;
+  transition: color .3s ease;
 }
-
-/* Aplica solo a enlaces que NO están dentro de un dropdown ni contienen imágenes */
-.navbar .navbar-nav.me-auto .nav-link {
-    position: relative;
-    transition: color 0.3s ease;
-}
-
 .navbar .navbar-nav.me-auto .nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background-color: #d6c4ff;
-    transition: width 0.3s ease;
+  content:""; position:absolute; bottom:-4px; left:0;
+  width:0; height:2px; background:#d6c4ff;
+  transition: width .3s ease;
 }
+.navbar .navbar-nav.me-auto .nav-link:hover::after { width:100%; }
+.navbar .nav-link:hover { color: #d6c4ff !important; }
+.navbar .dropdown-item { color:#000 !important; transition:.2s; }
+.navbar .dropdown-item:hover { background:rgba(73,4,138,0.1); color:rgb(73,4,138)!important; }
+.user-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; transition:.3s; }
+.user-avatar:hover { box-shadow:0 0 0 3px rgba(255,255,255,0.5); }
 
-.navbar .navbar-nav.me-auto .nav-link:hover::after {
-    width: 100%;
+/* ================== LOGIN / REGISTRO ================== */
+#loginForm, #form-container .card {
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 20px #a64bf4, 0 0 60px #e82ef8;
+  backdrop-filter: blur(10px);
+  padding: 30px 25px;
+  max-width: 400px;
+  margin: 50px auto;
+  animation: fadeInLogin 1s ease-out;
+  position: relative; overflow:hidden;
 }
-
-.navbar .nav-link:hover {
-    color: #d6c4ff !important;
+@keyframes fadeInLogin { from{opacity:0;transform:translateY(30px) scale(.95);} to{opacity:1;transform:translateY(0) scale(1);} }
+#loginForm::before, #form-container .card::before {
+  content:""; position:absolute; inset:-2px;
+  background: linear-gradient(45deg, #000, #d400ff, #000);
+  background-size: 600% 600%;
+  border-radius:18px; filter:blur(6px); z-index:-1;
+  animation: animatedBorder 6s linear infinite;
 }
-
-.navbar .dropdown-item {
-    color: black !important;
-    transition: background-color 0.2s, color 0.2s;
-}
-
-.navbar .dropdown-item:hover {
-    background-color: rgba(73, 4, 138, 0.1);
-    color: rgb(73, 4, 138) !important;
-}
-
-.fade-menu {
-    animation: fadeInDropdown 0.3s ease forwards;
-}
-
-@keyframes fadeInDropdown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-/* ------------------login------------------ */
-
-#loginForm {
-    display: block !important;
-    max-width: 400px;
-    margin: 50px auto;
-    background-color: rgba(0, 0, 0, 0.85);
-    color: #ffffff;
-    padding: 30px 25px;
-    border-radius: 18px;
-    box-shadow: 0 0 20px #a64bf4, 0 0 60px #e82ef8;
-    backdrop-filter: blur(8px);
-    animation: fadeInLogin 1s ease-out;
-    position: relative;
-    overflow: hidden;
-}
-
-@keyframes fadeInLogin {
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Borde neón animado */
-#loginForm::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    background: linear-gradient(45deg, #000000, #d400ff, #000000);
-    background-size: 600% 600%;
-    animation: animatedBorder 6s linear infinite;
-    border-radius: 18px;
-    filter: blur(6px);
-    z-index: -1;
-}
-
-@keyframes animatedBorder {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* Título del login */
-#loginForm h5 {
-    text-align: center;
-    font-size: 20px;
-    margin-bottom: 25px;
-    color: #d6c4ff;
-    font-family: 'Ethnocentric', sans-serif;
-}
+@keyframes animatedBorder { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
 
 /* Inputs */
-#loginForm input[type="text"],
-#loginForm input[type="password"] {
-    background-color: #1a1a1a;
-    border: 1px solid #5e2c91;
-    color: #fff;
-    padding: 12px 15px;
-    margin-bottom: 18px;
-    border-radius: 8px;
-    width: 100%;
-    transition: border-color 0.3s, box-shadow 0.3s;
+.input-neon, #loginForm input, #form-container input {
+  background: #1a1a1a;
+  border: 1px solid #5e2c91;
+  color: #fff;
+  padding: 12px 15px;
+  border-radius: 8px;
+  width: 100%;
+  transition: .3s;
 }
-
-#loginForm input:focus {
-    outline: none;
-    border-color: #e82ef8;
-    box-shadow: 0 0 10px #e82ef8;
+.input-neon:focus, #loginForm input:focus, #form-container input:focus {
+  outline:none; border-color:#e82ef8; box-shadow:0 0 10px #e82ef8;
 }
 
 /* Botones */
-#loginForm button {
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    font-weight: bold;
-    font-family: 'Ethnocentric', sans-serif;
-    letter-spacing: 1px;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+.btn-neon, #loginForm button, #form-container .btn {
+  font-family: 'Ethnocentric', sans-serif;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px;
+  transition:.3s;
 }
+.btn-primary { background:#a64bf4; color:#fff; box-shadow:0 0 10px #a64bf4; }
+.btn-primary:hover { background:#d86cf4; transform:scale(1.03); box-shadow:0 0 20px #e82ef8; }
+.btn-secondary { background:#3d1c54; color:#fff; box-shadow:0 0 10px #5e2c91; }
+.btn-secondary:hover { background:#5e2c91; transform:scale(1.03); box-shadow:0 0 20px #a64bf4; }
+.btn-outline-light { border:1px solid #a64bf4; color:#fff; background:transparent; }
+.btn-outline-light:hover, .btn-outline-light.active { background:#a64bf4; color:#000; box-shadow:0 0 10px #a64bf4; }
 
-
-#loginForm .btn-primary {
-    background-color: #a64bf4;
-    color: #fff;
-    margin-bottom: 10px;
-    box-shadow: 0 0 10px #a64bf4;
-}
-
-#loginForm .btn-primary:hover {
-    background-color: #d86cf4;
-    transform: scale(1.03);
-    box-shadow: 0 0 20px #e82ef8;
-}
-
-#loginForm .btn-secondary {
-    background-color: #3d1c54;
-    color: #fff;
-    box-shadow: 0 0 10px #5e2c91;
-}
-
-#loginForm .btn-secondary:hover {
-    background-color: #5e2c91;
-    transform: scale(1.03);
-    box-shadow: 0 0 20px #a64bf4;
-}
-/* Botones de cambio entre login y registro */
-#form-container .btn-outline-light {
-    font-family: 'Ethnocentric', sans-serif;
-    letter-spacing: 1px;
-    border: 1px solid #a64bf4;
-    color: #fff;
-    background-color: transparent;
-    transition: all 0.3s ease;
-}
-
-#form-container .btn-outline-light:hover,
-#form-container .btn-outline-light.active {
-    background-color: #a64bf4;
-    color: #000;
-    box-shadow: 0 0 10px #a64bf4;
-}
-
-/* Formulario contenedor */
-#form-container .card {
-    background-color: rgba(0, 0, 0, 0.85);
-    border-radius: 18px;
-    box-shadow: 0 0 20px #a64bf4, 0 0 60px #e82ef8;
-    backdrop-filter: blur(10px);
-    color: white;
-    animation: fadeInLogin 1s ease-out;
-}
-
-/* Input compartido para ambos formularios */
-#form-container input {
-    background-color: #1a1a1a;
-    border: 1px solid #5e2c91;
-    color: #fff;
-    padding: 12px 15px;
-    border-radius: 8px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-#form-container input:focus {
-    outline: none;
-    border-color: #e82ef8;
-    box-shadow: 0 0 10px #e82ef8;
-}
-
-/* Botones del formulario */
-#form-container .btn-primary {
-    background-color: #a64bf4;
-    color: #fff;
-    font-family: 'Ethnocentric', sans-serif;
-    letter-spacing: 1px;
-    box-shadow: 0 0 10px #a64bf4;
-    transition: all 0.3s ease;
-}
-
-#form-container .btn-primary:hover {
-    background-color: #d86cf4;
-    transform: scale(1.03);
-    box-shadow: 0 0 20px #e82ef8;
-}
-
-#form-container .btn-secondary {
-    background-color: #3d1c54;
-    color: #fff;
-    font-family: 'Ethnocentric', sans-serif;
-    letter-spacing: 1px;
-    box-shadow: 0 0 10px #5e2c91;
-    transition: all 0.3s ease;
-}
-
-#form-container .btn-secondary:hover {
-    background-color: #5e2c91;
-    transform: scale(1.03);
-    box-shadow: 0 0 20px #a64bf4;
-}
-/* Placeholder forzado sobre Bootstrap */
-#form-container .form-control::placeholder {
-  color: #ccc !important;
-  opacity: 1 !important;
-}
-#form-container .form-control::-webkit-input-placeholder { color: #ccc !important; opacity: 1 !important; }
-#form-container .form-control::-moz-placeholder { color: #ccc !important; opacity: 1 !important; }
-#form-container .form-control:-ms-input-placeholder { color: #ccc !important; opacity: 1 !important; }
-#form-container .form-control::-ms-input-placeholder { color: #ccc !important; opacity: 1 !important; }
-
-
-
-/* Mensaje de error */
-#loginError {
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: #ff5c8a !important;
-}
-
-#mainContent {
-    display: none;
-}
-
-.custom-close {
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    background-color: white;
-    padding: 6px;
-    border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.fade-in {
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes gradientBG {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.game-box {
-    background: linear-gradient(135deg, #111, #1a1a1a);
-    border: 2px solid #ea00ff;
-    box-shadow: 0 0 20px #81004c, inset 0 0 10px #5500ff;
-    border-radius: 20px;
-    padding: 30px;
-    width: 350px;
-    text-align: center;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.game-box:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 30px #9900ff, inset 0 0 15px #5500ff;
-}
-
-.game-title {
-    color: #c300ff;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-shadow: 0 0 5px #c4c4c4, 0 0 10px #5500ff;
-}
-
-.game-desc {
-    color: #cccccc;
-    font-size: 1rem;
-    margin-bottom: 30px;
-}
-
-.play-btn {
-    background: #5500ff;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 10px #5500ff;
-}
-
-.play-btn:hover {
-    background: #a401b9;
-    color: #000;
-    box-shadow: 0 0 20px #dd0081;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-
+/* ================== JUEGOS ================== */
 .juegos-wrapper {
-    min-height: 100vh;
-    padding: 60px 20px;
-    background: radial-gradient(circle at top left, #1b1b1b 0%, #000 100%);
-    backdrop-filter: blur(3px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  min-height: 100vh;
+  padding: 60px 20px;
+  background: radial-gradient(circle at top left, #1b1b1b 0%, #000 100%);
+  display: flex; flex-direction: column; align-items: center;
 }
-
-.titulo-juegos {
-    font-family: 'Ethnocentric', sans-serif;
-    color: #ea00ff;
-    text-shadow: 0 0 15px #5500ff, 0 0 30px #81004c;
-    margin-bottom: 50px;
-}
-
-.grid-juegos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    width: 100%;
-    padding: 20px;
-}
-
+.titulo-juegos { font-family:'Ethnocentric'; color:#ea00ff; text-shadow:0 0 15px #5500ff, 0 0 30px #81004c; margin-bottom:50px; }
+.grid-juegos { display:flex; flex-direction:column; align-items:center; gap:40px; width:100%; padding:20px; }
 .tarjeta-juego {
-    background: linear-gradient(135deg, #111, #1a1a1a);
-    border: 2px solid #ea00ff;
-    box-shadow: 0 0 20px #81004c, inset 0 0 10px #5500ff;
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    position: relative;
-    overflow: hidden;
-
-    width: 90%;           /* Ocupará el 90% del contenedor */
-    max-width: 700px;     /* Pero no pasará de 700px de ancho */
+  background: linear-gradient(135deg, #111, #1a1a1a);
+  border:2px solid #ea00ff; border-radius:20px;
+  box-shadow:0 0 20px #81004c, inset 0 0 10px #5500ff;
+  padding:25px; max-width:700px; width:90%;
+  text-align:center; overflow:hidden; position:relative;
+  transition:.4s;
 }
-
-
+.tarjeta-juego:hover { transform:scale(1.03); box-shadow:0 0 30px #9900ff, inset 0 0 15px #5500ff; }
 .tarjeta-juego::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(234, 0, 255, 0.15) 0%, transparent 70%);
-    animation: pulseNeon 6s infinite alternate;
-    z-index: 0;
+  content:""; position:absolute; inset:-50% auto auto -50%;
+  width:200%; height:200%;
+  background: radial-gradient(circle, rgba(234,0,255,.15) 0%, transparent 70%);
+  animation: pulseNeon 6s infinite alternate; z-index:0;
 }
+@keyframes pulseNeon { 0%{transform:translate(0,0) rotate(0);} 100%{transform:translate(20px,20px) rotate(360deg);} }
+.tarjeta-juego h2 { font-family:'Ethnocentric'; color:#c300ff; font-size:1.8rem; margin-bottom:15px; text-shadow:0 0 10px #5500ff; z-index:1; }
+.tarjeta-juego p, .tarjeta-juego .play-btn { position:relative; z-index:1; }
 
-@keyframes pulseNeon {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    100% { transform: translate(20px, 20px) rotate(360deg); }
-}
-
-.tarjeta-juego h2 {
-    color: #c300ff;
-    font-family: 'Ethnocentric', sans-serif;
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    position: relative;
-    z-index: 1;
-    text-shadow: 0 0 10px #5500ff;
-}
-
-.tarjeta-juego p {
-    color: #ccc;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-}
-
-.tarjeta-juego .play-btn {
-    position: relative;
-    z-index: 1;
-}
-@keyframes logoClickAnimation {
-    0% {
-        transform: scale(1);
-        text-shadow: 0 0 2px #c57eff;
-    }
-    50% {
-        transform: scale(1.05);
-        text-shadow: 0 0 6px #d6c4ff;
-    }
-    100% {
-        transform: scale(1);
-        text-shadow: 0 0 2px #c57eff;
-    }
-}
-
-.navbar-brand.animate-click {
-    animation: logoClickAnimation 0.4s ease-in-out;
-}
-/*--------------------------------CONTENIDO--------------------------------*/
+/* ================== INICIO / BIENVENIDA ================== */
 .inicio-bienvenida {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%; /* Asegura que ocupa toda la fila */
-    min-height: calc(100vh - 90px);
-    padding: 20px;
+  display:flex; justify-content:center; align-items:center;
+  min-height:calc(100vh - 90px); padding:20px; width:100%;
 }
-
-
 .bienvenida-box {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.05));
-    border: 2px solid #ea00ff44;
-    border-radius: 20px;
-    padding: 40px 30px;
-    max-width: 800px;
-    box-shadow: 0 0 20px rgba(234, 0, 255, 0.2);
-    animation: fadeInInicio 1s ease;
-    backdrop-filter: blur(6px);
-    margin: 0 auto;
-    text-align: center;
+  background: linear-gradient(135deg, rgba(255,255,255,.02), rgba(255,255,255,.05));
+  border:2px solid #ea00ff44; border-radius:20px;
+  padding:40px 30px; max-width:800px; margin:auto;
+  text-align:center;
+  box-shadow:0 0 20px rgba(234,0,255,.2);
+  animation: fadeInInicio 1s ease;
+  backdrop-filter: blur(6px);
 }
-
-@keyframes fadeInInicio {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.bienvenida-box h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
-    color: #d6c4ff;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px #5500ff;
-}
-
-.bienvenida-box h2 {
-    font-family: 'Ethnocentric', sans-serif;
-    color: #ea00ff;
-    font-size: 2rem;
-    margin-bottom: 25px;
-    text-shadow: 0 0 10px #a64bf4;
-}
-
-.bienvenida-box .descripcion-inicio {
-    font-size: 1.1rem;
-    color: #ccc;
-    margin-bottom: 30px;
-}
-
-.usuario {
-    color: #00ffe7;
-    text-shadow: 0 0 10px #00ffe7;
-}
-
+@keyframes fadeInInicio { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+.bienvenida-box h1 { font-family:'Orbitron'; font-size:2.5rem; color:#d6c4ff; margin-bottom:10px; text-shadow:0 0 10px #5500ff; }
+.bienvenida-box h2 { font-family:'Ethnocentric'; font-size:2rem; color:#ea00ff; margin-bottom:25px; text-shadow:0 0 10px #a64bf4; }
+.bienvenida-box .descripcion-inicio { font-size:1.1rem; color:#ccc; margin-bottom:30px; }
+.usuario { color:#00ffe7; text-shadow:0 0 10px #00ffe7; }
 .btn-inicio-jugar {
-    background: linear-gradient(90deg, #a64bf4, #ea00ff);
-    color: #000;
-    padding: 12px 30px;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 0 10px #a64bf4;
-    transition: transform 0.3s, box-shadow 0.3s;
+  background: linear-gradient(90deg,#a64bf4,#ea00ff);
+  color:#000; padding:12px 30px; font-size:1.1rem;
+  border-radius:30px; font-weight:bold;
+  box-shadow:0 0 10px #a64bf4; transition:.3s;
 }
-
-.btn-inicio-jugar:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #ea00ff;
-}   
-/* Avatar genérico */
+.btn-inicio-jugar:hover { transform:scale(1.05); box-shadow:0 0 20px #ea00ff; }

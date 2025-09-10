@@ -1,9 +1,31 @@
 <?php
 session_start();
+
+include "Conexion_BD.php";
+$db = new conexion_BD();
+$conexion = $db->getConexion();
+
 if (isset($_SESSION['usuario'])) {
     header("Location: Inicio.php");
     exit();
 }
+
+$sql_foto = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario = ?";
+$stmt_foto = $conexion->prepare($sql_foto);
+$stmt_foto->bind_param("s", $usuario);
+$stmt_foto->execute();
+$res_foto = $stmt_foto->get_result()->fetch_assoc();
+
+
+$BASE_URL = "/PlataformaLudica/main_final/";  
+
+if (!empty($res_foto['imagen_perfil']) && file_exists(__DIR__ . "/uploads/perfiles/" . $res_foto['imagen_perfil'])) {
+    $_SESSION['foto'] = $BASE_URL . "uploads/perfiles/" . $res_foto['imagen_perfil'];
+} else {
+    $_SESSION['foto'] = $BASE_URL . "navbar/imagenes/usuario.png";
+}
+
+
 ?>
 
 

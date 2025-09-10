@@ -13,6 +13,14 @@ $conexion = $db->getConexion();
 
 $usuario_actual = $_SESSION["usuario"];
 
+// Definir BASE_URL (ajusta si tu proyecto está en otra ruta)
+$BASE_URL = "/PlataformaLudica/main_final/";
+$BASE_URL = "/PlataformaLudica/main_final/";
+
+// Rutas de archivo físico y ruta web para uploads
+$upload_dir = __DIR__ . "/uploads/perfiles/";               // filesystem
+$upload_web = $BASE_URL . "pagina-principal/uploads/perfiles/"; // web (ajusta 'pagina-principal' si tu estructura es distinta)
+
 // Obtener datos del usuario
 $sql = "SELECT nom_usuario, gmail_usuario, imagen_perfil, passwd FROM usuarios WHERE nom_usuario = ?";
 $stmt = $conexion->prepare($sql);
@@ -20,10 +28,6 @@ $stmt->bind_param("s", $usuario_actual);
 $stmt->execute();
 $resultado = $stmt->get_result();
 $datos = $resultado->fetch_assoc();
-// ================== Procesar cambios ==================
-$mensaje = "";            // para mostrar dentro del modal
-$tipo_alerta = "danger";  // 'success' o 'danger'
-$accion_post = "";        // para saber qué acción disparó el post (ej: 'password')
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $accion = $_POST["accion"] ?? "";
@@ -54,17 +58,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 mkdir("uploads/perfiles", 0777, true);
             }
 
-            move_uploaded_file($_FILES["imagen"]["tmp_name"], $ruta);
+            if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $ruta)) {
+                $update_img = "UPDATE usuarios SET imagen_perfil=? WHERE nom_usuario=?";
+                $stmt = $conexion->prepare($update_img);
+                $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
+                $stmt->execute();
 
-            $update_img = "UPDATE usuarios SET imagen_perfil=? WHERE nom_usuario=?";
-            $stmt = $conexion->prepare($update_img);
-            $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
-            $stmt->execute();
+                // 🔹 Guardar en sesión también
+                $_SESSION["foto"] = $ruta;
+            }
         }
         // Redirigimos
         header("Location: perfil.php");
         exit();
     }
+
 
     // Cambiar contraseña —> NO redirigimos (mostramos mensaje en el modal)
     if ($accion === "password") {
@@ -133,13 +141,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-
-
-
-// Foto por defecto o personalizada
-$foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $datos['imagen_perfil']))
-    ? "uploads/perfiles/" . $datos['imagen_perfil']
-    : "../navbar/imagenes/usuario.png";
+if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_perfil'])) {
+    // ruta web que usará el <img>
+    $foto = $upload_web . $datos['imagen_perfil'];
+} else {
+    $foto = $BASE_URL . "navbar/imagenes/usuario.png";
+}
 ?>
 
 <!DOCTYPE html>
@@ -288,8 +295,8 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
 </head>
 
 <body>
-    
-    <?php 
+
+    <?php
     ?>
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
@@ -320,7 +327,10 @@ $foto = (!empty($datos['imagen_perfil']) && file_exists("uploads/perfiles/" . $d
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white"
                             id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <img src="../navbar/imagenes/usuario.png" class="user-avatar shadow-sm">
+                            <img src="<?php echo htmlspecialchars($_SESSION['foto'] ?? '../navbar/imagenes/usuario.png'); ?>"
+                                class="user-avatar shadow-sm"
+                                alt="Usuario">
+
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">
                             <li>
