@@ -170,13 +170,15 @@ class conexion_BD
             }
         }
     }
-    public function obtenerFoto($nombre)
-    {
-        $consulta = mysqli_query($this->conexion, "SELECT imagen_perfil FROM usuarios WHERE nom_usuario='{$nombre}' LIMIT 1");
-        if ($consulta && mysqli_num_rows($consulta) === 1) {
-            $row = mysqli_fetch_assoc($consulta);
-            return $row['foto'];
-        }
-        return null;
-    }
+    public function obtenerFoto($usuario) {
+    $sql = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario = ? LIMIT 1";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->bind_param("s", $usuario);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+    return $row['imagen_perfil'] ?? null;
+}
+
+
 }

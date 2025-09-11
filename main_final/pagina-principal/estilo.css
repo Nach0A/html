@@ -60,13 +60,26 @@ body {
   width:0; height:2px; background:#d6c4ff;
   transition: width .3s ease;
 }
-.navbar .navbar-nav.me-auto .nav-link:hover::after { width:100%; }
+
 .navbar .nav-link:hover { color: #d6c4ff !important; }
 .navbar .dropdown-item { color:#000 !important; transition:.2s; }
 .navbar .dropdown-item:hover { background:rgba(73,4,138,0.1); color:rgb(73,4,138)!important; }
 .user-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; transition:.3s; }
 .user-avatar:hover { box-shadow:0 0 0 3px rgba(255,255,255,0.5); }
-
+.navbar .nav-link {  position: relative; /* 🔹 Necesario para que el ::after se quede bajo cada link */}
+.navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #d6c4ff;
+  transition: width 0.3s ease;
+}
+.navbar .nav-link:hover::after {
+  width: 100%;
+}
 /* ================== LOGIN / REGISTRO ================== */
 #loginForm, #form-container .card {
   background: rgba(0,0,0,0.85);
@@ -144,6 +157,32 @@ body {
   background: radial-gradient(circle, rgba(234,0,255,.15) 0%, transparent 70%);
   animation: pulseNeon 6s infinite alternate; z-index:0;
 }
+button.play-btn {
+  all: unset; /* quita estilos nativos */
+  display: inline-block;
+  cursor: pointer;
+}
+
+.play-btn {
+  margin-top: 15px;
+  padding: 12px 25px;
+  font-family: 'Ethnocentric', sans-serif;
+  font-size: 1rem;
+  background: linear-gradient(90deg,#a64bf4,#ea00ff);
+  color: #000;
+  border-radius: 25px;
+  font-weight: bold;
+  box-shadow: 0 0 12px #a64bf4;
+  transition: 0.3s;
+  text-align: center;
+}
+.play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px #ea00ff;
+  color: #000;
+}
+
+
 @keyframes pulseNeon { 0%{transform:translate(0,0) rotate(0);} 100%{transform:translate(20px,20px) rotate(360deg);} }
 .tarjeta-juego h2 { font-family:'Ethnocentric'; color:#c300ff; font-size:1.8rem; margin-bottom:15px; text-shadow:0 0 10px #5500ff; z-index:1; }
 .tarjeta-juego p, .tarjeta-juego .play-btn { position:relative; z-index:1; }

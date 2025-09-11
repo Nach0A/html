@@ -12,14 +12,18 @@ $db = new conexion_BD();
 $conexion = $db->getConexion();
 
 $usuario_actual = $_SESSION["usuario"];
+// Evitar warnings: inicializar variables usadas por los modales
+$accion_post = '';
+$mensaje = '';
+$tipo_alerta = '';
 
-// Definir BASE_URL (ajusta si tu proyecto está en otra ruta)
-$BASE_URL = "/PlataformaLudica/main_final/";
+
+// Definir BASE_URL
 $BASE_URL = "/PlataformaLudica/main_final/";
 
 // Rutas de archivo físico y ruta web para uploads
-$upload_dir = __DIR__ . "/uploads/perfiles/";               // filesystem
-$upload_web = $BASE_URL . "pagina-principal/uploads/perfiles/"; // web (ajusta 'pagina-principal' si tu estructura es distinta)
+$upload_dir = __DIR__ . "/uploads/perfiles/";
+$upload_web = $BASE_URL . "pagina-principal/uploads/perfiles/"; 
 
 // Obtener datos del usuario
 $sql = "SELECT nom_usuario, gmail_usuario, imagen_perfil, passwd FROM usuarios WHERE nom_usuario = ?";
@@ -48,31 +52,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-    // Cambiar imagen
-    if ($accion === "imagen") {
-        if (!empty($_FILES["imagen"]["name"])) {
-            $nombre_imagen = $usuario_actual . "_" . basename($_FILES["imagen"]["name"]);
-            $ruta = "uploads/perfiles/" . $nombre_imagen;
+    // ... luego, en el bloque de cambiar imagen:
+if ($accion === "imagen") {
+    if (!empty($_FILES["imagen"]["name"])) {
+        $nombre_imagen = $usuario_actual . "_" . basename($_FILES["imagen"]["name"]);
 
-            if (!is_dir("uploads/perfiles")) {
-                mkdir("uploads/perfiles", 0777, true);
-            }
-
-            if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $ruta)) {
-                $update_img = "UPDATE usuarios SET imagen_perfil=? WHERE nom_usuario=?";
-                $stmt = $conexion->prepare($update_img);
-                $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
-                $stmt->execute();
-
-                // 🔹 Guardar en sesión también
-                $_SESSION["foto"] = $ruta;
-            }
+        // Aseguramos carpeta
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0775, true);
         }
-        // Redirigimos
-        header("Location: perfil.php");
-        exit();
-    }
 
+        $destino_fs = $upload_dir . $nombre_imagen; // ruta física para move_uploaded_file
+
+        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $destino_fs)) {
+            // Guardamos solo el nombre en la BD
+            $update_img = "UPDATE usuarios SET imagen_perfil=? WHERE nom_usuario=?";
+            $stmt = $conexion->prepare($update_img);
+            $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
+            $stmt->execute();
+
+            // Guardar en sesión la RUTA WEB (no la ruta física)
+            $_SESSION["foto"] = $upload_web . $nombre_imagen;
+        } else {
+            // opcional: mensaje de error
+            $mensaje = "Error al subir la imagen.";
+            $tipo_alerta = "danger";
+        }
+    }
+    header("Location: perfil.php");
+    exit();
+}
 
     // Cambiar contraseña —> NO redirigimos (mostramos mensaje en el modal)
     if ($accion === "password") {
@@ -142,11 +151,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_perfil'])) {
-    // ruta web que usará el <img>
     $foto = $upload_web . $datos['imagen_perfil'];
 } else {
     $foto = $BASE_URL . "navbar/imagenes/usuario.png";
 }
+
 ?>
 
 <!DOCTYPE html>
