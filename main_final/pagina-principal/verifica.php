@@ -6,12 +6,6 @@ require_once "Conexion_BD.php";
 $db = new conexion_BD();
 $conexion = $db->getConexion();
 
-// Si no es POST, volvemos al login
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: login.php");
-    exit();
-}
-
 // Config (ajusta si tu estructura cambia)
 $BASE_URL   = "/PlataformaLudica/main_final/";
 $UPLOAD_DIR = __DIR__ . "/uploads/perfiles/";                  // ruta en disco donde se guardan archivos
