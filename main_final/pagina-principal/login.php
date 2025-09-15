@@ -67,17 +67,17 @@ $BASE_URL = "/PlataformaLudica/main_final/";
 
         <!-- LOGIN CON MAIL -->
         <form id="loginSection" action="verifica.php" method="post">
-            <input type="text" name="input" class="form-control mb-3" placeholder="Usuario o correo" required>
-            <input type="password" name="contrasenia" class="form-control mb-3" placeholder="Contraseña" required>
+            <input type="text" name="input" class="textwhite" placeholder="Usuario o correo" required>
+            <input type="password" name="contrasenia" class="textwhite" placeholder="Contraseña" required>
             <input type="hidden" name="ini" value="1">
             <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
         </form>
 
         <!-- REGISTRO -->
         <form id="registerSection" action="verifica.php" method="post" style="display: none;">
-            <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre de usuario" required>
-            <input type="email" name="gmail" class="form-control mb-2" placeholder="Correo electrónico" required>
-            <input type="password" name="contrasenia" class="form-control mb-2" placeholder ="Contraseña" required>
+            <input type="text" name="nombre" class="textwhite" placeholder="Nombre de usuario" required>
+            <input type="email" name="gmail" class="textwhite" placeholder="Correo electrónico" required>
+            <input type="password" name="contrasenia" class="textwhite" placeholder ="Contraseña" required>
             <input type="hidden" name="ini" value="0">
             <button type="submit" class="btn btn-secondary w-100">Registrarse</button>
         </form>

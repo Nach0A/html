@@ -330,3 +330,7 @@ button.play-btn {
   box-shadow:0 0 10px #a64bf4; transition:.3s;
 }
 .btn-inicio-jugar:hover { transform:scale(1.05); box-shadow:0 0 20px #ea00ff; }
+
+.textwhite::placeholder {
+    color: rgb(255, 255, 255);
+}
