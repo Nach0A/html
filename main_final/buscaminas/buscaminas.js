@@ -28,8 +28,8 @@ let currentDifficulty = 'easy';
 // Configuraciones de dificultad
 const difficulties = {
     easy: { rows: 8, cols: 8, mines: 10, cellSize: 40, fontSize: '1.5em' },
-    medium: { rows: 16, cols: 16, mines: 40, cellSize: 28, fontSize: '1.2em' },
-    hard: { rows: 16, cols: 30, mines: 99, cellSize: 20, fontSize: '0.9em' }
+    medium: { rows: 12, cols: 20, mines: 40, cellSize: 28, fontSize: '1.2em' },
+    hard: { rows: 12, cols: 40, mines: 99, cellSize: 28, fontSize: '1.2em' }
 };
 
 // Función para establecer la dificultad
