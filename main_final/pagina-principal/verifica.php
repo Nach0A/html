@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "Conexion_BD.php";
+require_once "Conexion_BD.php"; 
 
 // Instancia de DB
 $db = new conexion_BD();
