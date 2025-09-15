@@ -1,9 +1,9 @@
 /* ========= Configuración de dificultad ========= */
 const DIFFICULTY = {
     easy:       { swaps:  6, speed:  900 },
-    normal:     { swaps:  4, speed: 3000 },   // modo “Normal”
+    normal:     { swaps:  10, speed: 600 },   // modo “Normal” velosidad cambiada para test
     hard:       { swaps: 18, speed:  450 },
-    impossible: { swaps: 30, speed:  330 }
+    impossible: { swaps: 28, speed:  390 }
 };
 
 /* ========= Mensajes ========= */
@@ -33,7 +33,7 @@ const nextEl     = document.getElementById('nextBanner');
 
 /* ========= Estado ========= */
 let currentDiff = 'normal';
-let stage       = 'hide';   // hide → shuffling → guess
+let stage       = 'hide';
 let attempts    = 0;
 let wins        = 0;
 let streak      = 0;
@@ -48,7 +48,7 @@ const lockBoard = () => {                    // bloquea TODO
     gameArea.style.pointerEvents = 'none';
 };
 const enableClicksOnly = () => {             // sólo clicks, sin hover
-    gameArea.style.pointerEvents = 'auto';   // inline style > class
+    gameArea.style.pointerEvents = 'auto'; 
 };
 const unlockBoard = () => {                  // clicks + hover
     gameArea.classList.remove('no-hover');
@@ -173,14 +173,29 @@ function animateSwap(i, j, duration) {
         setTimeout(() => {
             [A, B].forEach(el => { el.style.transition = ''; el.style.transform = ''; });
 
-            /* Reinsertar nodos según el sentido */
-            if (dx > 0) {       // A → izquierda, B → derecha
-                A.before(B);    // B queda a la izquierda
-            } else {            // A → derecha, B → izquierda
-                B.before(A);    // A queda a la izquierda
+            function swapNodes(a, b) {
+                const parent = a.parentNode;
+                if (!parent || parent !== b.parentNode) return;
+
+                // Si son adyacentes
+                if (a.nextSibling === b) {
+                    parent.insertBefore(b, a); // [a,b] -> [b,a]
+                    return;
+                }
+                if (b.nextSibling === a) {
+                    parent.insertBefore(a, b); // [b,a] -> [a,b]
+                    return;
+                }
+
+                // No adyacentes
+                const aNext = a.nextSibling;
+                const bNext = b.nextSibling;
+                parent.insertBefore(a, bNext); // mueve A donde estaba B
+                parent.insertBefore(b, aNext); // mueve B donde estaba A
             }
 
             /* Mantener array sincronizado */
+            swapNodes(A, B); 
             [cups[i], cups[j]] = [cups[j], cups[i]];
             res();
         }, duration);
