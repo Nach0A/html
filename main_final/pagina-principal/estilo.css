@@ -1,0 +1,336 @@
+/* ================== FUENTES ================== */
+@font-face {
+  font-family: 'Ethnocentric';
+  src: url('../navbar/letra/EthnocentricRg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+/* ================== GLOBAL ================== */
+body {
+  background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff;
+  min-height: 100vh;
+  padding-top: 70px;
+  overflow-x: hidden;
+}
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.fade-in { animation: fadeIn 0.6s ease-in-out; }
+@keyframes fadeIn { from {opacity:0;transform:translateY(20px);} to {opacity:1;transform:translateY(0);} }
+
+/* ================== PRELOADER ================== */
+#preloader {
+  position: fixed; inset: 0;
+  display: flex; justify-content: center; align-items: center;
+  background: #000; z-index: 9999;
+  transition: opacity .8s ease, visibility .8s ease;
+}
+#preloader-logo {
+  width: 100px; height: 100px; border-radius: 50%;
+  animation: logoFade 2s ease-in-out infinite;
+}
+@keyframes logoFade {
+  0%,100% { opacity: .4; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* ================== NAVBAR ================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(20,20,20,0.85);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 1030;
+}
+
+/* Tipografía y color base */
+.navbar .navbar-brand,
+.navbar .navbar-nav .nav-link {
+  font-family: 'Ethnocentric', sans-serif;
+  font-weight: 500;
+  color: #fff !important;
+  transition: color .3s ease;
+}
+
+
+.navbar .navbar-nav.me-auto .nav-link {
+  position: relative;        /* necesario para que ::after se posicione respecto al link */
+  display: inline-block;     /* importante: hace que width:100% del ::after funcione consistentemente */
+  padding-bottom: 6px;       /* da espacio para que la línea no pise el texto */
+  transition: color .3s ease;
+}
+
+/* pseudo-elemento de la línea (inicialmente ancho 0) */
+.navbar .navbar-nav.me-auto .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #d6c4ff;
+  transition: width 0.3s ease;
+  pointer-events: none;
+}
+
+/* al pasar el mouse: expandir la línea */
+.navbar .navbar-nav.me-auto .nav-link:not(.dropdown-toggle):hover::after {
+  width: 100%;
+}
+
+/* color hover del texto (aplica a todos los nav-link) */
+.navbar .nav-link:hover {
+  color: #d6c4ff !important;
+}
+
+/* dropdown items */
+.navbar .dropdown-item {
+  color: #000 !important;
+  transition: .2s;
+}
+.navbar .dropdown-item:hover {
+  background: rgba(73,4,138,0.1);
+  color: rgb(73,4,138)!important;
+}
+
+.user-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; transition:.3s; }
+.user-avatar:hover { box-shadow:0 0 0 3px rgba(255,255,255,0.5); }
+
+/* ================== DROPDOWNS OSCUROS + TRANSICIONES ================== */
+
+/* Forzar la fuente del navbar y todos sus descendientes (incluye dropdowns) */
+.navbar,
+.navbar * {
+  font-family: 'Ethnocentric', sans-serif !important;
+}
+
+/* Estilo base del dropdown (oscuro, borde y sombra) */
+.navbar .dropdown-menu {
+  background: rgba(12,12,12,0.96);    /* fondo oscuro casi opaco */
+  color: #e6e6ee;                      /* texto claro */
+  border: 1px solid rgba(166,75,244,0.12);
+  box-shadow: 0 8px 28px rgba(16,8,30,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 8px 6px;
+  min-width: 200px;
+  transform-origin: top center;
+  /* transición visual */
+  opacity: 0;
+  transform: translateY(8px) scale(.995);
+  transition: opacity .18s cubic-bezier(.2,.8,.2,1), transform .18s cubic-bezier(.2,.8,.2,1);
+  /* asegúrate de que no se muestre hasta que tenga la clase .show */
+  will-change: opacity, transform;
+  z-index: 2000;
+}
+
+
+.navbar .dropdown.show > .dropdown-menu,
+.navbar .dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+
+.navbar .dropdown-item {
+  font-family: 'Ethnocentric', sans-serif !important;
+  color: #d6d0ff !important;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background-color .16s ease, color .16s ease, transform .12s ease;
+}
+
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  background: rgba(104, 20, 180, 0.14);
+  color: #fff !important;
+  transform: translateX(2px);
+}
+
+
+.navbar .dropdown-divider {
+  border-top: 1px solid rgba(255,255,255,0.04);
+  margin: 6px 4px;
+}
+
+/* Enlaces disabled dentro del dropdown */
+.navbar .dropdown-item.disabled,
+.navbar .dropdown-item:disabled {
+  color: rgba(255,255,255,0.35) !important;
+  background: transparent;
+  pointer-events: none;
+}
+
+
+.navbar .dropdown-item .fa,
+.navbar .dropdown-item img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+
+.navbar .dropdown {
+  transition: transform .18s ease;
+}
+
+
+
+
+/* ================== LOGIN / REGISTRO ================== */
+#loginForm, #form-container .card {
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 20px #a64bf4, 0 0 60px #e82ef8;
+  backdrop-filter: blur(10px);
+  padding: 30px 25px;
+  max-width: 400px;
+  margin: 50px auto;
+  animation: fadeInLogin 1s ease-out;
+  position: relative; overflow:hidden;
+}
+@keyframes fadeInLogin { from{opacity:0;transform:translateY(30px) scale(.95);} to{opacity:1;transform:translateY(0) scale(1);} }
+#loginForm::before, #form-container .card::before {
+  content:""; position:absolute; inset:-2px;
+  background: linear-gradient(45deg, #000, #d400ff, #000);
+  background-size: 600% 600%;
+  border-radius:18px; filter:blur(6px); z-index:-1;
+  animation: animatedBorder 6s linear infinite;
+}
+@keyframes animatedBorder { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+
+/* Inputs */
+.input-neon, #loginForm input, #form-container input {
+  background: #1a1a1a;
+  border: 1px solid #5e2c91;
+  color: #fff;
+  padding: 12px 15px;
+  border-radius: 8px;
+  width: 100%;
+  transition: .3s;
+}
+.input-neon:focus, #loginForm input:focus, #form-container input:focus {
+  outline:none; border-color:#e82ef8; box-shadow:0 0 10px #e82ef8;
+}
+
+/* Botones */
+.btn-neon, #loginForm button, #form-container .btn {
+  font-family: 'Ethnocentric', sans-serif;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px;
+  transition:.3s;
+}
+.btn-primary { background:#a64bf4; color:#fff; box-shadow:0 0 10px #a64bf4; }
+.btn-primary:hover { background:#d86cf4; transform:scale(1.03); box-shadow:0 0 20px #e82ef8; }
+.btn-secondary { background:#3d1c54; color:#fff; box-shadow:0 0 10px #5e2c91; }
+.btn-secondary:hover { background:#5e2c91; transform:scale(1.03); box-shadow:0 0 20px #a64bf4; }
+.btn-outline-light { border:1px solid #a64bf4; color:#fff; background:transparent; }
+.btn-outline-light:hover, .btn-outline-light.active { background:#a64bf4; color:#000; box-shadow:0 0 10px #a64bf4; }
+
+/* ================== JUEGOS ================== */
+.juegos-wrapper {
+  min-height: 100vh;
+  padding: 60px 20px;
+  background: radial-gradient(circle at top left, #1b1b1b 0%, #000 100%);
+  display: flex; flex-direction: column; align-items: center;
+}
+.titulo-juegos { font-family:'Ethnocentric'; color:#ea00ff; text-shadow:0 0 15px #5500ff, 0 0 30px #81004c; margin-bottom:50px; }
+.grid-juegos { display:flex; flex-direction:column; align-items:center; gap:40px; width:100%; padding:20px; }
+.tarjeta-juego {
+  background: linear-gradient(135deg, #111, #1a1a1a);
+  border:2px solid #ea00ff; border-radius:20px;
+  box-shadow:0 0 20px #81004c, inset 0 0 10px #5500ff;
+  padding:25px; max-width:700px; width:90%;
+  text-align:center; overflow:hidden; position:relative;
+  transition:.4s;
+}
+.tarjeta-juego:hover { transform:scale(1.03); box-shadow:0 0 30px #9900ff, inset 0 0 15px #5500ff; }
+.tarjeta-juego::before {
+  content:""; position:absolute; inset:-50% auto auto -50%;
+  width:200%; height:200%;
+  background: radial-gradient(circle, rgba(234,0,255,.15) 0%, transparent 70%);
+  animation: pulseNeon 6s infinite alternate; z-index:0;
+}
+button.play-btn {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.play-btn {
+  margin-top: 15px;
+  padding: 12px 25px;
+  font-family: 'Ethnocentric', sans-serif;
+  font-size: 1rem;
+  background: linear-gradient(90deg,#a64bf4,#ea00ff);
+  color: #000;
+  border-radius: 25px;
+  font-weight: bold;
+  box-shadow: 0 0 12px #a64bf4;
+  transition: 0.3s;
+  text-align: center;
+}
+.play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px #ea00ff;
+  color: #000;
+}
+
+.tarjeta-juego {
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.tarjeta-juego:hover {
+  transform: rotateY(15deg) scale(1.05);
+  box-shadow: 0 0 25px #a64bf4, 0 0 50px #ea00ff;
+}
+
+
+.tarjeta-juego h2 { font-family:'Ethnocentric'; color:#c300ff; font-size:1.8rem; margin-bottom:15px; text-shadow:0 0 10px #5500ff; z-index:1; }
+.tarjeta-juego p, .tarjeta-juego .play-btn { position:relative; z-index:1; }
+
+
+
+/* ================== INICIO / BIENVENIDA ================== */
+.inicio-bienvenida {
+  display:flex; justify-content:center; align-items:center;
+  min-height:calc(100vh - 90px); padding:20px; width:100%;
+}
+.bienvenida-box {
+  background: linear-gradient(135deg, rgba(255,255,255,.02), rgba(255,255,255,.05));
+  border:2px solid #ea00ff44; border-radius:20px;
+  padding:40px 30px; max-width:800px; margin:auto;
+  text-align:center;
+  box-shadow:0 0 20px rgba(234,0,255,.2);
+  animation: fadeInInicio 1s ease;
+  backdrop-filter: blur(6px);
+}
+@keyframes fadeInInicio { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+.bienvenida-box h1 { font-family:'Orbitron'; font-size:2.5rem; color:#d6c4ff; margin-bottom:10px; text-shadow:0 0 10px #5500ff; }
+.bienvenida-box h2 { font-family:'Ethnocentric'; font-size:2rem; color:#ea00ff; margin-bottom:25px; text-shadow:0 0 10px #a64bf4; }
+.bienvenida-box .descripcion-inicio { font-size:1.1rem; color:#ccc; margin-bottom:30px; }
+.usuario { color:#00ffe7; text-shadow:0 0 10px #00ffe7; }
+.btn-inicio-jugar {
+  background: linear-gradient(90deg,#a64bf4,#ea00ff);
+  color:#000; padding:12px 30px; font-size:1.1rem;
+  border-radius:30px; font-weight:bold;
+  box-shadow:0 0 10px #a64bf4; transition:.3s;
+}
+.btn-inicio-jugar:hover { transform:scale(1.05); box-shadow:0 0 20px #ea00ff; }
+
+.textwhite::placeholder {
+    color: rgb(255, 255, 255);
+}
