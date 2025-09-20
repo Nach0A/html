@@ -61,6 +61,11 @@ class conexion_BD
         return $this->conexion;
     }
 
+    public function getCorreo()
+    {
+        return $this->correo;
+    }
+
     public function getServidor()
     {
         return $this->servidor;
@@ -136,21 +141,25 @@ class conexion_BD
             $nombre = $this->nombre; 
             $contrasenia = trim(hash('sha256', $this->contrasenia));
             $gmailHash = trim(hash('sha256', $this->correo)); 
-            mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES ('{$nombre}', '{$contrasenia}', '{$gmailHash}')");
+            $stmt = $this->conexion->prepare("INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES (?, ?, ?)"); //Para que solo sustiyuya los ?
+            $stmt->bind_param("sss", $nombre, $contrasenia, $gmailHash); //Indicamos los valores por los que vamos a sustituir los ? por tres datos tipo string
+            $stmt->execute(); //Ejecutamos la consulta
+            $stmt->close();
         }
     }
 
     public function mailUsado() {
         $mail = $this->correo; 
         $gmailHash = hash('sha256', $mail);
-        $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
+        $consulta = mysqli_query($this->conexion, "SELECT nom_usuario FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
         return $consulta && mysqli_num_rows($consulta) > 0;
     }
 
     public function nombreUsado()
     {
         $nom = $this->nombre; // sin hash
-        $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE nom_usuario='{$nom}' LIMIT 1");
+        $consulta = mysqli_query($this->conexion, "SELECT nom_usuario FROM usuarios WHERE nom_usuario='{$nom}' LIMIT 1");
+
         return $consulta && mysqli_num_rows($consulta) > 0;
     }
 
@@ -170,10 +179,11 @@ class conexion_BD
             }
         }
     }
-    public function obtenerFoto($usuario) {
-    $sql = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario = ? LIMIT 1";
+    public function obtenerFoto() {
+    $nombre = $this->nombre;
+    $sql = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario={$nombre}  LIMIT 1";
     $stmt = $this->conexion->prepare($sql);
-    $stmt->bind_param("s", $usuario);
+    $stmt->bind_param("s", $nombre);
     $stmt->execute();
     $res = $stmt->get_result();
     $row = $res->fetch_assoc();
