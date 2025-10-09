@@ -11,6 +11,9 @@ class conexion_BD
     private $contrasenia;
     private $correo;
     private $ini;
+    private $calle;
+    private $departamento;
+    private $num_calle;
 
     public function __construct()
     {
@@ -22,6 +25,9 @@ class conexion_BD
         $this->contrasenia = $_POST["contrasenia"] ?? null;
         $this->correo = $_POST["gmail"] ?? null;
         $this->ini = $_POST["ini"] ?? null;
+        $this->calle = $_POST["calle"] ?? null;
+        $this->departamento = $_POST["departamento"] ?? null;
+        $this->num_calle = $_POST["num_calle"] ?? null;
         $this->conexion = $this->conectar($this->servidor, $this->usuario, $this->pass, $this->base);
     }
 
@@ -55,6 +61,22 @@ class conexion_BD
     {
         $this->contrasenia = $contrasenia;
     }
+    public function setCorreo($correo)
+    {
+        $this->correo = $correo;
+    }
+    public function setCalle($calle)
+    {
+        $this->calle = $calle;
+    }
+    public function setDepartamento($departamento)
+    {
+        $this->departamento = $departamento;
+    }
+    public function setNumCalle($num_calle)
+    {
+        $this->num_calle = $num_calle;
+    }
 
     public function getConexion()
     {
@@ -80,8 +102,6 @@ class conexion_BD
     {
         return $this->pass;
     }
-
-
     public function getBase()
     {
         return $this->base;
@@ -106,6 +126,18 @@ class conexion_BD
     {
         return $this->ini;
     }
+    public function getCalle()
+    {
+        return $this->calle;
+    }
+    public function getDepartamento()
+    {
+        return $this->departamento;
+    }
+    public function getNumCalle()
+    {
+        return $this->num_calle;
+    }
 
     public function inicio()
     {
@@ -113,7 +145,7 @@ class conexion_BD
         $contra = trim(hash('sha256', $this->contrasenia));
         $gmailHash = hash('sha256', $input);
         $sql = "SELECT nom_usuario 
-            FROM usuarios 
+            FROM usuarios JOIN 
             WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
             AND passwd='{$contra}'
             LIMIT 1";
@@ -190,5 +222,15 @@ class conexion_BD
     return $row['imagen_perfil'] ?? null;
 }
 
-
+public function agregarAdmin() {
+    $calle = trim(hash('sha256',$this->calle));
+    $departamento = trim(hash('sha256',$this->departamento));
+    $contrasenia = trim(hash('sha256', $this->contrasenia));
+    $num_calle = trim(hash('sha256', $this->num_calle));   
+    $gmail = trim(hash('sha256', $this->correo));
+    $stmt = $this->conexion->prepare("INSERT INTO `administrador` (`calle`, `departamento`, `gmail_admin`, `num_calle`, `passwd_admin`) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $calle, $departamento, $gmail, $num_calle, $contrasenia);
+    $stmt->execute();
+    $stmt->close();
+}
 }
