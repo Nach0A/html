@@ -80,7 +80,7 @@ if ($accion === "imagen") {
         }
     }
     header("Location: perfil.php");
-    exit();
+    exit(); 
 }
 
     // Cambiar contraseña —> NO redirigimos (mostramos mensaje en el modal)

@@ -7,7 +7,6 @@ require "autoload.php";
 class Correo
 {
     private $host;
-    private $puerto;
     private $nombre;
     private $direccion;
     private $contenido;
@@ -17,7 +16,6 @@ class Correo
     public function __construct($host, $puerto, $nombre, $direccion, $contenido, $asunto)
     {
         $this->host = $host;
-        $this->puerto = $puerto;
         $this->nombre = $nombre;
         $this->direccion = $direccion;
         $this->contenido = $contenido;
@@ -28,10 +26,6 @@ class Correo
     public function setHost($host)
     {
         $this->host = $host;
-    }
-    public function setPuerto($puerto)
-    {
-        $this->puerto = $puerto;
     }
     public function setNombre($nombre)
     {
@@ -56,7 +50,7 @@ class Correo
             $this->mail->Host = $this->host;
             $this->mail->SMTPAuth = false;
             $this->mail->SMTPAutoTLS = false; // Para que no use TLS por defecto, porque el ServidOR no lo soporta :/
-            $this->mail->Port = $this->puerto;
+            $this->mail->Port = 587;
 
             $this->mail->setFrom('zentryx@correos.local', 'Zentryx');
             $this->mail->addAddress($this->direccion, $this->nombre);
