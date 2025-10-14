@@ -233,4 +233,19 @@ public function agregarAdmin() {
     $stmt->execute();
     $stmt->close();
 }
+
+public function getId_usuario() {
+    $nombre = $this->nombre; 
+    $consulta_usuario = mysqli_query($this->conexion, "SELECT id_usuario FROM usuarios WHERE nom_usuario='{$nombre}' LIMIT 1");
+    $fila_usuario = mysqli_fetch_assoc($consulta_usuario);
+    return $fila_usuario['id_usuario'] ?? null;
+}
+
+public function agregarPuntaje($nombre, $puntaje, $correo, $id_juego) { 
+    $id_usuario = $this->getId_usuario();
+    $stmt = $this->conexion->prepare("INSERT INTO `juega` (`gmail_usuario`, `id_juego`, `id_usuario`, `nom_usuario`, `puntos`) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje); 
+    $stmt->execute();
+    $stmt->close();
+}
 }
