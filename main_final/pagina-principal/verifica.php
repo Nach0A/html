@@ -37,6 +37,7 @@ if ($bd->getIni() === "1") {
         if ($user['passwd'] === $hash) {
             // Login correcto
             $_SESSION['usuario'] = $user['nom_usuario'];
+            $_SESSION['id_usuario'] = $bd->getId_usuario();
 
             // Asignar foto en sesión — con ruta web consistente
             if (!empty($user['imagen_perfil']) && file_exists($UPLOAD_DIR . $user['imagen_perfil'])) {

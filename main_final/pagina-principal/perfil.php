@@ -9,7 +9,7 @@ if (!isset($_SESSION["usuario"])) {
 }
 
 $db = new conexion_BD();
-$conexion = $db->getConexion();
+$conexion = $db->conectar("localhost", "root", "", "zentryx");
 
 $usuario_actual = $_SESSION["usuario"];
 // Evitar warnings: inicializar variables usadas por los modales
@@ -155,7 +155,6 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
 } else {
     $foto = $BASE_URL . "navbar/imagenes/usuario.png";
 }
-
 ?>
 
 <!DOCTYPE html>
