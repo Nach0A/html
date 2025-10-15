@@ -14,7 +14,7 @@ class conexion_BD
 
     public function __construct()
     {
-        $this->servidor = "localhost";
+        $this->servidor = "db";//mismo nombre del servicio en docker-compose.yml
         $this->usuario = "root";
         $this->pass = "";
         $this->base = "zentryx";

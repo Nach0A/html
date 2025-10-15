@@ -1,0 +1,18 @@
+services:
+  app:
+    build:
+      context: main_final
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+  db:
+    image: mariadb:10.4
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+      MARIADB_DATABASE: zentryx
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./zentryx.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  db_data:
