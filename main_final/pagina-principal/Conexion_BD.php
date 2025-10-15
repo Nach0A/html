@@ -146,7 +146,7 @@ class conexion_BD
         $gmailHash = hash('sha256', $input);
         $sql = "SELECT nom_usuario 
             FROM usuarios 
-            WHERE (nom_usuario='{$input}' OR gmail_usuario='{$input}')
+            WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
             AND passwd='{$contra}'
             LIMIT 1";
             return mysqli_num_rows(mysqli_query($this->conexion, $sql)) === 1;
@@ -226,18 +226,23 @@ public function agregarAdmin() {
     $stmt->close();
 }
 
-public function getIdUsuario() {
-    $nombre = $this->nombre; 
-    $consulta_usuario = mysqli_query($this->conexion, "SELECT id_usuario FROM usuarios WHERE nom_usuario='{$nombre}' LIMIT 1");
+public function getIdUsuario($nombre) {
+    $gmail = hash('sha256', $nombre);
+    $consulta_usuario = mysqli_query($this->conexion, "SELECT id_usuario FROM usuarios WHERE nom_usuario='{$nombre}' OR gmail_usuario='{$gmail}' LIMIT 1");
     $fila_usuario = mysqli_fetch_assoc($consulta_usuario);
     return $fila_usuario['id_usuario'] ?? null;
 }
 
+public function getNombreUsuario($gmail) {
+    $consulta = mysqli_query($this->conexion, "SELECT nom_usuario FROM usuarios WHERE gmail_usuario={$gmail} LIMIT 1");
+    $fila_usuario = mysqli_fetch_assoc($consulta);
+    return $fila_usuario['nom_usuario'] ?? $this->getNombre();
+}
+
 public function agregarPuntaje($nombre, $puntaje, $correo, $id_juego) { 
-    $id_usuario = $this->getIdUsuario();
+    $id_usuario = $this->getIdUsuario($nombre);
     $stmt = $this->conexion->prepare("INSERT INTO `juega` (`gmail_usuario`, `id_juego`, `id_usuario`, `nom_usuario`, `puntos`) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje); 
+    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje);
     $stmt->execute();
-    $stmt->close();
 }
 }

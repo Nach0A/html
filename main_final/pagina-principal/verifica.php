@@ -19,17 +19,11 @@ $ini = $bd->getIni();
 if ($ini === "1") {
     // --- LOGIN ---
     $input = trim($_POST['input'] ?? '');
-    $pass  = "liceo";
-
-    if ($input === '' || $pass === '') {
-        echo '<script>alert("Completa usuario/contraseña."); window.location.href="login.php";</script>';
-        exit();
-    }
 
     if ($bd->inicio()) {
             // Login correcto
-            $_SESSION['usuario'] = $bd->getNombre();
-            $_SESSION['id_usuario'] = $bd->getIdUsuario();
+            $_SESSION['usuario'] = $bd->getNombreUsuario($bd->getNombre());
+            $_SESSION['id_usuario'] = $bd->getIdUsuario($bd->getNombre());
             // Asignar foto en sesión — con ruta web consistente
             if (!empty($user['imagen_perfil']) && file_exists($UPLOAD_DIR . $user['imagen_perfil'])) {
                 $_SESSION['foto'] = $UPLOAD_WEB . $user['imagen_perfil'];
