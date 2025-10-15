@@ -8,8 +8,8 @@ if (!isset($_SESSION['usuario'])) {
 $user = $_SESSION['usuario'];
 $bd = new conexion_BD();
 $conexion = $bd->conectar("localhost", "root", "", "zentryx");
-//$bd->agregarPuntaje($user, 10, "c21de19190f725e92595482548338a79f86e108285678731010989a866684b4f
-//", 1); // 1 es el id del memory
+$bd->agregarPuntaje($user, 10, "c21de19190f725e92595482548338a79f86e108285678731010989a866684b4f
+", 1); // 1 es el id del memory
 ?>
 
 <!DOCTYPE html>
