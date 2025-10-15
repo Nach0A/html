@@ -71,7 +71,7 @@ class conexion_BD
     }
     public function setDepartamento($departamento)
     {
-        $this->departamento = $departamento;
+        $this->departamento = $departamento; 
     }
     public function setNumCalle($num_calle)
     {
@@ -145,19 +145,11 @@ class conexion_BD
         $contra = trim(hash('sha256', $this->contrasenia));
         $gmailHash = hash('sha256', $input);
         $sql = "SELECT nom_usuario 
-            FROM usuarios JOIN 
+            FROM usuarios 
             WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
             AND passwd='{$contra}'
             LIMIT 1";
-        $consulta = mysqli_query($this->conexion, $sql);
-
-        if ($consulta && mysqli_num_rows($consulta) === 1) {
-            $row = mysqli_fetch_assoc($consulta);
-            // guardar SIEMPRE el nom_usuario real
-            $this->nombre = $row['nom_usuario'];
-            return true;
-        }
-        return false;
+            return mysqli_num_rows(mysqli_query($this->conexion, $sql)) === 1;
     }
 
     public function registro()
@@ -234,18 +226,23 @@ public function agregarAdmin() {
     $stmt->close();
 }
 
-public function getId_usuario() {
-    $nombre = $this->nombre; 
-    $consulta_usuario = mysqli_query($this->conexion, "SELECT id_usuario FROM usuarios WHERE nom_usuario='{$nombre}' LIMIT 1");
+public function getIdUsuario($nombre) {
+    $gmail = hash('sha256', $nombre);
+    $consulta_usuario = mysqli_query($this->conexion, "SELECT id_usuario FROM usuarios WHERE nom_usuario='{$nombre}' OR gmail_usuario='{$gmail}' LIMIT 1");
     $fila_usuario = mysqli_fetch_assoc($consulta_usuario);
     return $fila_usuario['id_usuario'] ?? null;
 }
 
+public function getNombreUsuario($gmail) {
+    $consulta = mysqli_query($this->conexion, "SELECT nom_usuario FROM usuarios WHERE gmail_usuario={$gmail} LIMIT 1");
+    $fila_usuario = mysqli_fetch_assoc($consulta);
+    return $fila_usuario['nom_usuario'] ?? $this->getNombre();
+}
+
 public function agregarPuntaje($nombre, $puntaje, $correo, $id_juego) { 
-    $id_usuario = $this->getId_usuario();
+    $id_usuario = $this->getIdUsuario($nombre);
     $stmt = $this->conexion->prepare("INSERT INTO `juega` (`gmail_usuario`, `id_juego`, `id_usuario`, `nom_usuario`, `puntos`) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje); 
+    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje);
     $stmt->execute();
-    $stmt->close();
 }
 }
