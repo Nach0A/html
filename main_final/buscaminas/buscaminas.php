@@ -95,7 +95,7 @@ $user = $_SESSION['usuario'];
         <h1>Buscaminas</h1>
         <div id="header-original-scoreboard">
             <span id="mine-count">000</span>
-            <button id="reset-button">Reiniciar</button>
+            <button id="reset-button" style="background-color: brown;">Reiniciar</button>
             <span id="timer">000</span>
         </div>
     </header>
