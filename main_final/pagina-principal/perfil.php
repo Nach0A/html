@@ -9,7 +9,7 @@ if (!isset($_SESSION["usuario"])) {
 }
 
 $db = new conexion_BD();
-$conexion = $db->conectar("localhost", "root", "", "zentryx");
+$conexion = $db->getConexion();
 
 $usuario_actual = $_SESSION["usuario"];
 // Evitar warnings: inicializar variables usadas por los modales
@@ -80,7 +80,7 @@ if ($accion === "imagen") {
         }
     }
     header("Location: perfil.php");
-    exit(); 
+    exit();
 }
 
     // Cambiar contraseña —> NO redirigimos (mostramos mensaje en el modal)
@@ -155,6 +155,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
 } else {
     $foto = $BASE_URL . "navbar/imagenes/usuario.png";
 }
+
 ?>
 
 <!DOCTYPE html>

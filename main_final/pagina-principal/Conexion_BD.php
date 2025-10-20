@@ -11,13 +11,10 @@ class conexion_BD
     private $contrasenia;
     private $correo;
     private $ini;
-    private $calle;
-    private $departamento;
-    private $num_calle;
 
     public function __construct()
     {
-        $this->servidor = "db";//mismo nombre del servicio en docker-compose.yml
+        $this->servidor = "localhost";
         $this->usuario = "root";
         $this->pass = "";
         $this->base = "zentryx";
@@ -25,9 +22,6 @@ class conexion_BD
         $this->contrasenia = $_POST["contrasenia"] ?? null;
         $this->correo = $_POST["gmail"] ?? null;
         $this->ini = $_POST["ini"] ?? null;
-        $this->calle = $_POST["calle"] ?? null;
-        $this->departamento = $_POST["departamento"] ?? null;
-        $this->num_calle = $_POST["num_calle"] ?? null;
         $this->conexion = $this->conectar($this->servidor, $this->usuario, $this->pass, $this->base);
     }
 
@@ -61,31 +55,10 @@ class conexion_BD
     {
         $this->contrasenia = $contrasenia;
     }
-    public function setCorreo($correo)
-    {
-        $this->correo = $correo;
-    }
-    public function setCalle($calle)
-    {
-        $this->calle = $calle;
-    }
-    public function setDepartamento($departamento)
-    {
-        $this->departamento = $departamento;
-    }
-    public function setNumCalle($num_calle)
-    {
-        $this->num_calle = $num_calle;
-    }
 
     public function getConexion()
     {
         return $this->conexion;
-    }
-
-    public function getCorreo()
-    {
-        return $this->correo;
     }
 
     public function getServidor()
@@ -102,6 +75,8 @@ class conexion_BD
     {
         return $this->pass;
     }
+
+
     public function getBase()
     {
         return $this->base;
@@ -126,18 +101,6 @@ class conexion_BD
     {
         return $this->ini;
     }
-    public function getCalle()
-    {
-        return $this->calle;
-    }
-    public function getDepartamento()
-    {
-        return $this->departamento;
-    }
-    public function getNumCalle()
-    {
-        return $this->num_calle;
-    }
 
     public function inicio()
     {
@@ -145,7 +108,7 @@ class conexion_BD
         $contra = trim(hash('sha256', $this->contrasenia));
         $gmailHash = hash('sha256', $input);
         $sql = "SELECT nom_usuario 
-            FROM usuarios JOIN 
+            FROM usuarios 
             WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
             AND passwd='{$contra}'
             LIMIT 1";
@@ -173,25 +136,21 @@ class conexion_BD
             $nombre = $this->nombre; 
             $contrasenia = trim(hash('sha256', $this->contrasenia));
             $gmailHash = trim(hash('sha256', $this->correo)); 
-            $stmt = $this->conexion->prepare("INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES (?, ?, ?)"); //Para que solo sustiyuya los ?
-            $stmt->bind_param("sss", $nombre, $contrasenia, $gmailHash); //Indicamos los valores por los que vamos a sustituir los ? por tres datos tipo string
-            $stmt->execute(); //Ejecutamos la consulta
-            $stmt->close();
+            mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES ('{$nombre}', '{$contrasenia}', '{$gmailHash}')");
         }
     }
 
     public function mailUsado() {
         $mail = $this->correo; 
         $gmailHash = hash('sha256', $mail);
-        $consulta = mysqli_query($this->conexion, "SELECT nom_usuario FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
+        $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
         return $consulta && mysqli_num_rows($consulta) > 0;
     }
 
     public function nombreUsado()
     {
         $nom = $this->nombre; // sin hash
-        $consulta = mysqli_query($this->conexion, "SELECT nom_usuario FROM usuarios WHERE nom_usuario='{$nom}' LIMIT 1");
-
+        $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE nom_usuario='{$nom}' LIMIT 1");
         return $consulta && mysqli_num_rows($consulta) > 0;
     }
 
@@ -211,41 +170,15 @@ class conexion_BD
             }
         }
     }
-    public function obtenerFoto() {
-    $nombre = $this->nombre;
-    $sql = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario={$nombre}  LIMIT 1";
+    public function obtenerFoto($usuario) {
+    $sql = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario = ? LIMIT 1";
     $stmt = $this->conexion->prepare($sql);
-    $stmt->bind_param("s", $nombre);
+    $stmt->bind_param("s", $usuario);
     $stmt->execute();
     $res = $stmt->get_result();
     $row = $res->fetch_assoc();
     return $row['imagen_perfil'] ?? null;
 }
 
-public function agregarAdmin() {
-    $calle = trim(hash('sha256',$this->calle));
-    $departamento = trim(hash('sha256',$this->departamento));
-    $contrasenia = trim(hash('sha256', $this->contrasenia));
-    $num_calle = trim(hash('sha256', $this->num_calle));   
-    $gmail = trim(hash('sha256', $this->correo));
-    $stmt = $this->conexion->prepare("INSERT INTO `administrador` (`calle`, `departamento`, `gmail_admin`, `num_calle`, `passwd_admin`) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $calle, $departamento, $gmail, $num_calle, $contrasenia);
-    $stmt->execute();
-    $stmt->close();
-}
 
-public function getId_usuario() {
-    $nombre = $this->nombre; 
-    $consulta_usuario = mysqli_query($this->conexion, "SELECT id_usuario FROM usuarios WHERE nom_usuario='{$nombre}' LIMIT 1");
-    $fila_usuario = mysqli_fetch_assoc($consulta_usuario);
-    return $fila_usuario['id_usuario'] ?? null;
-}
-
-public function agregarPuntaje($nombre, $puntaje, $correo, $id_juego) { 
-    $id_usuario = $this->getId_usuario();
-    $stmt = $this->conexion->prepare("INSERT INTO `juega` (`gmail_usuario`, `id_juego`, `id_usuario`, `nom_usuario`, `puntos`) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje); 
-    $stmt->execute();
-    $stmt->close();
-}
 }

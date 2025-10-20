@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "Conexion_BD.php";
+
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../pagina-principal/login.php");
     exit();

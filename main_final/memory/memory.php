@@ -1,15 +1,10 @@
 <?php
-require_once '../pagina-principal/Conexion_BD.php';
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../pagina-principal/login.php");
     exit;
 }
 $user = $_SESSION['usuario'];
-$bd = new conexion_BD();
-$conexion = $bd->conectar("localhost", "root", "", "zentryx");
-$bd->agregarPuntaje($user, 10, "c21de19190f725e92595482548338a79f86e108285678731010989a866684b4f
-", 1); // 1 es el id del memory
 ?>
 
 <!DOCTYPE html>
