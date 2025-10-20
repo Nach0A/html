@@ -68,9 +68,9 @@ $BASE_URL = "/PlataformaLudica/main_final/";
         <!-- LOGIN CON MAIL -->
         <form id="loginSection" action="verifica.php" method="post">
             <input type="text" name="input" class="textwhite" placeholder="Usuario o correo" required>
-            <input type="text" name="contrasenia" class="textwhite" placeholder="Contraseña" required>
+            <input type="password" name="contrasenia" class="textwhite" placeholder="Contraseña" required>
             <input type="hidden" name="ini" value="1">
-            <button type="submit" class="btn btn-primary w-100" style="background-color: red";>Iniciar sesión</button>
+            <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
         </form>
 
         <!-- REGISTRO -->
