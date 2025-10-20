@@ -92,7 +92,7 @@ $user = $_SESSION['usuario'];
 
     <!-- Buscaminas -->
     <header>
-        <h1>Buscaminas</h1>
+        <h1 style="color: green;">Buscaminas</h1>
         <div id="header-original-scoreboard">
             <span id="mine-count">000</span>
             <button id="reset-button">Reiniciar</button>
