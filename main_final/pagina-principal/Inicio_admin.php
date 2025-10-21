@@ -25,10 +25,33 @@ $resultado = $conexion->query($sql);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar_id'])) {
     $editarId = (int)$_POST['editar_id'];
     $nombre = $conexion->real_escape_string($_POST['editar_nombre']);
+    $password = trim($_POST['editar_passwd'] ?? '');
+
+    if ($password !== '') {
+    // Encriptar con SHA-256 (igual que en registro)
+    $hash = trim(hash('sha256', $password));
+    $conexion->query("UPDATE usuarios SET nom_usuario='$nombre', passwd='$hash' WHERE id_usuario=$editarId");
+} else {
+    // Solo se cambia el nombre
     $conexion->query("UPDATE usuarios SET nom_usuario='$nombre' WHERE id_usuario=$editarId");
-    header("Location: inicio_admin.php");
+}
+
+
+    // actualizar sesión si el usuario editado es el actual
+    $usuarioActual = $_SESSION['usuario'] ?? '';
+    $resultado = $conexion->query("SELECT id_usuario FROM usuarios WHERE nom_usuario='$usuarioActual' LIMIT 1");
+    $fila = $resultado ? $resultado->fetch_assoc() : null;
+
+    if ($fila && $fila['id_usuario'] == $editarId) {
+        $_SESSION['usuario'] = $nombre;
+    }
+
+    header("Location: inicio_admin.php?seccion=admin");
     exit;
 }
+
+
+
 
 // Eliminación
 if (isset($_GET['eliminar'])) {
@@ -133,9 +156,26 @@ if (isset($_GET['eliminar'])) {
             cursor: pointer;
         }
 
+        .btn-editar,
+        .btn-eliminar {
+            border: none;
+            padding: 0.4rem 0.8rem;
+            margin: 0.2rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 0 10px #00ffff33;
+        }
+
         .btn-editar {
             background-color: #0099ff;
             color: white;
+        }
+
+        .btn-editar:hover {
+            background-color: #007acc;
+            transform: scale(1.05);
         }
 
         .btn-eliminar {
@@ -143,12 +183,9 @@ if (isset($_GET['eliminar'])) {
             color: white;
         }
 
-        .btn-editar:hover {
-            background-color: #007acc;
-        }
-
         .btn-eliminar:hover {
             background-color: #cc0044;
+            transform: scale(1.05);
         }
 
         /* Animaciones de secciones */
@@ -220,7 +257,7 @@ if (isset($_GET['eliminar'])) {
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link text-white" href="#" id="linkInicio">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="#" id="linkJuegos">Juegos</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#" id="linkAdmin">Administrar usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#" id="linkAdmin">Usuarios</a></li>
                 </ul>
 
                 <ul class="navbar-nav">
@@ -317,7 +354,6 @@ if (isset($_GET['eliminar'])) {
                                 <td><?php echo $fila['id_usuario']; ?></td>
                                 <td><?php echo htmlspecialchars($fila['nom_usuario']); ?></td>
                                 <td>
-                                    <!-- nota: quité el '...' inválido -->
                                     <img src="<?php echo htmlspecialchars($rutaImagen); ?>" width="60" height="60" class="rounded-circle border border-info shadow-sm" alt="avatar">
                                 </td>
                                 <td class="acciones">
@@ -330,14 +366,23 @@ if (isset($_GET['eliminar'])) {
                                         Editar
                                     </button>
 
-                                    <a href="?eliminar=<?php echo $fila['id_usuario']; ?>" class="btn-eliminar" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">Eliminar</a>
+                                    <a href="?eliminar=<?php echo $fila['id_usuario']; ?>"
+                                        class="btn btn-danger btn-sm btn-eliminar"
+                                        onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">
+                                        Eliminar
+                                    </a>
+
                                 </td>
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
                 </table>
             </div> <!-- .table-responsive cerrada -->
-            <!-- Modal único de edición (UNA SOLA COPIA) -->
+            
+
+        </div>
+    </section>
+    <!-- Modal único de edición (UNA SOLA COPIA) -->
             <div class="modal fade" id="editarModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content" style="background:#111; color:white;">
@@ -364,12 +409,7 @@ if (isset($_GET['eliminar'])) {
                         </div>
                     </div>
                 </div>
-            </div>
-                            
-            </table>
-        </div>
-        </div>
-    </section>
+            </div>      
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
