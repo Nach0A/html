@@ -3,8 +3,8 @@ session_start();
 require_once "Conexion_BD.php"; 
 
 // Instancia de DB
-$db = new conexion_BD();
-$conexion = $db->getConexion();
+$bd = new conexion_BD();
+$conexion = $bd->getConexion();
 
 // Config (ajusta si tu estructura cambia)
 $BASE_URL   = "/PlataformaLudica/main_final/";
@@ -13,6 +13,10 @@ $UPLOAD_WEB = $BASE_URL . "pagina-principal/uploads/perfiles/"; // ruta pública
 
 // Valores del formulario
 $ini = $_POST['ini'] ?? null;
+if($bd->esAdmin("35")) {
+    echo '<script>alert("Acceso denegado para administradores."); window.location.href="login.php";</script>';
+    exit();
+}
 
 if ($ini === "1") {
     // --- LOGIN ---

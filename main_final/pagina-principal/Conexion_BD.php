@@ -76,7 +76,6 @@ class conexion_BD
         return $this->pass;
     }
 
-
     public function getBase()
     {
         return $this->base;
@@ -154,7 +153,6 @@ class conexion_BD
         return $consulta && mysqli_num_rows($consulta) > 0;
     }
 
-
     public function grupo($conexion, $nombre, $nombre_grupo)
     {
         /*Agregar un nombre del grupo */
@@ -170,6 +168,7 @@ class conexion_BD
             }
         }
     }
+
     public function obtenerFoto($usuario) {
     $sql = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario = ? LIMIT 1";
     $stmt = $this->conexion->prepare($sql);
@@ -180,5 +179,12 @@ class conexion_BD
     return $row['imagen_perfil'] ?? null;
 }
 
-
+public function esAdmin($id) {
+    $sql = "SELECT id_admin FROM administrador WHERE id_admin = ? LIMIT 1";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    return $res->num_rows > 0;
+}
 }
