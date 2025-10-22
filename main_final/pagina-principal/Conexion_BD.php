@@ -187,4 +187,24 @@ public function esAdmin($id) {
     $res = $stmt->get_result();
     return $res->num_rows > 0;
 }
+
+public function getIdUsuario($nombre) {
+    $sql = "SELECT id_usuario FROM usuarios WHERE nom_usuario = ? LIMIT 1";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->bind_param("s", $nombre);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+    return $row['id_usuario'] ?? null;
+}
+
+public function getNombreUsuario($nombre) {
+    $sql = "SELECT nom_usuario FROM usuarios WHERE nom_usuario = ? LIMIT 1";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->bind_param("s", $nombre);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+    return $row['nom_usuario'] ?? null;   
+}
 }
