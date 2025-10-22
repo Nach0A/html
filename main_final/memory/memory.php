@@ -1,10 +1,14 @@
 <?php
+require_once "../pagina-principal/Conexion_BD.php";
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../pagina-principal/login.php");
     exit;
 }
 $user = $_SESSION['usuario'];
+$bd = new conexion_BD();
+$id_usuario = $bd->getIdUsuario($user);
+//$bd->agregarPuntaje($user, '20', $bd->obtenerCorreo($id_usuario), '1');
 ?>
 
 <!DOCTYPE html>

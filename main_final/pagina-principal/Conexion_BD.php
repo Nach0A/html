@@ -207,4 +207,23 @@ public function getNombreUsuario($nombre) {
     $row = $res->fetch_assoc();
     return $row['nom_usuario'] ?? null;   
 }
+
+public function agregarPuntaje($nombre, $puntaje, $correo, $id_juego) { 
+    $id_usuario = $this->getIdUsuario($nombre);
+    $stmt = $this->conexion->prepare("INSERT INTO `juega` (`gmail_usuario`, `id_juego`, `id_usuario`, `nom_usuario`, `puntos`) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje); 
+    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje);
+    $stmt->execute();
+    $stmt->close();
+}
+
+public function obtenerCorreo($id) {
+    $sql = "SELECT gmail_usuario FROM usuarios WHERE id_usuario = ? LIMIT 1";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+    return $row['gmail_usuario'] ?? null;
+}
 }
