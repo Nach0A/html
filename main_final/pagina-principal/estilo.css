@@ -332,5 +332,6 @@ button.play-btn {
 .btn-inicio-jugar:hover { transform:scale(1.05); box-shadow:0 0 20px #ea00ff; }
 
 .textwhite::placeholder {
-    color: rgb(255, 255, 255);
+    color: #919191;
+    opacity: 0.8; /* opcional: suaviza el color */
 }
