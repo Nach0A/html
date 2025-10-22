@@ -16,20 +16,11 @@ $BASE_URL   = "/PlataformaLudica/main_final/";
 $UPLOAD_DIR = __DIR__ . "/uploads/perfiles/";                  // ruta en disco donde se guardan archivos
 $UPLOAD_WEB = $BASE_URL . "pagina-principal/uploads/perfiles/"; // ruta pública para <img> (consistente con perfil.php)
 $ini = $bd->getIni();
-if ($ini === "1") {
-    // --- LOGIN ---
-    $input = trim($_POST['input'] ?? '');
-    $pass  = "liceo";
-
-    if ($input === '' || $pass === '') {
-        echo '<script>alert("Completa usuario/contraseña."); window.location.href="login.php";</script>';
-        exit();
-    }
-
+if ($bd->getIni() === "1") {
     if ($bd->inicio()) {
             // Login correcto
-            $_SESSION['usuario'] = $bd->getNombre();
             $_SESSION['id_usuario'] = $bd->getIdUsuario($bd->getNombre());
+            // Obtener datos del usuario para la foto
             $_SESSION['usuario'] = $bd->getNombreUsuario($bd->getNombre());
             $_SESSION['id_usuario'] = $bd->getIdUsuario($bd->getNombre());
             // Asignar foto en sesión — con ruta web consistente
