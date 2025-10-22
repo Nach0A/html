@@ -24,8 +24,8 @@ if ($bd->getIni() === "1") {
             $_SESSION['usuario'] = $bd->getNombreUsuario($bd->getNombre());
             $_SESSION['id_usuario'] = $bd->getIdUsuario($bd->getNombre());
             // Asignar foto en sesión — con ruta web consistente
-            if (!empty($user['imagen_perfil']) && file_exists($UPLOAD_DIR . $user['imagen_perfil'])) {
-                $_SESSION['foto'] = $UPLOAD_WEB . $user['imagen_perfil'];
+            if (!empty($bd->obtenerFoto($_SESSION['usuario'])) && file_exists($UPLOAD_DIR .$bd->obtenerFoto($_SESSION['usuario']))) {
+                $_SESSION['foto'] = $UPLOAD_WEB . $bd->obtenerFoto($_SESSION['usuario']);
             } else {
                 $_SESSION['foto'] = $BASE_URL . "navbar/imagenes/usuario.png";
             }
