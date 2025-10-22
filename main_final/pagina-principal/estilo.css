@@ -189,57 +189,211 @@ body {
 
 
 /* ================== LOGIN / REGISTRO ================== */
-#loginForm, #form-container .card {
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-  border-radius: 18px;
-  box-shadow: 0 0 20px #a64bf4, 0 0 60px #e82ef8;
-  backdrop-filter: blur(10px);
-  padding: 30px 25px;
-  max-width: 400px;
-  margin: 50px auto;
-  animation: fadeInLogin 1s ease-out;
-  position: relative; overflow:hidden;
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  min-height: calc(100vh - 70px);
+  overflow: hidden;
+  position: relative;
 }
-@keyframes fadeInLogin { from{opacity:0;transform:translateY(30px) scale(.95);} to{opacity:1;transform:translateY(0) scale(1);} }
-#loginForm::before, #form-container .card::before {
-  content:""; position:absolute; inset:-2px;
-  background: linear-gradient(45deg, #000, #d400ff, #000);
-  background-size: 600% 600%;
-  border-radius:18px; filter:blur(6px); z-index:-1;
-  animation: animatedBorder 6s linear infinite;
-}
-@keyframes animatedBorder { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
 
-/* Inputs */
-.input-neon, #loginForm input, #form-container input {
-  background: #1a1a1a;
-  border: 1px solid #5e2c91;
+/* LADO IZQUIERDO */
+.login-left {
+  flex: 1;
+  background: radial-gradient(circle at center, #1a001f 0%, #000 70%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: #fff;
-  padding: 12px 15px;
-  border-radius: 8px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.neon-circle {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166,75,244,0.5), transparent 70%);
+  animation: pulseNeon 6s infinite alternate ease-in-out;
+}
+.neon-glow {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234,0,255,0.15), transparent 80%);
+  filter: blur(60px);
+  animation: floatGlow 12s infinite alternate ease-in-out;
+}
+@keyframes floatGlow {
+  0% { transform: translateY(0px) scale(1); }
+  100% { transform: translateY(-20px) scale(1.05); }
+}
+
+.neon-title {
+  font-family: 'Ethnocentric';
+  font-size: 3rem;
+  letter-spacing: 3px;
+  z-index: 1;
+  text-shadow: 0 0 15px #a64bf4, 0 0 30px #ea00ff;
+}
+.login-slogan {
+  z-index: 1;
+  font-family: 'Orbitron';
+  font-size: 1.2rem;
+  color: #cbbaff;
+  text-shadow: 0 0 10px #a64bf4;
+  margin-top: 15px;
+}
+
+/* LADO DERECHO */
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+#loginForm {
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(166,75,244,0.6), 0 0 60px rgba(234,0,255,0.3);
+  padding: 35px;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+}
+
+.switch-buttons button {
+  width: 48%;
+  transition: all 0.3s ease;
+}
+.switch-buttons .active {
+  background: linear-gradient(90deg, #a64bf4, #ea00ff);
+  color: #000 !important;
+  box-shadow: 0 0 20px #a64bf4;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .login-wrapper {
+    flex-direction: column;
+  }
+  .login-left {
+    display: none;
+  }
+  .login-right {
+    background: linear-gradient(180deg, #0a0a0a, #1b0024);
+    padding: 40px 0;
+  }
+}
+/* ================== INPUTS LOGIN ================== */
+#loginForm input, 
+#registerSection input {
+  background: rgba(25, 0, 40, 0.4);
+  border: 1.5px solid rgba(166, 75, 244, 0.6);
+  border-radius: 10px;
+  color: #fff;
+  padding: 12px 16px;
+  margin-bottom: 15px;
   width: 100%;
-  transition: .3s;
-}
-.input-neon:focus, #loginForm input:focus, #form-container input:focus {
-  outline:none; border-color:#e82ef8; box-shadow:0 0 10px #e82ef8;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 0 10px rgba(166, 75, 244, 0.2);
 }
 
-/* Botones */
-.btn-neon, #loginForm button, #form-container .btn {
-  font-family: 'Ethnocentric', sans-serif;
-  letter-spacing: 1px;
-  font-weight: bold;
-  border-radius: 8px;
-  padding: 12px;
-  transition:.3s;
+#loginForm input::placeholder,
+#registerSection input::placeholder {
+  color: #a779ff;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
 }
-.btn-primary { background:#a64bf4; color:#fff; box-shadow:0 0 10px #a64bf4; }
-.btn-primary:hover { background:#d86cf4; transform:scale(1.03); box-shadow:0 0 20px #e82ef8; }
-.btn-secondary { background:#3d1c54; color:#fff; box-shadow:0 0 10px #5e2c91; }
-.btn-secondary:hover { background:#5e2c91; transform:scale(1.03); box-shadow:0 0 20px #a64bf4; }
-.btn-outline-light { border:1px solid #a64bf4; color:#fff; background:transparent; }
-.btn-outline-light:hover, .btn-outline-light.active { background:#a64bf4; color:#000; box-shadow:0 0 10px #a64bf4; }
+
+#loginForm input:focus::placeholder,
+#registerSection input:focus::placeholder {
+  opacity: 0.3;
+}
+
+#loginForm input:focus, 
+#registerSection input:focus {
+  outline: none;
+  border-color: #ea00ff;
+  box-shadow: 0 0 15px #ea00ff, inset 0 0 10px rgba(166, 75, 244, 0.4);
+  background: rgba(30, 0, 50, 0.6);
+  transform: scale(1.02);
+}
+
+/* ================== BOTONES LOGIN ================== */
+#loginForm button,
+#registerSection button {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Ethnocentric', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 13px;
+  width: 100%;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Gradiente animado base */
+#loginForm .btn-primary,
+#registerSection .btn-secondary {
+  background: linear-gradient(90deg, #a64bf4, #ea00ff);
+  color: #000;
+  box-shadow: 0 0 15px #a64bf4;
+  animation: neonPulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes neonPulse {
+  0% { box-shadow: 0 0 10px #a64bf4, 0 0 20px #ea00ff; }
+  100% { box-shadow: 0 0 25px #ea00ff, 0 0 45px #a64bf4; }
+}
+
+/* Hover y click */
+#loginForm button:hover,
+#registerSection button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 25px #ea00ff, 0 0 50px #a64bf4;
+}
+
+/* Rayo luminoso al hacer clic */
+#loginForm button::after,
+#registerSection button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+#loginForm button:active::after,
+#registerSection button:active::after {
+  left: 125%;
+}
+
+/* Pequeño “glow” de texto */
+#loginForm button span,
+#registerSection button span {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+}
+
 
 /* ================== JUEGOS ================== */
 .juegos-wrapper {

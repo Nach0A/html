@@ -44,45 +44,47 @@ $BASE_URL = "/PlataformaLudica/main_final/";
             <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top">
             &nbsp;Zentryx
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link text-white" href="login.php">Inicio</a></li>
-                <li class="nav-item separator"></li>
-                <li class="nav-item"><a class="nav-link text-white" href="login.php">Juegos</a></li>
-            </ul>
-        </div>
     </div>
 </nav>
 
-<!-- FORMULARIO -->
-<div class="container mt-5" id="form-container">
-    <div class="card p-4 shadow" id="loginForm">
-        <div class="text-center mb-4">
-            <button id="btnLogin" class="btn btn-outline-light me-2">Iniciar sesión</button>
-            <button id="btnRegister" class="btn btn-outline-light">Registrarse</button>
+<!-- LOGIN WRAPPER -->
+<div class="login-wrapper">
+    <!-- LADO IZQUIERDO - EFECTO NEÓN -->
+    <div class="login-left">
+        <div class="neon-circle"></div>
+        <div class="neon-glow"></div>
+        <h1 class="neon-title">ZENTRYX</h1>
+        <p class="login-slogan">Sumérgete en la experiencia del futuro</p>
+    </div>
+
+    <!-- LADO DERECHO - FORMULARIO -->
+    <div class="login-right fade-in">
+        <div class="card p-4" id="loginForm">
+            <div class="text-center mb-4 switch-buttons">
+                <button id="btnLogin" class="btn btn-outline-light me-2 active">Iniciar sesión</button>
+                <button id="btnRegister" class="btn btn-outline-light">Registrarse</button>
+            </div>
+
+            <!-- LOGIN -->
+            <form id="loginSection" action="verifica.php" method="post">
+                <input type="text" name="input" class="textwhite" placeholder="Usuario o correo" required>
+                <input type="password" name="contrasenia" class="textwhite" placeholder="Contraseña" required>
+                <input type="hidden" name="ini" value="1">
+                <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+            </form>
+
+            <!-- REGISTRO -->
+            <form id="registerSection" action="verifica.php" method="post" style="display: none;">
+                <input type="text" name="nombre" class="textwhite" placeholder="Nombre de usuario" required>
+                <input type="email" name="gmail" class="textwhite" placeholder="Correo electrónico" required>
+                <input type="password" name="contrasenia" class="textwhite" placeholder="Contraseña" required>
+                <input type="hidden" name="ini" value="0">
+                <button type="submit" class="btn btn-secondary w-100">Registrarse</button>
+            </form>
         </div>
-
-        <!-- LOGIN CON MAIL -->
-        <form id="loginSection" action="verifica.php" method="post">
-            <input type="text" name="input" class="textwhite" placeholder="Usuario o correo" required>
-            <input type="password" name="contrasenia" class="textwhite" placeholder="Contraseña" required>
-            <input type="hidden" name="ini" value="1">
-            <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-        </form>
-
-        <!-- REGISTRO -->
-        <form id="registerSection" action="verifica.php" method="post" style="display: none;">
-            <input type="text" name="nombre" class="textwhite" placeholder="Nombre de usuario" required>
-            <input type="email" name="gmail" class="textwhite" placeholder="Correo electrónico" required>
-            <input type="password" name="contrasenia" class="textwhite" placeholder ="Contraseña" required>
-            <input type="hidden" name="ini" value="0">
-            <button type="submit" class="btn btn-secondary w-100">Registrarse</button>
-        </form>
     </div>
 </div>
+
 
 
 <!-- Bootstrap JS (funcionamiento del navbar y componentes) -->
