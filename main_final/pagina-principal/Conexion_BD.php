@@ -1,6 +1,9 @@
 <?php
 class conexion_BD
 {
+    private $calle;
+    private $departamento;
+    private $num_calle;
     private $servidor;
     private $usuario;
     private $pass;
@@ -99,6 +102,21 @@ class conexion_BD
     public function getIni()
     {
         return $this->ini;
+    }
+
+    public function getCalle()
+    {
+        return $this->calle;
+    }
+
+    public function getDepartamento()
+    {
+        return $this->departamento;
+    }
+    
+    public function getNumCalle()
+    {
+        return $this->num_calle;
     }
 
     public function inicio()
@@ -225,5 +243,17 @@ public function obtenerCorreo($id) {
     $res = $stmt->get_result();
     $row = $res->fetch_assoc();
     return $row['gmail_usuario'] ?? null;
+}
+
+public function agregarAdmin() {
+    $calle = trim(hash('sha256',$this->calle));
+    $departamento = trim(hash('sha256',$this->departamento));
+    $contrasenia = trim(hash('sha256', $this->contrasenia));
+    $num_calle = trim(hash('sha256', $this->num_calle));   
+    $gmail = trim(hash('sha256', $this->correo));
+    $stmt = $this->conexion->prepare("INSERT INTO `administrador` (`calle`, `departamento`, `gmail_admin`, `num_calle`, `passwd_admin`) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $calle, $departamento, $gmail, $num_calle, $contrasenia);
+    $stmt->execute();
+    $stmt->close();
 }
 }

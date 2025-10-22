@@ -1,14 +1,12 @@
 <?php
-require_once "Conexion_BD.php";
+require_once "../pagina-principal/Conexion_BD.php";
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../pagina-principal/login.php");
-
-
     exit();
 }
-
-$conexion = new mysqli("localhost", "root", "", "zentryx");
+$bd = new conexion_BD();
+$conexion = $bd->conectar("localhost", "root", "", "zentryx");  
 if ($conexion->connect_error) die("Error al conectar: " . $conexion->connect_error);
 
 // Filtros de búsqueda
@@ -264,7 +262,7 @@ if (isset($_GET['eliminar'])) {
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white" id="userDropdown" data-bs-toggle="dropdown">
-                            <img src="<?php echo htmlspecialchars($_SESSION['foto'] ?? 'uploads/perfiles/usuario.png'); ?>" class="user-avatar shadow-sm" alt="Usuario">
+                            <img src="<?php echo htmlspecialchars('uploads/perfiles/juan_titocaldern-zq4a.png'); ?>" class="user-avatar shadow-sm" alt="Usuario">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">
                             <li><a class="dropdown-item" href="../pagina-principal/perfil.php">Perfil (<?php echo htmlspecialchars($_SESSION['usuario']); ?>)</a></li>
