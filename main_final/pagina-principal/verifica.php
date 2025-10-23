@@ -23,11 +23,19 @@ if ($bd->getIni() === "1") {
             // Obtener datos del usuario para la foto
             $_SESSION['usuario'] = $bd->getNombreUsuario($bd->getNombre());
             $_SESSION['id_usuario'] = $bd->getIdUsuario($bd->getNombre());
+            $_SESSION['correo'] = $bd->obtenerCorreo($_SESSION['id_usuario']);
             // Asignar foto en sesión — con ruta web consistente
             if (!empty($bd->obtenerFoto($_SESSION['usuario'])) && file_exists($UPLOAD_DIR .$bd->obtenerFoto($_SESSION['usuario']))) {
                 $_SESSION['foto'] = $UPLOAD_WEB . $bd->obtenerFoto($_SESSION['usuario']);
             } else {
                 $_SESSION['foto'] = $BASE_URL . "navbar/imagenes/usuario.png";
+            }
+            if($bd->esAdmin($_SESSION['correo'])){
+                $_SESSION['admin'] = true;
+                header("Location: Inicio_admin.php");
+                exit();
+            } else {
+                $_SESSION['admin'] = false;
             }
 
             // Cerrar y redirigir
