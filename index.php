@@ -1,4 +1,4 @@
 <?php
 // Redirige a la página principal dentro de la carpeta "pagina_principal"
-header("Location: main_final/pagina_principal/Inicio.php");
+header("Location: main_final/pagina-principal/Inicio.php");
 exit();
