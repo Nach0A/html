@@ -1,9 +1,10 @@
 version: "3.9"
 
 services:
-  app:
+  web:
     build:
       context: ./main_final
+    container_name: zentryx_web
     ports:
       - "80:80"
     depends_on:
@@ -11,12 +12,20 @@ services:
     restart: always
     volumes:
       - ./main_final:/var/www/html
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=1
+      - DB_NAME=zentryx
 
   db:
     image: mariadb:10.4
+    container_name: zentryx_db
     environment:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
       MARIADB_DATABASE: zentryx
+      MARIADB_USER: root
+      MARIADB_PASSWORD: 1
     volumes:
       - db_data:/var/lib/mysql
       - ./zentryx.sql:/docker-entrypoint-initdb.d/init.sql

@@ -1,4 +1,6 @@
 <?php
+require_once "./Conexion_BD.php";
+
 // Inicia o continúa la sesión actual
 session_start();
 

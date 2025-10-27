@@ -1,4 +1,5 @@
 <?php
+require_once "../pagina-principal/Conexion_BD.php";
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../pagina-principal/login.php");
