@@ -126,7 +126,7 @@ class conexion_BD
         $gmailHash = hash('sha256', $input);
         $sql = "SELECT nom_usuario 
             FROM usuarios 
-            WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
+            WHERE (nom_usuario='{$gmailHash}' OR gmail_usuario='{$gmailHash}')
             AND passwd='{$contra}'
             LIMIT 1";
         $consulta = mysqli_query($this->conexion, $sql);
@@ -255,5 +255,11 @@ public function agregarAdmin() {
     $stmt->bind_param("sssss", $calle, $departamento, $gmail, $num_calle, $contrasenia);
     $stmt->execute();
     $stmt->close();
+}
+
+public function existeCorreo($correo) {
+    $gmailHash = hash('sha256', $correo);
+    $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
+    return $consulta && mysqli_num_rows($consulta) > 0;     
 }
 }

@@ -3,12 +3,14 @@ version: "3.9"
 services:
   app:
     build:
-      context: main_final
+      context: ./main_final
     ports:
       - "80:80"
     depends_on:
       - db
     restart: always
+    volumes:
+      - ./main_final:/var/www/html
 
   db:
     image: mariadb:10.4

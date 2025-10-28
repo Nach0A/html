@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+// Si ya hay sesión, redirigir al inicio
 if (isset($_SESSION['usuario'])) {
     header("Location: Inicio.php");
     exit();
@@ -58,11 +58,11 @@ $BASE_URL = "/PlataformaLudica/main_final/";
         <div class="card p-4" id="recoverForm">
             <h4 class="text-center mb-3">Recuperar contraseña</h4>
             <p class="text-center text-white-50 mb-4" style="font-size: 0.9rem;">
-                Ingresa tu correo electrónico o nombre de usuario y te ayudaremos a recuperar tu cuenta.
+                Ingresa tu correo electrónico y te ayudaremos a recuperar tu cuenta.
             </p>
 
-            <form action="procesar_recuperacion.php" method="post">
-                <input type="text" name="usuario_o_email" class="textwhite" placeholder="Usuario o correo electrónico" required>
+            <form action="procesa.php" method="post">
+                <input type="text" name="gmail" class="textwhite" placeholder="Usuario o correo electrónico" required>
                 <button type="submit" class="btn btn-primary w-100 mt-3">Enviar enlace de recuperación</button>
             </form>
 
