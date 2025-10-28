@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2025 at 01:41 PM
+-- Generation Time: Oct 28, 2025 at 01:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,6 @@ CREATE TABLE `administra` (
 
 CREATE TABLE `administrador` (
   `id_admin` int(11) NOT NULL,
-  `passwd_admin` varchar(64) NOT NULL,
   `calle` varchar(64) NOT NULL,
   `num_calle` varchar(64) NOT NULL,
   `departamento` varchar(64) NOT NULL,
@@ -92,10 +91,11 @@ CREATE TABLE `habla` (
 --
 
 CREATE TABLE `juega` (
+  `gmail_usuario` varchar(64) NOT NULL,
+  `id_juego` int(100) NOT NULL,
   `id_usuario` int(100) NOT NULL,
   `nom_usuario` varchar(64) NOT NULL,
-  `gmail_usuario` varchar(64) NOT NULL,
-  `id_juego` int(100) NOT NULL
+  `puntos` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -109,6 +109,13 @@ CREATE TABLE `juego` (
   `nom_juego` varchar(64) NOT NULL,
   `desc_juego` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `juego`
+--
+
+INSERT INTO `juego` (`id_juego`, `nom_juego`, `desc_juego`) VALUES
+(1, 'memory', 'juego de emparejar cartas');
 
 -- --------------------------------------------------------
 
@@ -129,9 +136,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nom_usuario`, `passwd`, `gmail_usuario`, `imagen_perfil`) VALUES
-(20, 'juan', 'ed08c290d7e22f7bb324b15cbadce35b0b348564fd2d5f95752388d86d71bcca', 'c21de19190f725e92595482548338a79f86e108285678731010989a866684b4f', 'usuario.png'),
-(22, '111', '5477957537', '1234314', 'usuario.png'),
-(24, 'papu', '72beaafbd6684b693da9e80c39f5f0244a8042f6371a46d95e69b05ba638f198', 'papu@gmail.com', 'usuario.png');
+(41, 'prueba', '655e786674d9d3e77bc05ed1de37b4b6bc89f788829f9f3c679e7687b410c89b', '30a7fff94fbeef0f90c6ed7804019c3da6bdf5e087c85c8095beae4477fb1ee0', 'usuario.png');
 
 --
 -- Indexes for dumped tables
@@ -175,8 +180,8 @@ ALTER TABLE `habla`
 -- Indexes for table `juega`
 --
 ALTER TABLE `juega`
-  ADD PRIMARY KEY (`id_usuario`,`nom_usuario`,`gmail_usuario`,`id_juego`),
-  ADD KEY `id_juego` (`id_juego`);
+  ADD PRIMARY KEY (`id_juego`,`id_usuario`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indexes for table `juego`
@@ -207,22 +212,16 @@ ALTER TABLE `grupo`
   MODIFY `id_grupo` int(100) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `juega`
---
-ALTER TABLE `juega`
-  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `juego`
 --
 ALTER TABLE `juego`
-  MODIFY `id_juego` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_juego` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Constraints for dumped tables

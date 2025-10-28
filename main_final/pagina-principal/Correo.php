@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-require "autoload.php";
+require "vendor/autoload.php";
 class Correo
 {
     private $host;
@@ -14,14 +14,14 @@ class Correo
     private $asunto;
     private $mail;
 
-    public function __construct($host, $puerto, $nombre, $direccion, $contenido, $asunto)
+    public function __construct()
     {
-        $this->host = $host;
-        $this->puerto = $puerto;
-        $this->nombre = $nombre;
-        $this->direccion = $direccion;
-        $this->contenido = $contenido;
-        $this->asunto = $asunto;
+        $this->host = "192.168.20.215";
+        $this->puerto = 25;
+        $this->nombre = $_SESSION['usuario'];
+        $this->direccion = $_SESSION['correo'];
+        $this->contenido = getrandmax();
+        $this->asunto = "Recuperación de contraseña";
         $this->mail = new PHPMailer(true);
     }
 
@@ -61,7 +61,7 @@ class Correo
             $this->mail->setFrom('zentryx@correos.local', 'Zentryx');
             $this->mail->addAddress($this->direccion, $this->nombre);
             $this->mail->isHTML(true);
-            $this->mail->AltBody = 'Este es el cuerpo en texto plano para clientes de correo que no soportan HTML';
+            $this->mail->AltBody = "Tu código de recuperación de contraseña: " . $this->contenido;
             $this->mail->Subject = $this->asunto;
             $this->mail->Body    = $this->contenido;
             $this->mail->send();
