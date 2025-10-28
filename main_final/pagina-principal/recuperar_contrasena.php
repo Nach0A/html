@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Si ya hay sesión, redirigir al inicio
 if (isset($_SESSION['usuario'])) {
     header("Location: Inicio.php");
     exit();
@@ -24,12 +23,12 @@ $BASE_URL = "/PlataformaLudica/main_final/";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
-    <!-- Estilos personalizados -->
+    <!-- estilo -->
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
-<!-- Preloader -->
+<!-- preloader -->
 <div id="preloader">
     <img src="../navbar/imagenes/logo.jpg" alt="Logo Zentryx" id="preloader-logo">
 </div>
@@ -46,7 +45,7 @@ $BASE_URL = "/PlataformaLudica/main_final/";
 
 <!-- CONTENEDOR PRINCIPAL -->
 <div class="login-wrapper">
-    <!-- LADO IZQUIERDO - EFECTO NEÓN -->
+    <!-- LADO IZQUIERDO -->
     <div class="login-left">
         <div class="neon-circle"></div>
         <div class="neon-glow"></div>
@@ -54,7 +53,7 @@ $BASE_URL = "/PlataformaLudica/main_final/";
         <p class="login-slogan">Restablece tu acceso al futuro</p>
     </div>
 
-    <!-- LADO DERECHO - FORMULARIO -->
+    <!-- LADO DERECHO -->
     <div class="login-right fade-in">
         <div class="card p-4" id="recoverForm">
             <h4 class="text-center mb-3">Recuperar contraseña</h4>
@@ -77,7 +76,7 @@ $BASE_URL = "/PlataformaLudica/main_final/";
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Preloader Script -->
+<!-- script -->
 <script>
 window.addEventListener("load", () => {
     const pre = document.getElementById("preloader");
