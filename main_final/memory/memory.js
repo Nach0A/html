@@ -158,17 +158,43 @@ function resetTimer() {
 function showWinModal() {
     clearInterval(timerInterval);
     finalTimeEl.textContent = timerEl.textContent;
+
     // Agregar el número de intentos al modal
     const modalContent = document.querySelector('.modal-content');
     // Eliminar cualquier intento previo agregado
     const prevAttempts = modalContent.querySelector('.attempts-info');
     if (prevAttempts) prevAttempts.remove();
+
     const attemptsInfo = document.createElement('p');
     attemptsInfo.className = 'attempts-info';
     attemptsInfo.textContent = `Intentos realizados: ${attempts}`;
     modalContent.insertBefore(attemptsInfo, modalContent.querySelector('#play-again-btn'));
+
     winModal.classList.remove('hidden');
+
+    // ============================
+    // cálculo y envío del puntaje
+    // ============================
+    const finalTimeText = timerEl.textContent; // formato mm:ss
+    const [min, sec] = finalTimeText.split(':').map(Number);
+    const totalSeconds = min * 60 + sec;
+
+    // Fórmula base: más rápido = más puntos
+    const puntos = Math.max(0, 500 - totalSeconds * 10 - attempts * 5);
+
+    // Enviar puntaje al backend
+    fetch('guardar_puntaje.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `puntos=${puntos}&id_juego=1`
+    })
+    .then(res => res.text())
+    .then(data => console.log("Servidor:", data))
+    .catch(err => console.error("Error al guardar puntaje:", err));
 }
+
+    
+
 
 // Eventos de botones
 restartBtn.addEventListener('click', initGame);
@@ -179,6 +205,8 @@ if (homeBtn) {
         window.location.href = '../pagina-principal/inicio.php#inicio';
     });
 }
+
+
 
 // Arrancar el juego al cargar la página
 window.addEventListener('load', initGame);

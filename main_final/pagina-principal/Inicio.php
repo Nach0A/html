@@ -87,6 +87,7 @@ if (!isset($_SESSION['usuario'])) {
             </p>
             <a href="#juegos" class="btn-inicio-jugar" onclick="mostrarJuegos()">🎮 Ver Juegos</a>
         </div>
+        <button class="ranking" onclick="location.href='../pagina-principal/ranking.php'">Ver Ranking</button>
     </div>
 
 
