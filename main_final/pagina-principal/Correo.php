@@ -19,8 +19,8 @@ class Correo
         $this->host = "192.168.20.215";
         $this->puerto = 25;
         $this->nombre = $_SESSION['usuario'];
-        $this->direccion = $_SESSION['correo'];
-        $this->contenido = getrandmax();
+        $this->direccion = $_SESSION['correo_ing'];
+        $this->contenido = 0;
         $this->asunto = "Recuperación de contraseña";
         $this->mail = new PHPMailer(true);
     }
@@ -57,7 +57,7 @@ class Correo
             $this->mail->SMTPAuth = false;
             $this->mail->SMTPAutoTLS = false; // Para que no use TLS por defecto, porque el ServidOR no lo soporta :/
             $this->mail->Port = $this->puerto;
-
+            $this->contenido = rand(100000, 999999); // Generar un código de 6 dígitos
             $this->mail->setFrom('zentryx@correos.local', 'Zentryx');
             $this->mail->addAddress($this->direccion, $this->nombre);
             $this->mail->isHTML(true);
@@ -65,7 +65,7 @@ class Correo
             $this->mail->Subject = $this->asunto;
             $this->mail->Body    = $this->contenido;
             $this->mail->send();
-            echo 'Correo enviado correctamente';
+            $_SESSION['codigo'] = $this->contenido;
         } catch (Exception $e) {
             echo "Error al enviar el correo: {$this->mail->ErrorInfo}";
         }

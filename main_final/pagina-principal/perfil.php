@@ -8,6 +8,7 @@ if (!isset($_SESSION["usuario"])) {
     exit();
 }
 
+
 $db = new conexion_BD();
 $conexion = $db->getConexion();
 

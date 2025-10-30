@@ -126,7 +126,7 @@ class conexion_BD
         $gmailHash = hash('sha256', $input);
         $sql = "SELECT nom_usuario 
             FROM usuarios 
-            WHERE (nom_usuario='{$gmailHash}' OR gmail_usuario='{$gmailHash}')
+            WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
             AND passwd='{$contra}'
             LIMIT 1";
         $consulta = mysqli_query($this->conexion, $sql);
@@ -261,5 +261,25 @@ public function existeCorreo($correo) {
     $gmailHash = hash('sha256', $correo);
     $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
     return $consulta && mysqli_num_rows($consulta) > 0;     
+}
+
+public function getNombrePorCorreo($correo) {
+    $gmailHash = hash('sha256', $correo);
+    $sql = "SELECT nom_usuario FROM usuarios WHERE gmail_usuario = ? LIMIT 1";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->bind_param("s", $gmailHash);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+    return $row['nom_usuario'] ?? null; 
+}
+
+public function cambiarContrasenia($correo, $nuevaContrasenia) {
+    $gmailHash = hash('sha256', $correo);
+    $contraseniaHash = trim(hash('sha256', $nuevaContrasenia));
+    $stmt = $this->conexion->prepare("UPDATE usuarios SET passwd = ? WHERE gmail_usuario = ?");
+    $stmt->bind_param("ss", $contraseniaHash, $gmailHash);
+    $stmt->execute();
+    $stmt->close();
 }
 }
