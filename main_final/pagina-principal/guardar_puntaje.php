@@ -4,24 +4,52 @@ session_start();
 
 if (!isset($_SESSION['usuario'])) {
     http_response_code(401);
-    echo "No autorizado";
+    echo "Error: usuario no autenticado.";
     exit;
 }
 
-$usuario = $_SESSION['usuario'];
-$puntos = $_POST['puntos'] ?? 0;
-$id_juego = $_POST['id_juego'] ?? 0; // ← Se recibe dinámicamente
-
-if ($id_juego == 0) {
+if (!isset($_POST['puntos'], $_POST['id_juego'])) {
     http_response_code(400);
-    echo "Falta el ID del juego";
+    echo "Error: datos incompletos.";
     exit;
 }
+
+$puntos = intval($_POST['puntos']);
+$id_juego = intval($_POST['id_juego']);
+$usuario = $_SESSION['usuario'];
 
 $bd = new conexion_BD();
+$conn = $bd->getConexion();
 $id_usuario = $bd->getIdUsuario($usuario);
 $correo = $bd->obtenerCorreo($id_usuario);
 
-$bd->agregarPuntaje($usuario, $puntos, $correo, $id_juego);
+// Verificar si ya existe puntaje para ese usuario/juego
+$sql_check = "SELECT puntos FROM juega WHERE id_usuario = ? AND id_juego = ?";
+$stmt = $conn->prepare($sql_check);
+$stmt->bind_param("ii", $id_usuario, $id_juego);
+$stmt->execute();
+$result = $stmt->get_result();
 
-echo "Puntaje guardado con éxito";
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if ($puntos > $row['puntos']) {
+        $sql_update = "UPDATE juega SET puntos = ? WHERE id_usuario = ? AND id_juego = ?";
+        $stmt2 = $conn->prepare($sql_update);
+        $stmt2->bind_param("iii", $puntos, $id_usuario, $id_juego);
+        $stmt2->execute();
+        echo "✅ Puntaje actualizado correctamente.";
+    } else {
+        echo "⚠️ El nuevo puntaje no supera el anterior.";
+    }
+} else {
+    $sql_insert = "INSERT INTO juega (gmail_usuario, id_juego, id_usuario, nom_usuario, puntos)
+                   VALUES (?, ?, ?, ?, ?)";
+    $stmt3 = $conn->prepare($sql_insert);
+    $stmt3->bind_param("sii si", $correo, $id_juego, $id_usuario, $usuario, $puntos);
+    $stmt3->execute();
+    echo "✅ Nuevo puntaje guardado.";
+}
+
+$stmt->close();
+$conn->close();
+?>

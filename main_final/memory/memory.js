@@ -183,7 +183,8 @@ function showWinModal() {
     const puntos = Math.max(0, 500 - totalSeconds * 10 - attempts * 5);
 
     // Enviar puntaje al backend
-    fetch('guardar_puntaje.php', {
+    fetch('../pagina-principal/guardar_puntaje.php', {
+
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: `puntos=${puntos}&id_juego=1`

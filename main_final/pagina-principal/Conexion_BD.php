@@ -113,7 +113,7 @@ class conexion_BD
     {
         return $this->departamento;
     }
-    
+
     public function getNumCalle()
     {
         return $this->num_calle;
@@ -150,15 +150,16 @@ class conexion_BD
             $this->cerrarConexion();
             exit();
         } else {
-            $nombre = $this->nombre; 
+            $nombre = $this->nombre;
             $contrasenia = trim(hash('sha256', $this->contrasenia));
-            $gmailHash = trim(hash('sha256', $this->correo)); 
+            $gmailHash = trim(hash('sha256', $this->correo));
             mysqli_query($this->conexion, "INSERT INTO `usuarios` (`nom_usuario`, `passwd`, `gmail_usuario`) VALUES ('{$nombre}', '{$contrasenia}', '{$gmailHash}')");
         }
     }
 
-    public function mailUsado() {
-        $mail = $this->correo; 
+    public function mailUsado()
+    {
+        $mail = $this->correo;
         $gmailHash = hash('sha256', $mail);
         $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
         return $consulta && mysqli_num_rows($consulta) > 0;
@@ -187,99 +188,125 @@ class conexion_BD
         }
     }
 
-    public function obtenerFoto($usuario) {
-    $sql = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario = ? LIMIT 1";
-    $stmt = $this->conexion->prepare($sql);
-    $stmt->bind_param("s", $usuario);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $row = $res->fetch_assoc();
-    return $row['imagen_perfil'] ?? null;
-}
+    public function obtenerFoto($usuario)
+    {
+        $sql = "SELECT imagen_perfil FROM usuarios WHERE nom_usuario = ? LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $usuario);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        return $row['imagen_perfil'] ?? null;
+    }
 
-public function esAdmin($id) {
-    $sql = "SELECT id_admin FROM administrador WHERE id_admin = ? LIMIT 1";
-    $stmt = $this->conexion->prepare($sql);
-    $stmt->bind_param("s", $id);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    return $res->num_rows > 0;
-}
+    public function esAdmin($id)
+    {
+        $sql = "SELECT id_admin FROM administrador WHERE id_admin = ? LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        return $res->num_rows > 0;
+    }
 
-public function getIdUsuario($nombre) {
-    $sql = "SELECT id_usuario FROM usuarios WHERE nom_usuario = ? LIMIT 1";
-    $stmt = $this->conexion->prepare($sql);
-    $stmt->bind_param("s", $nombre);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $row = $res->fetch_assoc();
-    return $row['id_usuario'] ?? null;
-}
+    public function getIdUsuario($nombre)
+    {
+        $sql = "SELECT id_usuario FROM usuarios WHERE nom_usuario = ? LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $nombre);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        return $row['id_usuario'] ?? null;
+    }
 
-public function getNombreUsuario($nombre) {
-    $sql = "SELECT nom_usuario FROM usuarios WHERE nom_usuario = ? LIMIT 1";
-    $stmt = $this->conexion->prepare($sql);
-    $stmt->bind_param("s", $nombre);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $row = $res->fetch_assoc();
-    return $row['nom_usuario'] ?? null;   
-}
+    public function getNombreUsuario($nombre)
+    {
+        $sql = "SELECT nom_usuario FROM usuarios WHERE nom_usuario = ? LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $nombre);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        return $row['nom_usuario'] ?? null;
+    }
 
-public function agregarPuntaje($nombre, $puntaje, $correo, $id_juego) { 
+    public function agregarPuntaje($nombre, $puntaje, $correo, $id_juego) { 
     $id_usuario = $this->getIdUsuario($nombre);
-    $stmt = $this->conexion->prepare("INSERT INTO `juega` (`gmail_usuario`, `id_juego`, `id_usuario`, `nom_usuario`, `puntos`) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje); 
-    $stmt->bind_param("siisi",  $correo, $id_juego, $id_usuario, $nombre, $puntaje);
-    $stmt->execute();
-    $stmt->close();
-}
+    if (!$id_usuario || !$correo) {
+        error_log("Error: usuario o correo nulos en agregarPuntaje()");
+        return false;
+    }
 
-public function obtenerCorreo($id) {
-    $sql = "SELECT gmail_usuario FROM usuarios WHERE id_usuario = ? LIMIT 1";
-    $stmt = $this->conexion->prepare($sql);
-    $stmt->bind_param("s", $id);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $row = $res->fetch_assoc();
-    return $row['gmail_usuario'] ?? null;
-}
-
-public function agregarAdmin() {
-    $calle = trim(hash('sha256',$this->calle));
-    $departamento = trim(hash('sha256',$this->departamento));
-    $contrasenia = trim(hash('sha256', $this->contrasenia));
-    $num_calle = trim(hash('sha256', $this->num_calle));   
-    $gmail = trim(hash('sha256', $this->correo));
-    $stmt = $this->conexion->prepare("INSERT INTO `administrador` (`calle`, `departamento`, `gmail_admin`, `num_calle`, `passwd_admin`) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $calle, $departamento, $gmail, $num_calle, $contrasenia);
-    $stmt->execute();
-    $stmt->close();
-}
-
-public function existeCorreo($correo) {
     $gmailHash = hash('sha256', $correo);
-    $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
-    return $consulta && mysqli_num_rows($consulta) > 0;     
-}
 
-public function getNombrePorCorreo($correo) {
-    $gmailHash = hash('sha256', $correo);
-    $sql = "SELECT nom_usuario FROM usuarios WHERE gmail_usuario = ? LIMIT 1";
-    $stmt = $this->conexion->prepare($sql);
-    $stmt->bind_param("s", $gmailHash);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $row = $res->fetch_assoc();
-    return $row['nom_usuario'] ?? null; 
-}
+    $stmt = $this->conexion->prepare("
+        INSERT INTO juega (gmail_usuario, id_juego, id_usuario, nom_usuario, puntos)
+        VALUES (?, ?, ?, ?, ?)
+    ");
 
-public function cambiarContrasenia($correo, $nuevaContrasenia) {
-    $gmailHash = hash('sha256', $correo);
-    $contraseniaHash = trim(hash('sha256', $nuevaContrasenia));
-    $stmt = $this->conexion->prepare("UPDATE usuarios SET passwd = ? WHERE gmail_usuario = ?");
-    $stmt->bind_param("ss", $contraseniaHash, $gmailHash);
-    $stmt->execute();
+    if (!$stmt) {
+        error_log("Error en prepare() agregarPuntaje: " . $this->conexion->error);
+        return false;
+    }
+
+    $stmt->bind_param("siisi", $gmailHash, $id_juego, $id_usuario, $nombre, $puntaje);
+    $ok = $stmt->execute();
     $stmt->close();
+    return $ok;
 }
+
+
+    public function obtenerCorreo($id)
+    {
+        $sql = "SELECT gmail_usuario FROM usuarios WHERE id_usuario = ? LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        return $row['gmail_usuario'] ?? null;
+    }
+
+    public function agregarAdmin()
+    {
+        $calle = trim(hash('sha256', $this->calle));
+        $departamento = trim(hash('sha256', $this->departamento));
+        $contrasenia = trim(hash('sha256', $this->contrasenia));
+        $num_calle = trim(hash('sha256', $this->num_calle));
+        $gmail = trim(hash('sha256', $this->correo));
+        $stmt = $this->conexion->prepare("INSERT INTO `administrador` (`calle`, `departamento`, `gmail_admin`, `num_calle`, `passwd_admin`) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $calle, $departamento, $gmail, $num_calle, $contrasenia);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function existeCorreo($correo)
+    {
+        $gmailHash = hash('sha256', $correo);
+        $consulta = mysqli_query($this->conexion, "SELECT 1 FROM usuarios WHERE gmail_usuario='{$gmailHash}' LIMIT 1");
+        return $consulta && mysqli_num_rows($consulta) > 0;
+    }
+
+    public function getNombrePorCorreo($correo)
+    {
+        $gmailHash = hash('sha256', $correo);
+        $sql = "SELECT nom_usuario FROM usuarios WHERE gmail_usuario = ? LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $gmailHash);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        return $row['nom_usuario'] ?? null;
+    }
+
+    public function cambiarContrasenia($correo, $nuevaContrasenia)
+    {
+        $gmailHash = hash('sha256', $correo);
+        $contraseniaHash = trim(hash('sha256', $nuevaContrasenia));
+        $stmt = $this->conexion->prepare("UPDATE usuarios SET passwd = ? WHERE gmail_usuario = ?");
+        $stmt->bind_param("ss", $contraseniaHash, $gmailHash);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
