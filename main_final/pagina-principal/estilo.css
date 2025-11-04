@@ -1393,58 +1393,6 @@ body.no-scroll {
     height: 100dvh;
 }
 
-/* ===== Esquinas con orientación corregida ===== */
-#mainContent .corner-svg {
-    position: absolute;
-    width: 160px;
-    height: 160px;
-    z-index: 2;
-    filter: drop-shadow(0 0 10px rgba(166, 75, 244, .35));
-    opacity: .9;
-    pointer-events: none;
-}
-
-/* Arriba izquierda: sin transformaciones */
-#mainContent .corner-tl {
-    top: 10px;
-    left: 10px;
-    transform: none !important;
-}
-
-/* Arriba derecha: reflejada horizontalmente */
-#mainContent .corner-tr {
-    top: 10px;
-    right: 10px;
-    transform: scaleX(-1) !important;
-}
-
-/* Abajo izquierda: reflejada verticalmente */
-#mainContent .corner-bl {
-    bottom: 10px;
-    left: 10px;
-    transform: scaleY(-1) !important;
-}
-
-/* Abajo derecha: reflejada en ambos ejes */
-#mainContent .corner-br {
-    bottom: 10px;
-    right: 10px;
-    transform: scale(-1) !important;
-}
-
-@media (max-width:768px) {
-    #mainContent .corner-svg {
-        width: 120px;
-        height: 120px;
-    }
-}
-
-@media (max-width:480px) {
-    #mainContent .corner-svg {
-        width: 92px;
-        height: 92px;
-    }
-}
 
 /* ================== RANKING OSCURO ZENTRYX ================== */
 .ranking-main {
@@ -1814,4 +1762,22 @@ body.no-scroll {
         font-size: 0.9rem;
         padding: 8px;
     }
+}
+/* --- Corrección: ocultar completamente el fondo de inicio al cambiar de sección --- */
+#mainContent[style*="display: none"] {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    z-index: -1 !important;
+    position: absolute !important;
+}
+
+#mainContent[style*="display: block"] {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1 !important;
+    position: fixed !important;
+}
+#mainContent {
+    transition: opacity 0.6s ease, visibility 0.6s ease;
 }
