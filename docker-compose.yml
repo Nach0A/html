@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   web:
-    build:
+    build: .
       context: ./main_final
     container_name: zentryx_web
     ports:
@@ -30,6 +30,8 @@ services:
     volumes:
       - ./db_data:/var/lib/mysql
       - ./zentryx.sql:/docker-entrypoint-initdb.d/zentryx.sql
+    ports:
+      - "3306:3306"
 
 volumes:
   db_data:
