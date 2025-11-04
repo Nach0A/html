@@ -40,9 +40,9 @@ if ($result->num_rows > 0) {
         $stmt2 = $conn->prepare($sql_update);
         $stmt2->bind_param("iii", $puntos, $id_usuario, $id_juego);
         $stmt2->execute();
-        echo "✅ Puntaje actualizado correctamente.";
+        echo " Puntaje actualizado correctamente.";
     } else {
-        echo "⚠️ El nuevo puntaje no supera el anterior.";
+        echo " El nuevo puntaje no supera el anterior.";
     }
 } else {
     $sql_insert = "INSERT INTO juega (gmail_usuario, id_juego, id_usuario, nom_usuario, puntos)
@@ -50,7 +50,7 @@ if ($result->num_rows > 0) {
     $stmt3 = $conn->prepare($sql_insert);
     $stmt3->bind_param("siisi", $correo, $id_juego, $id_usuario, $usuario, $puntos);
     $stmt3->execute();
-    echo "✅ Nuevo puntaje guardado.";
+    echo " Nuevo puntaje guardado.";
 }
 
 // ==== CIERRE DE CONEXIÓN ====

@@ -79,18 +79,106 @@ if (!isset($_SESSION['usuario'])) {
         </div>
     </nav>
 
-    <!-- SECCIÓN INICIO: saludo al usuario -->
-    <div id="mainContent" class="fade-in inicio-bienvenida" style="display: none;">
-        <div class="bienvenida-box">
-            <h1>¡Hola, <span class="usuario"><?php echo htmlspecialchars($_SESSION['usuario']); ?></span>!</h1>
-            <h2>Bienvenido a <span class="resaltado">Zentryx</span></h2>
-            <p class="descripcion-inicio">
-                En esta plataforma podés explorar juegos, competir en rankings y desafiar tu mente. <br>
-                ¡Demostrá tus habilidades y subí en la tabla!
-            </p>
-            <a href="#juegos" class="btn-inicio-jugar" onclick="mostrarJuegos()">🎮 Ver Juegos</a>
+    <!-- SECCIÓN INICIO: NUEVA PANTALLA DE BIENVENIDA -->
+    <div id="mainContent" class="inicio-fullscreen" style="display: none;">
+        <div class="overlay-tech"></div>
+
+        <div class="welcome-container">
+            <div class="welcome-inner">
+                <h1 class="welcome-title">¡Bienvenido,
+                    <span class="usuario">
+                        <?php echo htmlspecialchars($_SESSION['usuario']); ?>
+                    </span>!
+                </h1>
+                <h2 class="welcome-subtitle">A la experiencia <span class="resaltado">Zentryx</span></h2>
+                <p class="welcome-text">
+                    Desafiá tu mente con nuestros juegos, subí en el ranking y conquistá el mundo digital.
+                    <br>Sumergite en una interfaz inspirada en la tecnología del futuro.
+                </p>
+                <a href="#juegos" class="btn-inicio-jugar" onclick="mostrarJuegos()">🎮 Empezar a jugar</a>
+            </div>
         </div>
+
+        <!-- Fondo tecnológico -->
+        <div class="grid-anim" aria-hidden="true"></div>
+        <div class="tech-particles" aria-hidden="true"></div>
+
+        <!-- Esquinas con circuitos animados -->
+        <svg class="corner-svg corner-tl" viewBox="0 0 140 140" aria-hidden="true">
+            <defs>
+                <linearGradient id="gradTL" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#ea00ff" />
+                    <stop offset="100%" stop-color="#00ffe7" />
+                </linearGradient>
+            </defs>
+            <path d="M10,130 L10,40 Q10,10 40,10 L130,10" fill="none" stroke="url(#gradTL)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 8">
+                <animate attributeName="stroke-dashoffset" from="0" to="-200" dur="4s" repeatCount="indefinite" />
+            </path>
+            <circle cx="10" cy="130" r="3" fill="#ea00ff">
+                <animate attributeName="r" values="2;4;2" dur="2.2s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="130" cy="10" r="3" fill="#00ffe7">
+                <animate attributeName="r" values="2;4;2" dur="2.2s" begin="0.3s" repeatCount="indefinite" />
+            </circle>
+        </svg>
+
+        <svg class="corner-svg corner-tr" viewBox="0 0 140 140" aria-hidden="true">
+            <defs>
+                <linearGradient id="gradTR" x1="1" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ea00ff" />
+                    <stop offset="100%" stop-color="#00ffe7" />
+                </linearGradient>
+            </defs>
+            <path d="M130,130 L130,40 Q130,10 100,10 L10,10" fill="none" stroke="url(#gradTR)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 8">
+                <animate attributeName="stroke-dashoffset" from="0" to="-200" dur="4s" repeatCount="indefinite" />
+            </path>
+            <circle cx="130" cy="130" r="3" fill="#ea00ff">
+                <animate attributeName="r" values="2;4;2" dur="2.2s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="10" cy="10" r="3" fill="#00ffe7">
+                <animate attributeName="r" values="2;4;2" dur="2.2s" begin="0.3s" repeatCount="indefinite" />
+            </circle>
+        </svg>
+
+        <svg class="corner-svg corner-bl" viewBox="0 0 140 140" aria-hidden="true">
+            <defs>
+                <linearGradient id="gradBL" x1="0" y1="1" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#ea00ff" />
+                    <stop offset="100%" stop-color="#00ffe7" />
+                </linearGradient>
+            </defs>
+            <path d="M10,10 L10,100 Q10,130 40,130 L130,130" fill="none" stroke="url(#gradBL)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 8">
+                <animate attributeName="stroke-dashoffset" from="0" to="-200" dur="4s" repeatCount="indefinite" />
+            </path>
+            <circle cx="10" cy="10" r="3" fill="#ea00ff">
+                <animate attributeName="r" values="2;4;2" dur="2.2s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="130" cy="130" r="3" fill="#00ffe7">
+                <animate attributeName="r" values="2;4;2" dur="2.2s" begin="0.3s" repeatCount="indefinite" />
+            </circle>
+        </svg>
+
+        <svg class="corner-svg corner-br" viewBox="0 0 140 140" aria-hidden="true">
+            <defs>
+                <linearGradient id="gradBR" x1="1" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="#ea00ff" />
+                    <stop offset="100%" stop-color="#00ffe7" />
+                </linearGradient>
+            </defs>
+            <path d="M130,10 L130,100 Q130,130 100,130 L10,130" fill="none" stroke="url(#gradBR)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 8">
+                <animate attributeName="stroke-dashoffset" from="0" to="-200" dur="4s" repeatCount="indefinite" />
+            </path>
+            <circle cx="130" cy="10" r="3" fill="#ea00ff">
+                <animate attributeName="r" values="2;4;2" dur="2.2s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="10" cy="130" r="3" fill="#00ffe7">
+                <animate attributeName="r" values="2;4;2" dur="2.2s" begin="0.3s" repeatCount="indefinite" />
+            </circle>
+        </svg>
+
+
     </div>
+
 
     <!-- SECCIÓN JUEGOS: lista de juegos -->
     <div class="container-fluid juegos-wrapper" id="juegosContent" style="display: none;">
@@ -150,8 +238,14 @@ if (!isset($_SESSION['usuario'])) {
         }
 
         // Eventos
-        linkInicio.addEventListener("click", e => { e.preventDefault(); mostrarInicio(); });
-        linkJuegos.addEventListener("click", e => { e.preventDefault(); mostrarJuegos(); });
+        linkInicio.addEventListener("click", e => {
+            e.preventDefault();
+            mostrarInicio();
+        });
+        linkJuegos.addEventListener("click", e => {
+            e.preventDefault();
+            mostrarJuegos();
+        });
         linkLogo.addEventListener("click", e => {
             e.preventDefault();
             linkLogo.classList.add("animate-click");
@@ -178,6 +272,50 @@ if (!isset($_SESSION['usuario'])) {
         });
     </script>
     <script src="../navbar/script.js"></script>
+    <script>
+        // Parallax sutil (solo partículas) + bloqueo de scroll en Inicio
+        const particles = document.querySelector(".tech-particles");
+
+        document.addEventListener("mousemove", (e) => {
+            if (!particles) return;
+            const {
+                innerWidth,
+                innerHeight
+            } = window;
+            const moveX = (e.clientX / innerWidth - 0.5) * 10;
+            const moveY = (e.clientY / innerHeight - 0.5) * 10;
+            particles.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+
+        // Forzamos no-scroll cuando está el inicio visible
+        function bloquearScrollInicio(activo) {
+            if (activo) {
+                document.body.classList.add("no-scroll");
+            } else {
+                document.body.classList.remove("no-scroll");
+            }
+        }
+
+        // Sobrescribimos mostrarInicio / mostrarJuegos para manejar scroll y centrar
+        const _mostrarInicio = window.mostrarInicio;
+        const _mostrarJuegos = window.mostrarJuegos;
+
+        window.mostrarInicio = function() {
+            if (typeof _mostrarInicio === "function") _mostrarInicio();
+            bloquearScrollInicio(true);
+        };
+        window.mostrarJuegos = function() {
+            if (typeof _mostrarJuegos === "function") _mostrarJuegos();
+            bloquearScrollInicio(false);
+        };
+
+        // En carga inicial, si estás en #inicio, bloqueá scroll
+        window.addEventListener("load", () => {
+            if (location.hash !== "#juegos") bloquearScrollInicio(true);
+        });
+    </script>
+
+
 </body>
 
 </html>
