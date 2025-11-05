@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar_id'])) {
 // Eliminación
 if (isset($_GET['eliminar'])) {
     $eliminarId = (int)$_GET['eliminar'];
-    $conexion->query("DELETE FROM usuarios WHERE id_usuario=$eliminarId");
+    $conexion->query("UPDATE usuarios SET iniciar='0' WHERE id_usuario=$eliminarId");
     header("Location: inicio_admin.php");
     exit;
 }

@@ -70,17 +70,14 @@ class conexion_BD
         $input = $this->nombre; // puede ser usuario o mail
         $contra = trim(hash('sha256', $this->contrasenia));
         $gmailHash = hash('sha256', $input);
-
-        $sql = "SELECT nom_usuario 
-                FROM usuarios 
-                WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
-                AND passwd='{$contra}'
-                LIMIT 1";
-
+        $sql = "SELECT nom_usuario, iniciar 
+            FROM usuarios 
+            WHERE (nom_usuario='{$input}' OR gmail_usuario='{$gmailHash}')
+            AND passwd='{$contra}'
+            LIMIT 1";
         $consulta = mysqli_query($this->conexion, $sql);
-
-        if ($consulta && mysqli_num_rows($consulta) === 1) {
-            $row = mysqli_fetch_assoc($consulta);
+        $row = mysqli_fetch_assoc($consulta);
+        if ($consulta && mysqli_num_rows($consulta) === 1 && $row['iniciar'] === '1') {
             // guardar SIEMPRE el nom_usuario real
             $this->nombre = $row['nom_usuario'];
             return true;
@@ -189,14 +186,13 @@ class conexion_BD
         return $row['gmail_usuario'] ?? null;
     }
 
-    public function agregarAdmin() {
-        $calle = trim(hash('sha256',$this->calle));
-        $departamento = trim(hash('sha256',$this->departamento));
-        $contrasenia = trim(hash('sha256', $this->contrasenia));
-        $num_calle = trim(hash('sha256', $this->num_calle));   
-        $gmail = trim(hash('sha256', $this->correo));
-        $stmt = $this->conexion->prepare("INSERT INTO `administrador` (`calle`, `departamento`, `gmail_admin`, `num_calle`, `passwd_admin`) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $calle, $departamento, $gmail, $num_calle, $contrasenia);
+    public function agregarAdmin($calle, $departamento, $num_calle, $correo)
+    {
+        $Hashcalle = trim(hash('sha256', $calle));
+        $Hashdepartamento = trim(hash('sha256', $departamento));
+        $Hashnum_calle = trim(hash('sha256', $num_calle));
+        $stmt = $this->conexion->prepare("INSERT INTO `administrador` (`calle`, `departamento`, `gmail_admin`, `num_calle`) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $Hashcalle, $Hashdepartamento, $correo, $Hashnum_calle);
         $stmt->execute();
         $stmt->close();
     }
@@ -228,5 +224,16 @@ class conexion_BD
         $stmt->bind_param("ss", $contraseniaHash, $gmailHash);
         $stmt->execute();
         $stmt->close();
+    }
+
+    public function obtenerIniciar($nombre)
+    {
+        $sql = "SELECT iniciar FROM usuarios WHERE nom_usuario = ? LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $nombre);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        return $row['iniciar'] ?? null;
     }
 }
