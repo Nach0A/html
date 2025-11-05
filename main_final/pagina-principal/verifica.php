@@ -59,6 +59,7 @@ if ($ini === "1") {
         $bd->cerrarConexion();
         header("Location: Inicio.php");
         exit();
+    }
 
     } else {
         // ⚠️ Error de login → SweetAlert con estilo Zentryx
@@ -135,7 +136,7 @@ if ($ini === "1") {
         </html>';
         exit();
     }
-
+    }
 } elseif ($ini === "0") {
     // 🟢 Registro exitoso → SweetAlert con el mismo estilo Zentryx
     $bd->registro();
