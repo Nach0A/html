@@ -28,7 +28,6 @@ services:
       MARIADB_USER: zentryx_user
       MARIADB_PASSWORD: 1
     volumes:
-      - ./db_data:/var/lib/mysql
       - ./zentryx.sql:/docker-entrypoint-initdb.d/zentryx.sql
     ports:
       - "3306:3306"
@@ -36,6 +35,3 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
       retries: 5
-
-volumes:
-  db_data:
