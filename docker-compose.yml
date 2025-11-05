@@ -14,7 +14,7 @@ services:
     restart: always
     environment:
       - DB_HOST=db
-      - DB_USER=root
+      - DB_USER=zentryx_user
       - DB_PASSWORD=1
       - DB_NAME=zentryx
 
@@ -25,6 +25,8 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: 1
       MARIADB_DATABASE: zentryx
+      MARIADB_USER: zentryx_user
+      MARIADB_PASSWORD: 1
     volumes:
       - ./db_data:/var/lib/mysql
       - ./zentryx.sql:/docker-entrypoint-initdb.d/zentryx.sql
