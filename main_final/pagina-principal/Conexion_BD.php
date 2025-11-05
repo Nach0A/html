@@ -19,7 +19,7 @@ class conexion_BD
     {
         $this->servidor = getenv('DB_HOST') ?: 'localhost';
         $this->usuario = getenv('DB_USER') ?: 'root';
-        $this->pass = getenv('DB_PASS') ?: '';
+        $this->pass = getenv('DB_PASSWORD') ?: '';
         $this->base = getenv('DB_NAME') ?: 'zentryx';
 
         $this->nombre = $_POST["nombre"] ?? $_POST["input"] ?? null;
