@@ -1,4 +1,5 @@
 <?php
+require_once "./Conexion_BD.php";
 session_start();
 include("Conexion_BD.php");
 

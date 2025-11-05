@@ -1,5 +1,0 @@
-cd ruta/donde/esta/proyecto
-docker compose build -->construir imagenes
-docker compose up -d --> levantar contenedores
-docker ps --> ver contenedores corriendo
-http://localhost
