@@ -20,7 +20,7 @@ services:
 
   db:
     image: mariadb:10.4
-    container_name: zentryx_db
+    container_name: db
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: 1
