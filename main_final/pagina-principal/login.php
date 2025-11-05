@@ -1,4 +1,5 @@
 <?php
+require_once "./Conexion_BD.php";
 session_start();
 
 // Si ya hay sesión, vamos a Inicio
@@ -105,6 +106,7 @@ $BASE_URL = "/PlataformaLudica/main_final/";
         });
     </script>
     <script src="scriptLogin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

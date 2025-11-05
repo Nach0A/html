@@ -1,26 +1,37 @@
 version: "3.9"
 
 services:
-  app:
-    build:
-      context: ./main_final
+  web:
+    build: .
+    container_name: zentryx_web
     ports:
       - "80:80"
-    depends_on:
-      - db
-    restart: always
     volumes:
-      - ./main_final:/var/www/html
+      - ./:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    environment:
+      - DB_HOST=db
+      - DB_USER=zentryx_user
+      - DB_PASSWORD=1
+      - DB_NAME=zentryx
 
   db:
     image: mariadb:10.4
-    environment:
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
-      MARIADB_DATABASE: zentryx
-    volumes:
-      - db_data:/var/lib/mysql
-      - ./zentryx.sql:/docker-entrypoint-initdb.d/init.sql
+    container_name: db
     restart: always
-
-volumes:
-  db_data:
+    environment:
+      MARIADB_ROOT_PASSWORD: 1
+      MARIADB_DATABASE: zentryx
+      MARIADB_USER: zentryx_user
+      MARIADB_PASSWORD: 1
+    volumes:
+      - ./zentryx.sql:/docker-entrypoint-initdb.d/zentryx.sql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 5

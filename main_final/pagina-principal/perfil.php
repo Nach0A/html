@@ -1,4 +1,5 @@
 <?php
+require_once "./Conexion_BD.php";
 session_start();
 include("Conexion_BD.php");
 
@@ -24,7 +25,7 @@ $BASE_URL = "/PlataformaLudica/main_final/";
 
 // Rutas de archivo físico y ruta web para uploads
 $upload_dir = __DIR__ . "/uploads/perfiles/";
-$upload_web = $BASE_URL . "pagina-principal/uploads/perfiles/"; 
+$upload_web = $BASE_URL . "pagina-principal/uploads/perfiles/";
 
 // Obtener datos del usuario
 $sql = "SELECT nom_usuario, gmail_usuario, imagen_perfil, passwd FROM usuarios WHERE nom_usuario = ?";
@@ -54,42 +55,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // ... luego, en el bloque de cambiar imagen:
-if ($accion === "imagen") {
-    if (!empty($_FILES["imagen"]["name"])) {
-        $nombre_imagen = $usuario_actual . "_" . basename($_FILES["imagen"]["name"]);
+    if ($accion === "imagen") {
+        if (!empty($_FILES["imagen"]["name"])) {
+            $nombre_imagen = $usuario_actual . "_" . basename($_FILES["imagen"]["name"]);
 
-        // Aseguramos carpeta
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0775, true);
+            // Aseguramos carpeta
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0775, true);
+            }
+
+            $destino_fs = $upload_dir . $nombre_imagen; // ruta física para move_uploaded_file
+
+            if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $destino_fs)) {
+                // Guardamos solo el nombre en la BD
+                $update_img = "UPDATE usuarios SET imagen_perfil=? WHERE nom_usuario=?";
+                $stmt = $conexion->prepare($update_img);
+                $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
+                $stmt->execute();
+
+                // Guardar en sesión la RUTA WEB (no la ruta física)
+                $_SESSION["foto"] = $upload_web . $nombre_imagen;
+            } else {
+                // opcional: mensaje de error
+                $mensaje = "Error al subir la imagen.";
+                $tipo_alerta = "danger";
+            }
         }
-
-        $destino_fs = $upload_dir . $nombre_imagen; // ruta física para move_uploaded_file
-
-        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $destino_fs)) {
-            // Guardamos solo el nombre en la BD
-            $update_img = "UPDATE usuarios SET imagen_perfil=? WHERE nom_usuario=?";
-            $stmt = $conexion->prepare($update_img);
-            $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
-            $stmt->execute();
-
-            // Guardar en sesión la RUTA WEB (no la ruta física)
-            $_SESSION["foto"] = $upload_web . $nombre_imagen;
-        } else {
-            // opcional: mensaje de error
-            $mensaje = "Error al subir la imagen.";
-            $tipo_alerta = "danger";
-        }
+        header("Location: perfil.php");
+        exit();
     }
-    header("Location: perfil.php");
-    exit();
-}
 
     // Cambiar contraseña —> NO redirigimos (mostramos mensaje en el modal)
     if ($accion === "password") {
         $accion_post = "password";
 
-        $contrasenia_actual   = $_POST["contrasenia_actual"]   ?? "";
-        $nueva_contrasenia    = $_POST["nueva_contrasenia"]    ?? "";
+        $contrasenia_actual = $_POST["contrasenia_actual"] ?? "";
+        $nueva_contrasenia = $_POST["nueva_contrasenia"] ?? "";
         $confirmar_contrasenia = $_POST["confirmar_contrasenia"] ?? "";
 
         $contraHash = hash("sha256", $contrasenia_actual);
@@ -324,11 +325,17 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                 <!-- Botones Inicio / Juegos -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#inicio" id="linkInicio">Inicio</a>
+                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#inicio"
+                            id="linkInicio">Inicio</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#juegos" id="linkJuegos">Juegos</a>
+                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#juegos"
+                            id="linkJuegos">Juegos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../pagina-principal/ranking.php"
+                            id="linkRanking">Ranking</a>
                     </li>
                 </ul>
 
@@ -338,13 +345,13 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                         <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white"
                             id="userDropdown" role="button" data-bs-toggle="dropdown">
                             <img src="<?php echo htmlspecialchars($_SESSION['foto'] ?? '../navbar/imagenes/usuario.png'); ?>"
-                                class="user-avatar shadow-sm"
-                                alt="Usuario">
+                                class="user-avatar shadow-sm" alt="Usuario">
 
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">
                             <li>
-                                <a class="dropdown-item" href="../pagina-principal/perfil.php">Perfil (<?php echo htmlspecialchars($_SESSION['usuario']);     ?>)</a>
+                                <a class="dropdown-item" href="../pagina-principal/perfil.php">Perfil
+                                    (<?php echo htmlspecialchars($_SESSION['usuario']); ?>)</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -376,7 +383,8 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
 
                 <div>
                     <p class="mb-1 text-secondary">Sube una nueva foto para tu perfil</p>
-                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalImagen">Cambiar</button>
+                    <button class="btn btn-outline-light" data-bs-toggle="modal"
+                        data-bs-target="#modalImagen">Cambiar</button>
                 </div>
             </div>
 
@@ -395,7 +403,8 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
         <div class="card bg-dark mb-3 p-3 shadow-lg">
             <h5 class="text-white">Contraseña</h5>
             <p class="mb-1 text-secondary">Cambia tu clave de acceso de manera segura</p>
-            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalPassword">Cambiar</button>
+            <button class="btn btn-outline-light" data-bs-toggle="modal"
+                data-bs-target="#modalPassword">Cambiar</button>
         </div>
 
         <!-- Eliminar cuenta -->
@@ -441,7 +450,8 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                     <form method="POST">
                         <input type="hidden" name="accion" value="usuario">
                         <div class="modal-body">
-                            <input type="text" class="form-control" name="nuevo_usuario" value="<?php echo htmlspecialchars($datos['nom_usuario']); ?>" required>
+                            <input type="text" class="form-control" name="nuevo_usuario"
+                                value="<?php echo htmlspecialchars($datos['nom_usuario']); ?>" required>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>
@@ -454,13 +464,15 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
 
 
         <!-- Password -->
-        <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="modalPasswordLabel" aria-hidden="true">
+        <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="modalPasswordLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content bg-dark text-white">
                     <form method="POST" action="">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalPasswordLabel">Cambiar Contraseña</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="accion" value="password">
@@ -504,11 +516,14 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                     <form method="POST">
                         <input type="hidden" name="accion" value="eliminar">
                         <div class="modal-body">
-                            <p class="mb-2">¿Estás seguro de que quieres <strong class="text-danger">eliminar tu cuenta</strong>?</p>
-                            <p class="mb-0">Esta acción es <strong>irreversible</strong> y perderás todo tu progreso.</p>
+                            <p class="mb-2">¿Estás seguro de que quieres <strong class="text-danger">eliminar tu
+                                    cuenta</strong>?</p>
+                            <p class="mb-0">Esta acción es <strong>irreversible</strong> y perderás todo tu progreso.
+                            </p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-outline-light"
+                                data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-danger">Sí, eliminar</button>
                         </div>
                     </form>
@@ -522,7 +537,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
         <?php if ($accion_post === 'password' && !empty($mensaje)): ?>
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
+                document.addEventListener('DOMContentLoaded', function () {
                     var modal = new bootstrap.Modal(document.getElementById('modalPassword'));
                     modal.show();
                 });

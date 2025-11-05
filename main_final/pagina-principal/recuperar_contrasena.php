@@ -1,4 +1,5 @@
 <?php
+require_once "./Conexion_BD.php";
 session_start();
 // Si ya hay sesión, redirigir al inicio
 if (isset($_SESSION['usuario'])) {

@@ -52,6 +52,10 @@ $id_usuario = $bd->getIdUsuario($user);
                     <li class="nav-item">
                         <a class="nav-link" href="../pagina-principal/Inicio.php#juegos" id="linkJuegos">Juegos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../pagina-principal/ranking.php"
+                            id="linkRanking">Ranking</a>
+                    </li>
                 </ul>
 
                 <!-- PERFIL -->
@@ -60,8 +64,7 @@ $id_usuario = $bd->getIdUsuario($user);
                         <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="<?php echo htmlspecialchars($_SESSION['foto'] ?? '../navbar/imagenes/usuario.png'); ?>"
-                                class="user-avatar shadow-sm"
-                                alt="Usuario">
+                                class="user-avatar shadow-sm" alt="Usuario">
 
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end fade-menu">

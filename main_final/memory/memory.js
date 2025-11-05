@@ -141,7 +141,7 @@ function startTimer() {
         const elapsed = Date.now() - startTime;
         const minutes = String(Math.floor(elapsed / 60000)).padStart(2, '0');
         const seconds = String(Math.floor((elapsed % 60000) / 1000)).padStart(2, '0');
-        
+
         tiempoBD = elapsed; // Guardar tiempo en milisegundos para la base de datos
         timerEl.textContent = `Tiempo ${minutes}:${seconds}`;
     }, 500);
@@ -156,29 +156,64 @@ function resetTimer() {
 
 // Muestra el modal de victoria
 function showWinModal() {
-    clearInterval(timerInterval);
-    finalTimeEl.textContent = timerEl.textContent;
-    // Agregar el número de intentos al modal
-    const modalContent = document.querySelector('.modal-content');
-    // Eliminar cualquier intento previo agregado
-    const prevAttempts = modalContent.querySelector('.attempts-info');
-    if (prevAttempts) prevAttempts.remove();
-    const attemptsInfo = document.createElement('p');
-    attemptsInfo.className = 'attempts-info';
-    attemptsInfo.textContent = `Intentos realizados: ${attempts}`;
-    modalContent.insertBefore(attemptsInfo, modalContent.querySelector('#play-again-btn'));
-    winModal.classList.remove('hidden');
+  clearInterval(timerInterval);
+
+  // Tiempo exacto en segundos sin parsear el DOM
+  const elapsedSec = Math.floor((Date.now() - startTime) / 1000);
+
+  // Refrescar texto mostrado en el modal (opcional)
+  const mm = String(Math.floor(elapsedSec / 60)).padStart(2, '0');
+  const ss = String(elapsedSec % 60).padStart(2, '0');
+  finalTimeEl.textContent = `Tiempo ${mm}:${ss}`;
+
+  // Agregar intentos al modal
+  const modalContent = document.querySelector('.modal-content');
+  const prevAttempts = modalContent.querySelector('.attempts-info');
+  if (prevAttempts) prevAttempts.remove();
+  const attemptsInfo = document.createElement('p');
+  attemptsInfo.className = 'attempts-info';
+  attemptsInfo.textContent = `Intentos realizados: ${attempts}`;
+  modalContent.insertBefore(attemptsInfo, modalContent.querySelector('#play-again-btn'));
+
+  winModal.classList.remove('hidden');
+
+  // ===== Nueva fórmula de puntaje (más razonable) =====
+  // Base por pares + bonus base, penaliza segundos e intentos
+  // Ajustá coeficientes a gusto.
+  const puntos = Math.max(
+    0,
+    Math.round(totalPairs * 200 + 400 - elapsedSec * 3 - attempts * 6)
+  );
+
+  console.log("⏱ Tiempo total:", elapsedSec, "segundos");
+  console.log("Intentos:", attempts);
+  console.log("Puntos calculados:", puntos);
+
+  // Enviar al backend
+  fetch("../pagina-principal/guardar_puntaje.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `puntos=${puntos}&id_juego=1`,
+  })
+    .then(res => res.text())
+    .then(data => console.log("Servidor:", data))
+    .catch(err => console.error("Error al guardar puntaje:", err));
 }
+
+
+
 
 // Eventos de botones
 restartBtn.addEventListener('click', initGame);
 playAgainBtn.addEventListener('click', initGame);
 
 if (homeBtn) {
-    homeBtn.addEventListener('click', function() {
+    homeBtn.addEventListener('click', function () {
         window.location.href = '../pagina-principal/inicio.php#inicio';
     });
 }
+
+
 
 // Arrancar el juego al cargar la página
 window.addEventListener('load', initGame);
