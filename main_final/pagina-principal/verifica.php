@@ -24,6 +24,7 @@ if ($bd->getIni() === "1") {
             $_SESSION['usuario'] = $bd->getNombreUsuario($bd->getNombre());
             $_SESSION['id_usuario'] = $bd->getIdUsuario($bd->getNombre());
             $_SESSION['correo'] = $bd->obtenerCorreo($_SESSION['id_usuario']);
+            // $bd->agregarAdmin("calle1", "departamento1", "12345", $_SESSION['correo']); // Agregar admin por defecto
             // Asignar foto en sesión — con ruta web consistente
             if (!empty($bd->obtenerFoto($_SESSION['usuario'])) && file_exists($UPLOAD_DIR .$bd->obtenerFoto($_SESSION['usuario']))) {
                 $_SESSION['foto'] = $UPLOAD_WEB . $bd->obtenerFoto($_SESSION['usuario']);
@@ -43,6 +44,10 @@ if ($bd->getIni() === "1") {
             header("Location: Inicio.php");
             exit();
     } else {
+        if ($bd->obtenerIniciar($_POST['input']??$_POST['input'])) {
+            echo '<script>alert("Estás baneado."); window.location.href="login.php";</script>';
+            exit();
+        }
         echo '<script>alert("Nombre de usuario o contraseña incorrectos."); window.location.href="login.php";</script>';
         exit();
     }
