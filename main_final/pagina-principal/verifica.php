@@ -34,10 +34,8 @@ if ($ini === "1") {
         $bd->cerrarConexion();
         header("Location: Inicio.php");
         exit();
-    }
-
     } else {
-        // ⚠️ Error de login → SweetAlert con estilo Zentryx (violeta)
+        // Error de login → SweetAlert con estilo Zentryx (violeta)
         echo '
 <!DOCTYPE html>
 <html lang="es">
@@ -60,7 +58,7 @@ if ($ini === "1") {
             overflow: hidden;
         }
 
-        /* 🌌 Popup con tonos violeta neón */
+        /* Popup con tonos violeta neón */
         .swal2-popup.neon-border {
             border: 2px solid #a64bf4;
             background: rgba(20, 0, 40, 0.92);
@@ -103,7 +101,7 @@ if ($ini === "1") {
             100% { box-shadow: 0 0 25px #ea00ff, 0 0 45px #a64bf4; }
         }
 
-        /* 🌀 Transiciones entrada / salida */
+        /* Transiciones entrada / salida */
         .swal2-show {
             animation: fadeInNeon 0.5s ease-out forwards;
         }
@@ -144,11 +142,10 @@ Swal.fire({
 </script>
 </body>
 </html>';
-        exit();
+exit();
     }
-    }
-} elseif ($ini === "0") {
-    // 🟢 Registro exitoso → SweetAlert con el mismo estilo
+} else {
+    // Registro exitoso → SweetAlert con el mismo estilo
     $bd->registro();
     $bd->cerrarConexion();
 
