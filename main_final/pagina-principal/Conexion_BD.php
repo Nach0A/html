@@ -17,16 +17,16 @@ class conexion_BD
 
     public function __construct()
     {
-        /*
+        
         $this->servidor = getenv('DB_HOST') ?: 'localhost';
         $this->usuario  = getenv('DB_USER') ?: 'zentryx_user';
         $this->pass     = getenv('DB_PASSWORD') ?: '1';
         $this->base     = getenv('DB_NAME') ?: 'zentryx';
-        */
-        $this->servidor = 'localhost';
-        $this->usuario  = 'root';
-        $this->pass     = '';
-        $this->base     = 'zentryx';
+        
+        // $this->servidor = 'localhost';
+        // $this->usuario  = 'root';
+        // $this->pass     = '';
+        // $this->base     = 'zentryx';
 
 
 
