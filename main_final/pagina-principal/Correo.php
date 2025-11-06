@@ -35,7 +35,7 @@ class Correo
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-    }
+    }   
     public function setDireccion($direccion)
     {
         $this->direccion = $direccion;
