@@ -145,10 +145,10 @@ class conexion_BD
         return $row['imagen_perfil'] ?? null;
     }
 
-    public function esAdmin($id) {
-        $sql = "SELECT id_admin FROM administrador WHERE id_admin = ? LIMIT 1";
+    public function esAdmin($correo) {
+        $sql = "SELECT id_admin FROM administrador WHERE gmail_admin = ? LIMIT 1";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("s", $id);
+        $stmt->bind_param("s", $correo);
         $stmt->execute();
         $res = $stmt->get_result();
         return $res->num_rows > 0;
@@ -242,4 +242,21 @@ class conexion_BD
         $row = $res->fetch_assoc();
         return $row['iniciar'] ?? null;
     }
+
+    public function banearUsuario($id) {
+        $sql = "UPDATE usuarios SET iniciar='0' WHERE id_usuario = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $stmt->close();
+        $this->borrarJuega($id);
+    }
+
+    public function borrarJuega($id) {
+        $sql = "DELETE FROM juega WHERE id_usuario = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $stmt->close();
+    }   
 }

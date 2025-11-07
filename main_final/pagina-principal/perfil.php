@@ -134,17 +134,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     // Eliminar cuenta
     if ($accion === "eliminar") {
-        $delete_sql = "DELETE FROM usuarios WHERE nom_usuario=?";
-        $stmt = $conexion->prepare($delete_sql);
-        $stmt->bind_param("s", $usuario_actual);
-        if ($stmt->execute()) {
-            session_destroy();
-            header("Location: login.php");
-            exit();
-        } else {
-            $mensaje = "No se pudo eliminar la cuenta. Intenta de nuevo.";
-            $tipo_alerta = "danger";
-        }
+        $db->banearUsuario($_SESSION["usuario"]);
+        $mensaje = "La cuenta fue eliminada exitosamente";
+        $tipo_alerta = "success";
     }
 }
 // ================== FIN Procesar cambios ==================
@@ -178,7 +170,6 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
             margin-bottom: 2rem;
             position: relative;
         }
-
         .titulo-perfil::after {
             content: "";
             display: block;
