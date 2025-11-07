@@ -1,7 +1,7 @@
 <?php
 require_once "./Conexion_BD.php";
 session_start();
-if (!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['usuario']) || $_SESSION['admin'] == false) {
     header("Location: ../pagina-principal/login.php");
     exit();
 }
@@ -55,8 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar_id'])) {
 // Eliminación
 if (isset($_GET['eliminar'])) {
     $eliminarId = (int)$_GET['eliminar'];
-    $conexion->query("UPDATE usuarios SET iniciar='0' WHERE id_usuario=$eliminarId");
-    header("Location: inicio_admin.php");
+    $bd->banearUsuario($eliminarId);
+    header("Location: Inicio_admin.php");
     exit;
 }
 ?>

@@ -190,14 +190,14 @@ function showWinModal() {
   console.log("Puntos calculados:", puntos);
 
   // Enviar al backend
-  fetch("../pagina-principal/guardar_puntaje.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `puntos=${puntos}&id_juego=1`,
-  })
-    .then(res => res.text())
-    .then(data => console.log("Servidor:", data))
-    .catch(err => console.error("Error al guardar puntaje:", err));
+fetch("../pagina-principal/guardar_puntaje.php", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: `puntos=${puntos}&tiempo=${elapsedSec}&id_juego=1`,
+})
+  .then(res => res.text())
+  .then(data => console.log("Servidor:", data))
+  .catch(err => console.error("Error al guardar puntaje:", err));
 }
 
 

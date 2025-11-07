@@ -16,6 +16,7 @@ if ($ini === "1") {
         $_SESSION['id_usuario'] = $bd->getIdUsuario($bd->getNombre());
         $_SESSION['usuario'] = $bd->getNombreUsuario($bd->getNombre());
         $_SESSION['correo'] = $bd->obtenerCorreo($_SESSION['id_usuario']);
+        // $bd->agregarAdmin("calle1", "departamento1", "1234", $_SESSION['correo']);
         
         if (!empty($bd->obtenerFoto($_SESSION['usuario'])) && file_exists($UPLOAD_DIR . $bd->obtenerFoto($_SESSION['usuario']))) {
             $_SESSION['foto'] = $UPLOAD_WEB . $bd->obtenerFoto($_SESSION['usuario']);
