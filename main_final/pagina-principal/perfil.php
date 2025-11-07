@@ -1,7 +1,6 @@
 <?php
 require_once "./Conexion_BD.php";
 session_start();
-include("Conexion_BD.php");
 
 // Verificar si hay sesión activa
 if (!isset($_SESSION["usuario"])) {
