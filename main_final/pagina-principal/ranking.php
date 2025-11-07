@@ -75,10 +75,10 @@ $result = $stmt->get_result();
                 <!-- Botones Inicio / Juegos / Ranking -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="../pagina-principal/inicio.php#inicio">Inicio</a>
+                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#inicio">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="../pagina-principal/inicio.php#juegos">Juegos</a>
+                        <a class="nav-link text-white" href="../pagina-principal/Inicio.php#juegos">Juegos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white active" href="../pagina-principal/ranking.php">Ranking</a>
