@@ -6,8 +6,6 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 $user = $_SESSION['usuario'];
-$id_usuario = $bd->getIdUsuario($user);
-//$bd->agregarPuntaje($user, '20', $bd->obtenerCorreo($id_usuario), '1');
 ?>
 
 <!DOCTYPE html>
