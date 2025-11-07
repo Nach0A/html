@@ -176,7 +176,7 @@ playAgainBtn.addEventListener('click', initGame);
 
 if (homeBtn) {
     homeBtn.addEventListener('click', function() {
-        window.location.href = '../pagina-principal/inicio.php#inicio';
+        window.location.href = '../pagina-principal/Inicio.php#inicio';
     });
 }
 
