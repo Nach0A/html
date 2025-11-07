@@ -208,8 +208,8 @@ restartBtn.addEventListener('click', initGame);
 playAgainBtn.addEventListener('click', initGame);
 
 if (homeBtn) {
-    homeBtn.addEventListener('click', function () {
-        window.location.href = '../pagina-principal/inicio.php#inicio';
+    homeBtn.addEventListener('click', function() {
+        window.location.href = '../pagina-principal/Inicio.php#inicio';
     });
 }
 
