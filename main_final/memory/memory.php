@@ -6,6 +6,7 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 $user = $_SESSION['usuario'];
+echo "{$tiempo}";
 $bd = new conexion_BD();
 $id_usuario = $bd->getIdUsuario($user);
 //$bd->agregarPuntaje($user, '20', $bd->obtenerCorreo($id_usuario), '1');
