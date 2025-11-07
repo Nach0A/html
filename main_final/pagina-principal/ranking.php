@@ -62,7 +62,7 @@ $result = $stmt->get_result();
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold fs-4 text-white" href="../pagina-principal/inicio.php#inicio" id="linkLogo">
+            <a class="navbar-brand fw-bold fs-4 text-white" href="../pagina-principal/Inicio.php#inicio" id="linkLogo">
                 <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top">
                 &nbsp;Zentryx
             </a>
