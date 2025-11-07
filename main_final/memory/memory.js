@@ -177,7 +177,7 @@ function showWinModal() {
 
   winModal.classList.remove('hidden');
 
-  // ===== Nueva fórmula de puntaje (más razonable) =====
+  // ===== Nueva fórmula de puntaje =====
   // Base por pares + bonus base, penaliza segundos e intentos
   // Ajustá coeficientes a gusto.
   const puntos = Math.max(
