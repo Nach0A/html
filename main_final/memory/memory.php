@@ -111,8 +111,6 @@ $id_usuario = $bd->getIdUsuario($user);
             <span id="matches" class="score-item">Pares: 0</span>
             <span id="intenos" class="score-item">Intentos: 0</span>
             <span id="timer" class="score-item">Tiempo: 00:00</span>
-            <!-- cuando este la base de datos llamar los datos del usuario y poner su mejor tiempo -->
-            <span id="mejor-tiempo" class="score-item">Mejor tiempo: --:--</span>
         </div>
         <button id="restart-btn">Reiniciar</button>
     </header>
