@@ -1,247 +1,298 @@
-:root {
-  --bg: #0d0b0e;
-  --magenta: #ff1efb;
-  --text-light: #ffffff;
-  --text-dim: #cccccc;
-  --cup-desktop: 280px;
-  --cup-mobile: 160px;
-  --transition: 0.4s ease;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ==============================
+   ESTILO BASE - MOSQUETA
+============================== */
 
 body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
-  color: var(--text-light);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at center, #000010 0%, #000000 100%);
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-/* ===== HEADER ===== */
 header {
-  width: 100%;
-  max-width: 800px;
-  text-align: center;
-  margin-top: 40px;
-  background: rgba(20, 20, 20, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
-  padding: 1.5rem 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    margin: 2rem auto;
+    max-width: 800px;
+    backdrop-filter: blur(10px);
+    text-shadow: 0 0 10px cyan;
 }
 
-header h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #fff;
-  text-shadow: 0 0 10px var(--magenta), 0 0 20px var(--magenta);
-  animation: glow 2s ease-in-out infinite alternate;
+h1 {
+    font-size: 2.5rem;
+    color: #00ffff;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
 }
 
-@keyframes glow {
-  from {
-    text-shadow: 0 0 10px var(--magenta);
-  }
-  to {
-    text-shadow: 0 0 20px var(--magenta), 0 0 30px var(--magenta);
-  }
-}
-
-/* ===== SCOREBOARD ===== */
 .scoreboard {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 1rem;
 }
 
-.score-item {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  font-size: 1rem;
-  backdrop-filter: blur(5px);
-  transition: 0.3s;
+.score-item,
+#difficultyBtn {
+    background: rgba(0, 255, 255, 0.15);
+    border: 1px solid #00ffff;
+    border-radius: 12px;
+    padding: 0.4rem 1rem;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+    transition: 0.3s ease;
 }
 
-.score-item:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* ===== BOTÓN DIFICULTAD ===== */
-.difficulty-wrapper {
-  position: relative;
+.score-item:hover,
+#difficultyBtn:hover {
+    background: rgba(0, 255, 255, 0.25);
+    transform: scale(1.05);
 }
 
 #difficultyBtn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 0.4rem 1rem;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
+    cursor: pointer;
 }
 
-#difficultyBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* ===== TABLERO DE JUEGO ===== */
 .game-board {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 3rem;
-  margin-top: 80px;
-  padding: 1.5rem;
-  border-radius: 20px;
-  border: 2px solid var(--magenta);
-  box-shadow: 0 0 16px var(--magenta);
-  background: rgba(20, 20, 20, 0.8);
-  flex-wrap: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-top: 150px;
+    padding: 1rem;
+    transition: all 0.5s ease;
 }
 
 .cup {
-  position: relative;
-  width: var(--cup-desktop);
-  cursor: pointer;
-  transition: transform var(--transition);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.cup:hover {
+    transform: translateY(-10px) scale(1.05);
 }
 
 .cup img {
-  width: 100%;
-  display: block;
+    width: 250px;
+    transition: transform 0.3s ease;
 }
 
 .ball {
-  position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 35%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: url("imagenes/ball-neon.png") center/cover no-repeat;
-  opacity: 0;
-  transition: opacity 0.3s;
-  filter: drop-shadow(0 0 6px var(--magenta));
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
 }
 
-.show-ball .ball {
-  opacity: 1;
-  animation: pulse 1s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { filter: drop-shadow(0 0 6px var(--magenta)); }
-  50% { filter: drop-shadow(0 0 14px var(--magenta)); }
-}
-
-/* ===== MENSAJES ===== */
-.result, .feedback {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid var(--magenta);
-  border-radius: 12px;
-  padding: 0.8rem 2rem;
-  font-weight: 700;
-  color: #fff;
-  text-shadow: 0 0 8px var(--magenta);
-  backdrop-filter: blur(6px);
-  z-index: 1000;
-}
-
-/* ===== RESPONSIVE ===== */
-
-/* 🖥️ Tablets */
-@media (max-width: 1024px) {
-  header h1 {
-    font-size: 2rem;
-  }
-
-  .game-board {
-    gap: 2rem;
-  }
-
-  .cup {
-    width: 220px;
-  }
-}
-
-/* 📱 Celulares */
-@media (max-width: 768px) {
-  body {
-    padding-top: 20px;
-  }
-
-  header {
-    width: 95%;
-    margin-top: 1rem;
-    padding: 1rem;
-  }
-
-  header h1 {
-    font-size: 1.8rem;
-  }
-
-  .scoreboard {
-    gap: 0.5rem;
-  }
-
-  .score-item {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.7rem;
-  }
-
-  .game-board {
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1rem;
+.result {
     margin-top: 1.5rem;
-    padding: 1rem;
-    flex-wrap: nowrap;
-  }
-
-  .cup {
-    width: var(--cup-mobile);
-  }
+    font-size: 1.3rem;
+    color: #00ffff;
+    text-shadow: 0 0 15px cyan;
 }
 
-/* 📱📱 Celulares pequeños */
+.feedback {
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    color: #fff;
+    opacity: 0.85;
+}
+
+.next-banner {
+    margin-top: 1rem;
+    padding: 0.6rem 2rem;
+    background: rgba(0, 255, 255, 0.15);
+    border: 1px solid #00ffff;
+    border-radius: 12px;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.next-banner:hover {
+    background: rgba(0, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* ==============================
+   ANIMACIONES
+============================== */
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px cyan;
+    }
+    to {
+        text-shadow: 0 0 20px cyan;
+    }
+}
+
+h1 {
+    animation: glow 2s infinite alternate;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
+
+/* ========== TABLETS (hasta 1024px) ========== */
+@media (max-width: 1024px) {
+    header {
+        max-width: 90%;
+        margin: 2rem auto 1rem;
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .scoreboard {
+        flex-wrap: wrap;
+        font-size: 0.95rem;
+        gap: 0.4rem;
+    }
+
+    .game-board {
+        flex-wrap: nowrap;
+        gap: 1rem;
+        padding: 0.8rem;
+        margin-top: 120px;
+    }
+
+    .cup img {
+        width: 220px;
+    }
+}
+
+/* ========== CELULARES MEDIANOS (hasta 768px) ========== */
+@media (max-width: 768px) {
+    body {
+        padding-top: 20px;
+    }
+
+    header {
+        margin-top: 1rem;
+        padding: 0.8rem;
+        border-radius: 12px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .scoreboard {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.9rem;
+    }
+
+    .score-item,
+    #difficultyBtn {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.7rem;
+    }
+
+    .game-board {
+        flex-direction: row;
+        gap: 0.6rem;
+        padding: 0.5rem;
+        margin-top: 100px;
+    }
+
+    .cup img {
+        width: 170px;
+    }
+
+    .ball {
+        width: 40%;
+    }
+
+    .result,
+    .feedback,
+    .next-banner {
+        font-size: 1rem;
+        padding: 0.5rem 1.5rem;
+    }
+}
+
+/* ========== CELULARES PEQUEÑOS (hasta 480px) ========== */
 @media (max-width: 480px) {
-  header h1 {
-    font-size: 1.4rem;
-  }
+    header {
+        margin: 0.5rem auto;
+        padding: 0.6rem;
+        max-width: 95%;
+    }
 
-  .score-item {
-    font-size: 0.8rem;
-    padding: 0.3rem 0.6rem;
-  }
+    h1 {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
 
-  .cup {
-    width: 140px;
-  }
+    .scoreboard {
+        font-size: 0.8rem;
+        gap: 0.3rem;
+    }
 
-  .game-board {
-    gap: 0.8rem;
-  }
+    .score-item,
+    #difficultyBtn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.6rem;
+    }
+
+    .game-board {
+        flex-direction: row;
+        justify-content: center;
+        gap: 0.4rem;
+        margin-top: 80px;
+        padding: 0.3rem;
+    }
+
+    .cup img {
+        width: 120px;
+    }
+
+    .ball {
+        width: 45%;
+    }
+
+    .result,
+    .feedback,
+    .next-banner {
+        font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+    }
+}
+
+/* ========== EXTRA PEQUEÑOS (hasta 320px) ========== */
+@media (max-width: 320px) {
+    h1 {
+        font-size: 1rem;
+    }
+
+    .cup img {
+        width: 100px;
+    }
+
+    .scoreboard {
+        font-size: 0.75rem;
+    }
+
+    .result,
+    .feedback,
+    .next-banner {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
+    }
 }
