@@ -1894,3 +1894,38 @@ section,
         font-size: 0.9rem;
     }
 }
+/* ======== CENTRAR LINKS EN NAVBAR RESPONSIVE (sin superponer avatar) ======== */
+@media (max-width: 991.98px) { /* modo colapsado Bootstrap */
+  .navbar-collapse {
+    text-align: center;
+  }
+
+  .navbar-nav.me-auto {
+    margin: 0 auto !important;      /* centra horizontalmente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;            /* centra los enlaces */
+    gap: 8px;
+  }
+
+  .navbar-nav.me-auto .nav-item {
+    width: auto;
+  }
+
+  .navbar-nav.me-auto .nav-link {
+    display: inline-block;
+    width: auto;
+    padding: 10px 0;
+  }
+
+  /* 🔧 el avatar ya no es absoluto, se mantiene al final del colapso */
+  .navbar-nav:last-child {
+    position: static;
+    margin-top: 10px;
+  }
+
+  /* mejora visual en menú móvil */
+  .navbar-collapse.show {
+    padding-bottom: 15px;
+  }
+}
