@@ -7,8 +7,6 @@ if (!isset($_SESSION["usuario"])) {
     header("Location: login.php");
     exit();
 }
-
-$tiempo = $_GET["tiempo"]
 $db = new conexion_BD();
 $conexion = $db->getConexion();
 
