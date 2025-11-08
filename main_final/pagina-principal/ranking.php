@@ -22,13 +22,13 @@ $id_juego = isset($_GET['id_juego']) && array_key_exists(intval($_GET['id_juego'
     ? intval($_GET['id_juego'])
     : 1;
 
-// Consulta
+// Consulta para el ranking de jugadores con puntos y tiempo
 $stmt = $conn->prepare("
-    SELECT nom_usuario, MAX(puntos) AS mejor_puntaje
+    SELECT nom_usuario, MAX(puntos) AS mejor_puntaje, MIN(tiempo) AS mejor_tiempo
     FROM juega
     WHERE id_juego = ?
     GROUP BY nom_usuario
-    ORDER BY mejor_puntaje DESC
+    ORDER BY mejor_puntaje DESC, mejor_tiempo ASC
     LIMIT 20
 ");
 
@@ -39,6 +39,18 @@ if (!$stmt) {
 $stmt->bind_param("i", $id_juego);
 $stmt->execute();
 $result = $stmt->get_result();
+
+// Consulta para el récord general (mejor jugador del juego)
+$stmt2 = $conn->prepare("
+    SELECT nom_usuario, puntos, tiempo
+    FROM juega
+    WHERE id_juego = ?
+    ORDER BY puntos DESC, tiempo ASC
+    LIMIT 1
+");
+$stmt2->bind_param("i", $id_juego);
+$stmt2->execute();
+$record = $stmt2->get_result()->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -72,7 +84,6 @@ $result = $stmt->get_result();
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Botones Inicio / Juegos / Ranking -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link text-white" href="../pagina-principal/inicio.php#inicio">Inicio</a>
@@ -97,9 +108,7 @@ $result = $stmt->get_result();
                             <li><a class="dropdown-item" href="../pagina-principal/perfil.php">
                                     Perfil (<?php echo htmlspecialchars($_SESSION['usuario']); ?>)
                                 </a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="../pagina-principal/logout.php">Cerrar sesión</a></li>
                         </ul>
                     </li>
@@ -125,13 +134,26 @@ $result = $stmt->get_result();
         </div>
 
         <div class="ranking-board container">
+            <?php if ($record): ?>
+                <div class="text-center my-4">
+                    <h4 class="text-warning fw-bold">
+                        🏆 Récord general de <?php echo htmlspecialchars($juegos[$id_juego]); ?>:
+                        <?php echo htmlspecialchars($record['nom_usuario']); ?> —
+                        <?php echo $record['puntos']; ?> pts en
+                        <?php echo $record['tiempo']; ?> seg
+                    </h4>
+                </div>
+            <?php endif; ?>
+
             <div class="ranking-table-wrapper">
                 <table class="ranking-table">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Jugador</th>
-                            <th>Puntaje</th>
+                            <th>Juego</th>
+                            <th>Tiempo (s)</th>
+                            <th>Puntos</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,12 +165,14 @@ $result = $stmt->get_result();
                                 echo "<tr class='{$clase}'>
                                     <td>{$pos}</td>
                                     <td>" . htmlspecialchars($row['nom_usuario']) . "</td>
-                                    <td>{$row['mejor_puntaje']}</td>
+                                    <td>" . htmlspecialchars($juegos[$id_juego]) . "</td>
+                                    <td>" . htmlspecialchars($row['mejor_tiempo']) . "</td>
+                                    <td>" . htmlspecialchars($row['mejor_puntaje']) . "</td>
                                   </tr>";
                                 $pos++;
                             }
                         } else {
-                            echo "<tr><td colspan='3'>Aún no hay puntajes registrados.</td></tr>";
+                            echo "<tr><td colspan='5'>Aún no hay puntajes registrados.</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -157,10 +181,7 @@ $result = $stmt->get_result();
         </div>
     </main>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../navbar/script.js"></script>
 </body>
-
 </html>
