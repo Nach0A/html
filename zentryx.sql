@@ -111,6 +111,7 @@ CREATE TABLE `juega` (
 --
 
 INSERT INTO `juega` (`gmail_usuario`, `id_juego`, `id_usuario`, `nom_usuario`, `puntos`, `tiempo`) VALUES
+('668caacd70e3dabd3fb5beec642d23505814778aa9d66eea6952737ba22044c8', 1, 55, '111', 2491, 150);
 
 
 -- --------------------------------------------------------
