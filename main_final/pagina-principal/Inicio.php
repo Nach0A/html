@@ -214,24 +214,22 @@ if (!isset($_SESSION['usuario'])) {
             particles.style.transform = `translate(${moveX}px, ${moveY}px)`;
         });
 
-        // Forzamos no-scroll cuando está el inicio visible
+
         function bloquearScrollInicio(activo) {
-            if (activo) {
-                document.body.classList.add("no-scroll");
-            } else {
-                document.body.classList.remove("no-scroll");
-            }
+            if (window.innerWidth < 768) return; // no bloquear scroll en móviles
+            document.body.classList.toggle("no-scroll", activo);
         }
+
 
         // Sobrescribimos mostrarInicio / mostrarJuegos para manejar scroll y centrar
         const _mostrarInicio = window.mostrarInicio;
         const _mostrarJuegos = window.mostrarJuegos;
 
-        window.mostrarInicio = function() {
+        window.mostrarInicio = function () {
             if (typeof _mostrarInicio === "function") _mostrarInicio();
             bloquearScrollInicio(true);
         };
-        window.mostrarJuegos = function() {
+        window.mostrarJuegos = function () {
             if (typeof _mostrarJuegos === "function") _mostrarJuegos();
             bloquearScrollInicio(false);
         };
