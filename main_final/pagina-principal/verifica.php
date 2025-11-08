@@ -38,7 +38,7 @@ if ($ini === "1") {
         header("Location: Inicio.php");
         exit();
     } else {
-        // ❌ Error de login → SweetAlert con estilo Zentryx (violeta)
+        // error de login sweetalert 
         echo '
         <!DOCTYPE html>
         <html lang="es">
@@ -48,8 +48,8 @@ if ($ini === "1") {
             <title>Acceso denegado - Zentryx</title>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <link href="https://fonts.googleapis.com/css2?family=Ethnocentric&display=swap" rel="stylesheet">
-            <link rel="stylesheet" href="../css/sweetalert.css">
-            <script src="../js/alert.js"></script>
+            <link rel="stylesheet" href="../pagina-principal/css/sweetalert.css">
+            <script src="../pagina-principal/js/alert.js"></script>
         </head>
         <body>
         <script>
@@ -66,7 +66,7 @@ if ($ini === "1") {
         exit();
     }
 } else {
-    // ✅ Registro exitoso → SweetAlert con el mismo estilo violeta
+    // registro exitoso sweetalert
     $bd->registro();
     $bd->cerrarConexion();
 
@@ -79,8 +79,8 @@ if ($ini === "1") {
         <title>Registro exitoso - Zentryx</title>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link href="https://fonts.googleapis.com/css2?family=Ethnocentric&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="../css/sweetalert.css">
-        <script src="../js/alert.js"></script>
+        <link rel="stylesheet" href="../pagina-principal/css/sweetalert.css">
+        <script src="../pagina-principal/js/alert.js"></script>
     </head>
     <body>
     <script>
