@@ -227,53 +227,70 @@ h1 {
     }
 }
 
-/* ========== CELULARES PEQUEÑOS (hasta 480px) ========== */
+/* ========== OPTIMIZACIÓN CELULARES PEQUEÑOS (hasta 480px) ========== */
 @media (max-width: 480px) {
+    body {
+        padding-top: 0;
+    }
+
     header {
-        margin: 0.5rem auto;
-        padding: 0.6rem;
+        margin: 0.3rem auto 0.5rem;
+        padding: 0.4rem;
         max-width: 95%;
+        border-radius: 10px;
     }
 
     h1 {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        margin-bottom: 0.3rem;
         letter-spacing: 1px;
     }
 
     .scoreboard {
-        font-size: 0.8rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 0.3rem;
+        justify-items: center;
+        font-size: 0.8rem;
     }
 
     .score-item,
     #difficultyBtn {
         font-size: 0.75rem;
-        padding: 0.25rem 0.6rem;
+        padding: 0.2rem 0.5rem;
+        width: 95%;
+        max-width: 140px;
+    }
+
+    #difficultyBtn {
+        grid-column: span 2;
+        margin-top: 0.3rem;
     }
 
     .game-board {
-        flex-direction: row;
-        justify-content: center;
-        gap: 0.4rem;
-        margin-top: 80px;
+        margin-top: 30px;
         padding: 0.3rem;
+        justify-content: center;
+        gap: 0.3rem;
+        flex-wrap: nowrap;
     }
 
     .cup img {
-        width: 120px;
+        width: 100px;
     }
 
     .ball {
-        width: 45%;
+        width: 40%;
     }
 
     .result,
     .feedback,
     .next-banner {
-        font-size: 0.9rem;
-        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+        padding: 0.3rem 1rem;
     }
 }
+
 
 /* ========== EXTRA PEQUEÑOS (hasta 320px) ========== */
 @media (max-width: 320px) {
