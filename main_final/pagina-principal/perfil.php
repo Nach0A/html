@@ -8,7 +8,7 @@ if (!isset($_SESSION["usuario"])) {
     exit();
 }
 
-
+$tiempo = $_GET["tiempo"]
 $db = new conexion_BD();
 $conexion = $db->getConexion();
 
