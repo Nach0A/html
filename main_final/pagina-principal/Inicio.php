@@ -128,6 +128,7 @@ if (!isset($_SESSION['usuario'])) {
             <div class="tarjeta-juego">
                 <h2>Mosqueta</h2>
                 <p>Intenta seguir el ritmo de los vasos sin perder de vista la pelota.</p>
+                <br><p><b>(NO COMPATIBLE CON CELULARES)</b></p>
                 <button class="play-btn" onclick="location.href='../mosqueta/mosqueta.php'">Jugar</button>
             </div>
 
