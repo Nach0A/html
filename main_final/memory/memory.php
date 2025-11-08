@@ -22,6 +22,7 @@ $id_usuario = $bd->getIdUsuario($user);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./memory.css" />
     <link rel="stylesheet" href="../navbar/navbar.css" />
+
 </head>
 
 <body>
@@ -32,7 +33,8 @@ $id_usuario = $bd->getIdUsuario($user);
     <!-- ======= FIN PRELOADER ===== -->
 
     <!-- ======== NAVBAR ======== -->
-    <nav class="navbar navbar-expand-lg shadow-sm py-3">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-3" style="background-color: rgb(20,20,20);">
+
         <div class="container-fluid">
             <a class="navbar-brand fw-bold fs-4" href="../pagina-principal/Inicio.php#inicio">
                 <img src="../navbar/imagenes/logo.jpg" alt="Logo" width="30" height="30"

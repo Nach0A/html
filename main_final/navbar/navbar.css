@@ -1,138 +1,107 @@
-/* Fondo animado general del body */
+/* ================== FONDO GENERAL ================== */
 body {
-    background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: #ffffff;
-    position: relative;
-    min-height: 100vh;
-    overflow-x: hidden;
+  background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Preloader: pantalla de carga centrada */
+/* Fondo animado */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ================== PRELOADER ================== */
 #preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000; /* Color de fondo de carga */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  z-index: 9999;
+  transition: opacity .8s ease, visibility .8s ease;
 }
 
-/* Logo animado del preloader */
 #preloader-logo {
-    width: 150px;
-    height: 150px;
-    animation: logoFade 2s ease-in-out infinite;
-    border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  animation: logoFade 2s ease-in-out infinite;
 }
 
-/* Animación de aparición/desaparición del logo del preloader */
 @keyframes logoFade {
-    0% {
-        opacity: 0.4;
-        transform: scale(0.9);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-    100% {
-        opacity: 0.4;
-        transform: scale(0.9);
-    }
+  0%, 100% { opacity: .4; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
-
-/* animación */
-@keyframes float {
-    0% {
-        transform: translate(0px, 0px) scale(1);
-    }
-
-    100% {
-        transform: translate(20px, -30px) scale(1.1);
-    }
-}
-
-
-.Contenido {
-    margin-left: 10px;
-}
+/* ================== FUENTES ================== */
 @font-face {
-    font-family: 'Ethnocentric';
-    src: url('./letra/EthnocentricRg.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Ethnocentric';
+  src: url('./letra/EthnocentricRg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.separator {
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-    height: 24px;
-    margin: auto 10px;
+/* ================== NAVBAR ZENTRYX ================== */
+@font-face {
+  font-family: 'Ethnocentric';
+  src: url('./letra/EthnocentricRg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-/* Avatar de usuario en el navbar */
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    transition: box-shadow 0.3s ease;
-}
-
-/* Sombra al pasar el mouse sobre el avatar */
-.user-avatar:hover {
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
-}
-
-/* Formulario de login (puede que se obre escriba mas abajo) */
-#loginForm {
-    display: none;
-    max-width: 400px;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* ================== NAVBAR ================== */
 .navbar {
   position: fixed;
-  width: 100%;
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(20,20,20,0.85);
+  width: 100%;
+  background: rgba(20, 20, 20, 0.85);
   backdrop-filter: blur(6px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   z-index: 1030;
 }
 
-/* Tipografía y color base */
-.navbar .navbar-brand,
-.navbar .navbar-nav .nav-link {
-  font-family: 'Ethnocentric', sans-serif;
-  font-weight: 500;
+/* Tipografía general */
+.navbar,
+.navbar * {
+  font-family: 'Ethnocentric', sans-serif !important;
   color: #fff !important;
-  transition: color .3s ease;
 }
 
+/* Marca (logo + texto) */
+.navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  transition: transform 0.3s ease;
+}
 
+.navbar .navbar-brand img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.navbar .navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+/* Links */
 .navbar .navbar-nav.me-auto .nav-link {
-  position: relative;        /* necesario para que ::after se posicione respecto al link */
-  display: inline-block;     /* importante: hace que width:100% del ::after funcione consistentemente */
-  padding-bottom: 6px;       /* da espacio para que la línea no pise el texto */
-  transition: color .3s ease;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 6px;
+  transition: color 0.3s ease;
+  font-weight: 500;
 }
 
-/* pseudo-elemento de la línea (inicialmente ancho 0) */
 .navbar .navbar-nav.me-auto .nav-link::after {
   content: "";
   position: absolute;
@@ -145,74 +114,46 @@ body {
   pointer-events: none;
 }
 
-/* al pasar el mouse: expandir la línea */
 .navbar .navbar-nav.me-auto .nav-link:not(.dropdown-toggle):hover::after {
   width: 100%;
 }
 
-/* color hover del texto (aplica a todos los nav-link) */
 .navbar .nav-link:hover {
   color: #d6c4ff !important;
 }
 
-/* dropdown items */
-.navbar .dropdown-item {
-  color: #000 !important;
-  transition: .2s;
-}
-.navbar .dropdown-item:hover {
-  background: rgba(73,4,138,0.1);
-  color: rgb(73,4,138)!important;
-}
-
-.user-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; transition:.3s; }
-.user-avatar:hover { box-shadow:0 0 0 3px rgba(255,255,255,0.5); }
-
-/* ================== DROPDOWNS OSCUROS + TRANSICIONES ================== */
-
-/* Forzar la fuente del navbar y todos sus descendientes (incluye dropdowns) */
-.navbar,
-.navbar * {
-  font-family: 'Ethnocentric', sans-serif !important;
-}
-
-/* Estilo base del dropdown (oscuro, borde y sombra) */
+/* Dropdowns */
 .navbar .dropdown-menu {
-  background: rgba(12,12,12,0.96);    /* fondo oscuro casi opaco */
-  color: #e6e6ee;                      /* texto claro */
-  border: 1px solid rgba(166,75,244,0.12);
-  box-shadow: 0 8px 28px rgba(16,8,30,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
+  background: rgba(12, 12, 12, 0.96);
+  color: #e6e6ee;
+  border: 1px solid rgba(166, 75, 244, 0.12);
+  box-shadow: 0 8px 28px rgba(16, 8, 30, 0.65),
+              inset 0 1px 0 rgba(255, 255, 255, 0.02);
   border-radius: 12px;
   padding: 8px 6px;
   min-width: 200px;
   transform-origin: top center;
-  /* transición visual */
   opacity: 0;
-  transform: translateY(8px) scale(.995);
-  transition: opacity .18s cubic-bezier(.2,.8,.2,1), transform .18s cubic-bezier(.2,.8,.2,1);
-  /* asegúrate de que no se muestre hasta que tenga la clase .show */
+  transform: translateY(8px) scale(0.995);
+  transition: opacity 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
   will-change: opacity, transform;
   z-index: 2000;
 }
 
-
-.navbar .dropdown.show > .dropdown-menu,
 .navbar .dropdown-menu.show {
   opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
   transform: translateY(0) scale(1);
 }
 
-
 .navbar .dropdown-item {
-  font-family: 'Ethnocentric', sans-serif !important;
   color: #d6d0ff !important;
   padding: 8px 14px;
   border-radius: 8px;
-  transition: background-color .16s ease, color .16s ease, transform .12s ease;
+  transition: background-color 0.16s ease,
+              color 0.16s ease,
+              transform 0.12s ease;
 }
-
 
 .navbar .dropdown-item:hover,
 .navbar .dropdown-item:focus {
@@ -221,216 +162,96 @@ body {
   transform: translateX(2px);
 }
 
-
 .navbar .dropdown-divider {
-  border-top: 1px solid rgba(255,255,255,0.04);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
   margin: 6px 4px;
 }
 
-/* Enlaces disabled dentro del dropdown */
-.navbar .dropdown-item.disabled,
-.navbar .dropdown-item:disabled {
-  color: rgba(255,255,255,0.35) !important;
-  background: transparent;
-  pointer-events: none;
+/* Avatar */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: 0.3s;
 }
 
-
-.navbar .dropdown-item .fa,
-.navbar .dropdown-item img {
-  vertical-align: middle;
-  margin-right: 8px;
+.user-avatar:hover {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
-
-.navbar .dropdown {
-  transition: transform .18s ease;
-}
-
-
-
-
-
-/* Formulario de login (estilo moderno) */
-#loginForm {
-    display: block !important;
-    max-width: 400px;
-    margin: 50px auto;
-    background-color: rgba(0, 0, 0, 0.85);
-    color: #ffffff;
-    padding: 30px 25px;
-    border-radius: 18px;
-    box-shadow: 0 0 20px #a64bf4, 0 0 60px #e82ef8;
-    backdrop-filter: blur(8px);
-    animation: fadeInLogin 1s ease-out;
-    position: relative;
-    overflow: hidden;
-}
-
-@keyframes fadeInLogin {
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Borde neón animado */
-#loginForm::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    background: linear-gradient(45deg, #000000, #d400ff, #000000);
-    background-size: 600% 600%;
-    animation: animatedBorder 6s linear infinite;
-    border-radius: 18px;    
-    filter: blur(6px);
-    z-index: -1;
-}
-
-@keyframes animatedBorder {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Título del login */
-#loginForm h5 {
+/* ================== RESPONSIVE (centrado en móvil) ================== */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
     text-align: center;
-    font-size: 20px;
-    margin-bottom: 25px;
-    color: #d6c4ff;
-    font-family: 'Ethnocentric', sans-serif;
+  }
+
+  .navbar-nav.me-auto {
+    margin: 0 auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .navbar-nav.me-auto .nav-item {
+    width: auto;
+  }
+
+  .navbar-nav.me-auto .nav-link {
+    display: inline-block;
+    width: auto;
+    padding: 10px 0;
+  }
+
+  /* Avatar no se superpone */
+  .navbar-nav:last-child {
+    position: static;
+    margin-top: 10px;
+  }
+
+  .navbar-collapse.show {
+    padding-bottom: 15px;
+  }
 }
 
-/* Inputs */
-#loginForm input[type="text"],
-#loginForm input[type="password"] {
-    background-color: #1a1a1a;
-    border: 1px solid #5e2c91;
-    color: #fff;
-    padding: 12px 15px;
-    margin-bottom: 18px;
-    border-radius: 8px;
-    width: 100%;
-    transition: border-color 0.3s, box-shadow 0.3s;
+/* ================== Toggler accesible ================== */
+.navbar-dark .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
-#loginForm input:focus {
-    outline: none;
-    border-color: #e82ef8;
-    box-shadow: 0 0 10px #e82ef8;
+.navbar-dark .navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.15);
+}
+/* ======== Toggler igual al de inicio.php ======== */
+.navbar-dark .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
-/* Botones */
-#loginForm button {
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    font-weight: bold;
-    font-family: 'Ethnocentric', sans-serif;
-    letter-spacing: 1px;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+/* Fuerza el ícono del “sandwich” a ser blanco, como en inicio.php */
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  filter: none !important;  /* elimina cualquier filtro gris */
+  opacity: 1 !important;
 }
 
-#loginForm .btn-primary {
-    background-color: #a64bf4;
-    color: #fff;
-    margin-bottom: 10px;
-    box-shadow: 0 0 10px #a64bf4;
+/* Pequeño hover violeta igual que los links */
+.navbar-dark .navbar-toggler:hover .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(214,196,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+/* ======== CORRECCIÓN FINAL DEL COLOR DEL SANDWICH (MISMO QUE INICIO.PHP) ======== */
+
+/* Asegura que la regla tenga prioridad */
+.navbar.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+  filter: none !important;
+  opacity: 1 !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
 }
 
-#loginForm .btn-primary:hover {
-    background-color: #d86cf4;
-    transform: scale(1.03);
-    box-shadow: 0 0 20px #e82ef8;
-}
-
-#loginForm .btn-secondary {
-    background-color: #3d1c54;
-    color: #fff;
-    box-shadow: 0 0 10px #5e2c91;
-}
-
-#loginForm .btn-secondary:hover {
-    background-color: #5e2c91;
-    transform: scale(1.03);
-    box-shadow: 0 0 20px #a64bf4;
-}
-
-/* Mensaje de error */
-#loginError {
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: #ff5c8a !important;
-}
-
-
-
-#mainContent {
-    display: none;
-}
-
-.custom-close {
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    background-color: white;
-    padding: 6px;
-    border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.fade-in {
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes gradientBG {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-@keyframes logoClickAnimation {
-    0% {
-        transform: scale(1);
-        text-shadow: 0 0 2px #c57eff;
-    }
-    50% {
-        transform: scale(1.05);
-        text-shadow: 0 0 6px #d6c4ff;
-    }
-    100% {
-        transform: scale(1);
-        text-shadow: 0 0 2px #c57eff;
-    }
-}
-
-.navbar-brand.animate-click {
-    animation: logoClickAnimation 0.4s ease-in-out;
+/* Hover: color violeta igual que los links */
+.navbar.navbar-dark .navbar-toggler:hover .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(214,196,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
