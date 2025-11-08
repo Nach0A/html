@@ -1,312 +1,396 @@
-/* ==============================
-   ESTILO BASE - MOSQUETA
-============================== */
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at center, #000010 0%, #000000 100%);
-    color: #fff;
-    text-align: center;
+/* ======== Variables globales ======== */
+:root {
+    --bg: #0d0b0e;
+    --magenta: #ff1efb;
+    --cup-size-desk: 300px;
+    --cup-size-tab: 260px;
+    --cup-size-mobile: 200px;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+/* ======== Layout general ======== */
+body {
+    font-family: serif;
+    background: linear-gradient(-45deg, #010002, #080808, #1d1c1c, #313131);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
 }
 
 header {
-    background: rgba(0, 0, 0, 0.5);
-    border: 2px solid rgba(0, 255, 255, 0.5);
-    box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
-    padding: 1rem 2rem;
-    border-radius: 20px;
-    margin: 2rem auto;
-    max-width: 800px;
+    text-align: center;
+    margin: 3.5rem auto 1.2rem;
+    padding: 1.2rem 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    background: rgba(20, 20, 20, .85);
     backdrop-filter: blur(10px);
-    text-shadow: 0 0 10px cyan;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .45);
+    border: 1.5px solid rgba(255, 255, 255, .1);
 }
 
 h1 {
-    font-size: 2.5rem;
-    color: #00ffff;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 0.5rem;
-}
-
-.scoreboard {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    font-size: 1rem;
-}
-
-.score-item,
-#difficultyBtn {
-    background: rgba(0, 255, 255, 0.15);
-    border: 1px solid #00ffff;
-    border-radius: 12px;
-    padding: 0.4rem 1rem;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
-    transition: 0.3s ease;
-}
-
-.score-item:hover,
-#difficultyBtn:hover {
-    background: rgba(0, 255, 255, 0.25);
-    transform: scale(1.05);
-}
-
-#difficultyBtn {
+    font-family: 'Ethnocentric', sans-serif;
+    text-shadow: 0 0 10px rgba(255, 255, 255, .5),
+        0 0 20px rgba(255, 255, 255, .3),
+        0 0 30px rgba(255, 255, 255, .2);
+    animation: titleGlow 2s ease-in-out infinite alternate;
     cursor: pointer;
 }
 
+@keyframes titleGlow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, .5),
+            0 0 20px rgba(255, 255, 255, .3),
+            0 0 30px rgba(255, 255, 255, .2);
+    }
+
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, .7),
+            0 0 30px rgba(255, 255, 255, .5),
+            0 0 40px rgba(255, 255, 255, .3);
+    }
+}
+
+/* ---------- Descripción plegable ---------- */
+.title-box .game-desc {
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: height .5s cubic-bezier(.68, -0.55, .27, 1.55), opacity .3s;
+    interpolate-size: allow-keywords;
+    font-size: 1rem;
+    color: #e0e0e0;
+    background: rgba(40, 40, 40, .7);
+    border-radius: 0 0 10px 10px;
+    padding: 0 1rem;
+    width: 90%;
+    margin: 0 auto;
+    text-align: justify;
+}
+
+.title-box:hover .game-desc,
+.title-box:focus-within .game-desc {
+    height: auto;
+    opacity: 1;
+}
+
+/* Fallback para navegadores sin interpolate‑size */
+@supports not (interpolate-size:allow-keywords) {
+    .title-box .game-desc {
+        max-height: 0;
+    }
+
+    .title-box:hover .game-desc,
+    .title-box:focus-within .game-desc {
+        max-height: 10rem;
+    }
+}
+
+/* ---------- Score + menú dificultad ---------- */
+.scoreboard {
+    margin-top: .2rem;
+    font-size: 1.1rem;
+    display: flex;
+    gap: .7rem;
+    justify-content: center;
+    text-align:center;
+    flex-wrap: wrap;
+}
+
+.score-item {
+    padding: .15rem .6rem;
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, .1);
+    backdrop-filter: blur(5px);
+    color: #fff;
+    white-space: nowrap;
+}
+
+.difficulty-wrapper {
+    position: relative;
+    z-index: 1000;
+}
+
+#difficultyBtn {
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .3);
+    color: #fff;
+    padding: .4rem 1.2rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+#difficultyMenu {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: #29252f;
+    list-style: none;
+    padding: .3rem 0;
+    border-radius: 6px;
+    min-width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .7);
+    z-index:6500 !important;
+}
+
+#difficultyMenu.hidden {
+    display: none;
+}
+
+#difficultyMenu li {
+    padding: .5rem 1rem;
+    cursor: pointer;
+}
+
+#difficultyMenu li:hover {
+    background: rgba(255, 255, 255, .08);
+}
+
+/* ======== Área de juego ======== */
 .game-board {
+    background: rgba(20, 20, 20, .85);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    gap: 2rem;
-    margin-top: 150px;
-    padding: 1rem;
-    transition: all 0.5s ease;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 3rem);
+    padding: .5rem .5rem 1.2rem;
+    perspective: 1200px;
+    border-radius: 18px;
+    border: 3px solid #ff1efb;
+    box-shadow: 0 0 16px 4px #ff1efb,
+        0 0 32px 8px #ff1efb,
+        0 2px 16px rgba(0, 0, 0, .1);
+    margin-top: 220px;
+    position: relative;
 }
 
 .cup {
     position: relative;
+    width: var(--cup-size-desk);
     cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.cup:hover {
-    transform: translateY(-10px) scale(1.05);
+    transform-style: preserve-3d;
 }
 
 .cup img {
-    width: 250px;
-    transition: transform 0.3s ease;
+    width: 100%;
+    display: block;
+    transition: transform .4s;
 }
 
 .ball {
     position: absolute;
-    bottom: 0;
+    bottom: 15%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    transition: opacity 0.3s ease, bottom 0.3s ease;
+    translate: -50% 0;
+    width: 35%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: url("imagenes/ball-neon.png") center/cover no-repeat;
+    opacity: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 0 6px var(--magenta)) drop-shadow(0 0 12px var(--magenta));
+    transition: opacity .25s;
 }
 
-.result {
-    margin-top: 1.5rem;
-    font-size: 1.3rem;
-    color: #00ffff;
-    text-shadow: 0 0 15px cyan;
-}
+@keyframes neonPulse {
 
-.feedback {
-    font-size: 1.1rem;
-    margin-top: 0.5rem;
-    color: #fff;
-    opacity: 0.85;
-}
-
-.next-banner {
-    margin-top: 1rem;
-    padding: 0.6rem 2rem;
-    background: rgba(0, 255, 255, 0.15);
-    border: 1px solid #00ffff;
-    border-radius: 12px;
-    display: inline-block;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.next-banner:hover {
-    background: rgba(0, 255, 255, 0.3);
-    transform: scale(1.05);
-}
-
-/* ==============================
-   ANIMACIONES
-============================== */
-
-@keyframes glow {
-    from {
-        text-shadow: 0 0 5px cyan;
+    0%,
+    100% {
+        filter: drop-shadow(0 0 6px var(--magenta));
     }
-    to {
-        text-shadow: 0 0 20px cyan;
+
+    50% {
+        filter: drop-shadow(0 0 14px var(--magenta));
     }
 }
 
-h1 {
-    animation: glow 2s infinite alternate;
+.show-ball .ball {
+    opacity: 1;
+    animation: neonPulse 1s ease-in-out infinite;
 }
 
-/* ==============================
-   RESPONSIVE DESIGN
-============================== */
-
-/* ========== TABLETS (hasta 1024px) ========== */
-@media (max-width: 1024px) {
-    header {
-        max-width: 90%;
-        margin: 2rem auto 1rem;
-        padding: 1rem;
+/* ---------- Animaciones levantar/cubrir ---------- */
+@keyframes raise {
+    0% {
+        transform: translateY(0) rotateX(0);
     }
 
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    .scoreboard {
-        flex-wrap: wrap;
-        font-size: 0.95rem;
-        gap: 0.4rem;
-    }
-
-    .game-board {
-        flex-wrap: nowrap;
-        gap: 1rem;
-        padding: 0.8rem;
-        margin-top: 120px;
-    }
-
-    .cup img {
-        width: 220px;
+    50%,
+    100% {
+        transform: translateY(-30%) rotateX(25deg);
     }
 }
 
-/* ========== CELULARES MEDIANOS (hasta 768px) ========== */
-@media (max-width: 768px) {
-    body {
-        padding-top: 20px;
+@keyframes lower {
+    0% {
+        transform: translateY(-30%) rotateX(25deg);
     }
 
-    header {
-        margin-top: 1rem;
-        padding: 0.8rem;
-        border-radius: 12px;
+    100% {
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+.cup.raise img {
+    animation: raise .35s forwards ease-in-out;
+}
+
+.cup.lower img {
+    animation: lower 1.2s forwards ease-in-out;
+}
+
+.cup.cover img {
+    animation: coverBall .5s forwards ease;
+}
+
+@keyframes coverBall {
+    0% {
+        transform: translateY(-30%) rotateX(25deg);
     }
 
-    h1 {
-        font-size: 1.4rem;
-        margin-bottom: 0.4rem;
+    75% {
+        transform: translateY(4%) rotateX(-3deg);
+    }
+
+    100% {
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+/* ---------- Hover (solo cuando se permite) ---------- */
+.cup:not(.raise):not(.cover):hover img {
+    animation: raise 1.2s forwards ease-in-out;
+}
+
+.cup:not(.raise):not(.cover):hover .ball {
+    opacity: 1;
+    animation: neonPulse 1s ease-in-out infinite;
+}
+
+/* ---------- Bloqueo de interacción ---------- */
+.game-board.shuffling,
+.game-board.no-hover {
+    pointer-events: none;
+}
+
+.game-board.shuffling .cup:hover img,
+.game-board.no-hover .cup:hover img {
+    animation: none;
+}
+
+.game-board.shuffling .cup:hover .ball,
+.game-board.no-hover .cup:hover .ball {
+    opacity: 0;
+    animation: none;
+}
+
+/* ---------- Banner de resultado ---------- */
+.result,
+.feedback,
+.next-banner{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  padding:.8rem 2.2rem;
+  font-weight:800;
+  font-size:1.3rem;
+  color:#fff;
+  background:rgba(255,255,255,.12);
+  border:2px solid #ff1efb;
+  border-radius:12px;
+  text-shadow:0 0 8px #ff1efb,0 0 16px #ff1efb;
+  backdrop-filter:blur(8px);
+  transition:opacity .3s ease;
+  pointer-events:none;
+}
+
+/* z‑index escalonado para el orden de aparición */
+.result       { z-index:6100; }
+.feedback     { z-index:6000; }
+.next-banner  { z-index:5900; }
+
+/* estado oculto */
+.result.hidden,
+.feedback.hidden,
+.next-banner.hidden{ opacity:0; }
+
+
+
+.result.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:1023px) {
+    .cup {
+        width: var(--cup-size-tab);
+    }
+}
+
+@media (max-width:767px) {
+    .cup {
+        width: var(--cup-size-mobile);
     }
 
     .scoreboard {
         flex-direction: column;
-        align-items: center;
-        gap: 0.4rem;
-        font-size: 0.9rem;
-    }
-
-    .score-item,
-    #difficultyBtn {
-        font-size: 0.85rem;
-        padding: 0.3rem 0.7rem;
+        gap: .5rem;
     }
 
     .game-board {
-        flex-direction: row;
-        gap: 0.6rem;
-        padding: 0.5rem;
-        margin-top: 100px;
-    }
-
-    .cup img {
-        width: 170px;
-    }
-
-    .ball {
-        width: 40%;
-    }
-
-    .result,
-    .feedback,
-    .next-banner {
-        font-size: 1rem;
-        padding: 0.5rem 1.5rem;
+        gap: 1rem;
     }
 }
 
-/* ========== OPTIMIZACIÓN CELULAR (achicar área de juego) ========== */
-@media (max-width: 480px) {
-    body {
-        padding-top: 0;
-    }
-
-    header {
-        margin: 0.3rem auto;
-        padding: 0.4rem;
-        max-width: 95%;
-        border-radius: 10px;
-    }
-
-    h1 {
-        font-size: 1rem;
-        margin-bottom: 0.3rem;
-        letter-spacing: 1px;
-    }
-
-    .scoreboard {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.25rem;
-        justify-items: center;
-        font-size: 0.8rem;
-    }
-
-    .score-item,
-    #difficultyBtn {
-        font-size: 0.75rem;
-        padding: 0.2rem 0.4rem;
-        width: 95%;
-        max-width: 130px;
-    }
-
-    #difficultyBtn {
-        grid-column: span 2;
-        margin-top: 0.3rem;
-    }
-
-    /* 🔽 Achicamos área del juego */
+/* Ajuste visual para pantallas muy bajas */
+@media (min-width:0px) {
     .game-board {
-        margin-top: 10px;
-        padding: 0.2rem;
-        justify-content: center;
-        align-items: flex-end;
-        gap: 0.2rem;
-        height: auto;
-        transform: scale(0.85);
+        height: 20vh;
     }
 
-    .cup img {
-        width: 90px;
-    }
-
-    .ball {
-        width: 35%;
-    }
-
-    .result,
-    .feedback,
-    .next-banner {
-        font-size: 0.8rem;
-        padding: 0.25rem 0.8rem;
+    .cup {
+        margin-top: calc(0.4 * 20vh - var(--cup-size-desk) / 2);
     }
 }
 
-/* ========== EXTRA PEQUEÑOS (hasta 360px o menos) ========== */
-@media (max-width: 360px) {
-    .game-board {
-        transform: scale(0.75);
-        gap: 0.1rem;
-        margin-top: 5px;
-    }
 
-    .cup img {
-        width: 80px;
-    }
 
-    h1 {
-        font-size: 0.9rem;
-    }
+.next-banner.hidden {
+    opacity: 0;
+}
+
+/* mismo patrón que el banner de resultado */
+.next-banner:not(.hidden) {
+    opacity: 1;
+}
+
+
+.feedback.hidden {
+    opacity: 0;
+}
+
+.feedback:not(.hidden) {
+    opacity: 1;
 }
