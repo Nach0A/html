@@ -227,14 +227,14 @@ h1 {
     }
 }
 
-/* ========== OPTIMIZACIÓN CELULARES PEQUEÑOS (hasta 480px) ========== */
+/* ========== OPTIMIZACIÓN CELULAR (achicar área de juego) ========== */
 @media (max-width: 480px) {
     body {
         padding-top: 0;
     }
 
     header {
-        margin: 0.3rem auto 0.5rem;
+        margin: 0.3rem auto;
         padding: 0.4rem;
         max-width: 95%;
         border-radius: 10px;
@@ -249,7 +249,7 @@ h1 {
     .scoreboard {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0.3rem;
+        gap: 0.25rem;
         justify-items: center;
         font-size: 0.8rem;
     }
@@ -257,9 +257,9 @@ h1 {
     .score-item,
     #difficultyBtn {
         font-size: 0.75rem;
-        padding: 0.2rem 0.5rem;
+        padding: 0.2rem 0.4rem;
         width: 95%;
-        max-width: 140px;
+        max-width: 130px;
     }
 
     #difficultyBtn {
@@ -267,49 +267,46 @@ h1 {
         margin-top: 0.3rem;
     }
 
+    /* 🔽 Achicamos área del juego */
     .game-board {
-        margin-top: 30px;
-        padding: 0.3rem;
+        margin-top: 10px;
+        padding: 0.2rem;
         justify-content: center;
-        gap: 0.3rem;
-        flex-wrap: nowrap;
+        align-items: flex-end;
+        gap: 0.2rem;
+        height: auto;
+        transform: scale(0.85);
     }
 
     .cup img {
-        width: 100px;
+        width: 90px;
     }
 
     .ball {
-        width: 40%;
-    }
-
-    .result,
-    .feedback,
-    .next-banner {
-        font-size: 0.85rem;
-        padding: 0.3rem 1rem;
-    }
-}
-
-
-/* ========== EXTRA PEQUEÑOS (hasta 320px) ========== */
-@media (max-width: 320px) {
-    h1 {
-        font-size: 1rem;
-    }
-
-    .cup img {
-        width: 100px;
-    }
-
-    .scoreboard {
-        font-size: 0.75rem;
+        width: 35%;
     }
 
     .result,
     .feedback,
     .next-banner {
         font-size: 0.8rem;
-        padding: 0.3rem 0.8rem;
+        padding: 0.25rem 0.8rem;
+    }
+}
+
+/* ========== EXTRA PEQUEÑOS (hasta 360px o menos) ========== */
+@media (max-width: 360px) {
+    .game-board {
+        transform: scale(0.75);
+        gap: 0.1rem;
+        margin-top: 5px;
+    }
+
+    .cup img {
+        width: 80px;
+    }
+
+    h1 {
+        font-size: 0.9rem;
     }
 }
