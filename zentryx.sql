@@ -154,7 +154,6 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nom_usuario`, `passwd`, `gmail_usuario`, `imagen_perfil`, `iniciar`) VALUES
-(53, '444', '3538a1ef2e113da64249eea7bd068b585ec7ce5df73b2d1e319d8c9bf47eb314', 'bba4ddb815ba19edff67538226c0ecb18a14fac26a8a712737559161ff575e6a', 'usuario.png', 0),
 (55, '111', 'f6e0a1e2ac41945a9aa7ff8a8aaa0cebc12a3bcc981a929ad5cf810a090e11ae', '668caacd70e3dabd3fb5beec642d23505814778aa9d66eea6952737ba22044c8', 'usuario.png', 1),
 (56, '555', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', '5e92c7734ea0532461f81236396df1b498e83c3b7176371f882728cc0586c99e', 'usuario.png', 0),
 (57, '777', 'eaf89db7108470dc3f6b23ea90618264b3e8f8b6145371667c4055e9c5ce9f52', '626b2fe62f7bef6c8a4f86bafdf7e26a4c4804cbfd6cb975cc0276f415b89a44', 'usuario.png', 1);
