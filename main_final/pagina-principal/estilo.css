@@ -643,10 +643,11 @@ body {
     position: relative;
     transition: .4s;
     will-change: transform, box-shadow;
+    min-height: 300px;
 }
 
 .tarjeta-juego:hover {
-    transform: rotateY(15deg) scale(1.05);
+    transform: scale(1.05);
     box-shadow: 0 0 25px #a64bf4, 0 0 50px #ea00ff
 }
 
@@ -706,6 +707,33 @@ body {
 .tarjeta-juego .play-btn {
     position: relative;
     z-index: 1
+}
+/* ======== Alinear los botones "JUGAR" al mismo nivel ======== */
+.grid-juegos {
+    display: grid;
+    gap: 40px;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Estructura flexible para igualar alturas */
+.tarjeta-juego {
+    display: flex;
+    flex-direction: column;         /* apila título, texto y botón */
+    justify-content: space-between; /* distribuye el espacio vertical */
+    height: 100%;                   /* permite igualar alturas dentro del grid */
+}
+
+/* El texto ocupa el espacio variable */
+.tarjeta-juego p {
+    flex-grow: 1;                   /* empuja el botón hacia abajo */
+    margin-bottom: 20px;
+}
+
+/* El botón queda siempre al final */
+.play-btn {
+    align-self: center;             /* centra el botón horizontalmente */
+    margin-top: auto;               /* asegura que quede al fondo */
 }
 
 
@@ -1092,11 +1120,11 @@ body.no-scroll {
     }
 
     .welcome-title {
-        font-size: 2rem;
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
     }
 
     .welcome-subtitle {
-        font-size: 1.2rem;
+        font-size: clamp(1.2rem, 3.2vw, 1.6rem);
     }
 
     .corner-decor {
@@ -1273,17 +1301,13 @@ body.no-scroll {
 
 /* La pantalla de inicio se fija debajo del navbar y ocupa el resto → sin scroll */
 body #mainContent.inicio-fullscreen {
-    position: fixed !important;
-    inset: var(--nav-h) 0 0 0 !important;
-    /* top=altura navbar, left/right/bottom=0 */
-    height: auto !important;
-    display: grid !important;
-    place-items: center !important;
-    /* centro perfecto */
-    overflow: hidden !important;
-    background: radial-gradient(circle at 50% 50%, #0b0010 0%, #000 85%) !important;
-    z-index: 1;
-    /* debajo del navbar (que tiene z-index alto) */
+    position: relative;
+    min-height: calc(100dvh - var(--nav-h));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 20px;
 }
 
 /* El contenido (modal) sigue centrado y responsive */
@@ -1682,6 +1706,28 @@ body.no-scroll {
     }
 }
 
+@media (max-width: 480px) {
+    .navbar-brand {
+        font-size: 0.9rem !important;
+    }
+
+    .navbar-brand img {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .user-avatar {
+        width: 34px;
+        height: 34px;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 0.85rem !important;
+        padding: 6px 8px !important;
+    }
+}
+
+
 /* ================== RANKING RESPONSIVE ================== */
 
 
@@ -1763,6 +1809,7 @@ body.no-scroll {
         padding: 8px;
     }
 }
+
 /* --- Corrección: ocultar completamente el fondo de inicio al cambiar de sección --- */
 #mainContent[style*="display: none"] {
     opacity: 0;
@@ -1778,6 +1825,72 @@ body.no-scroll {
     z-index: 1 !important;
     position: fixed !important;
 }
+
 #mainContent {
     transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+section,
+.juegos-wrapper {
+    scroll-margin-top: 80px;
+    /* evita que el navbar tape los títulos */
+}
+
+/* ======== CORRECCIÓN DE DESBORDAMIENTO DEL MODAL DE BIENVENIDA ======== */
+.welcome-inner {
+    overflow-wrap: break-word;
+    /* Corta palabras largas */
+    word-break: break-word;
+    white-space: normal;
+    /* Asegura saltos de línea normales */
+    max-width: min(92vw, 850px);
+    /* Limita el ancho sin romper el diseño */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Hace que el contenedor crezca si hay mucho texto */
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: clamp(20px, 4vw, 40px);
+}
+
+/* Ajuste responsivo del texto interno */
+.welcome-title,
+.welcome-subtitle,
+.welcome-text {
+    overflow-wrap: break-word;
+    line-height: 1.3;
+    margin-inline: auto;
+}
+
+/* Títulos y texto se reducen progresivamente */
+@media (max-width: 768px) {
+    .welcome-title {
+        font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+    }
+
+    .welcome-subtitle {
+        font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+    }
+
+    .welcome-text {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-inner {
+        padding: 24px 18px;
+        border-radius: 18px;
+    }
+
+    .welcome-text {
+        font-size: 0.9rem;
+    }
 }
