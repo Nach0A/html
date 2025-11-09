@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["usuario"] = $nuevo_usuario;
             $usuario_actual = $nuevo_usuario;
         }
+        // Para estas acciones SÍ redirigimos
         header("Location: perfil.php");
         exit();
     }
@@ -54,20 +55,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!empty($_FILES["imagen"]["name"])) {
             $nombre_imagen = $usuario_actual . "_" . basename($_FILES["imagen"]["name"]);
 
+            // Aseguramos carpeta
             if (!is_dir($upload_dir)) {
                 mkdir($upload_dir, 0775, true);
             }
 
-            $destino_fs = $upload_dir . $nombre_imagen;
+            $destino_fs = $upload_dir . $nombre_imagen; // ruta física para move_uploaded_file
 
             if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $destino_fs)) {
+                // Guardamos solo el nombre en la BD
                 $update_img = "UPDATE usuarios SET imagen_perfil=? WHERE nom_usuario=?";
                 $stmt = $conexion->prepare($update_img);
                 $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
                 $stmt->execute();
 
+                // Guardar en sesión la RUTA WEB (no la ruta física)
                 $_SESSION["foto"] = $upload_web . $nombre_imagen;
             } else {
+                // opcional: mensaje de error
                 $mensaje = "Error al subir la imagen.";
                 $tipo_alerta = "danger";
             }
@@ -84,19 +89,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $contraHash = hash("sha256", $contrasenia_actual);
 
+        // 1. Verificar contraseña actual
         if ($datos["passwd"] !== $contraHash) {
             $mensaje = " La contraseña actual no es correcta";
             $tipo_alerta = "danger";
-        } elseif ($nueva_contrasenia === "" || $confirmar_contrasenia === "") {
+        }
+        // 2. Verificar vacíos
+        elseif ($nueva_contrasenia === "" || $confirmar_contrasenia === "") {
             $mensaje = " Debes completar todos los campos";
             $tipo_alerta = "danger";
-        } elseif ($nueva_contrasenia !== $confirmar_contrasenia) {
+        }
+        // 3. Coincidencia nueva/confirmar
+        elseif ($nueva_contrasenia !== $confirmar_contrasenia) {
             $mensaje = " La nueva contraseña y la confirmación no coinciden";
             $tipo_alerta = "danger";
-        } elseif (hash("sha256", $nueva_contrasenia) === $contraHash) {
+        }
+        // 4. Que no sea igual a la actual
+        elseif (hash("sha256", $nueva_contrasenia) === $contraHash) {
             $mensaje = " La nueva contraseña no puede ser igual a la actual";
             $tipo_alerta = "danger";
-        } else {
+        }
+        // 5. Todo bien → actualizar
+        else {
             $nuevaHash = hash("sha256", $nueva_contrasenia);
             $update_pass = "UPDATE usuarios SET passwd=? WHERE nom_usuario=?";
             $stmt = $conexion->prepare($update_pass);
@@ -104,12 +118,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($stmt->execute()) {
                 $mensaje = " Contraseña actualizada correctamente";
                 $tipo_alerta = "success";
+                // Actualizamos el dato en memoria para siguientes validaciones en esta carga
                 $datos["passwd"] = $nuevaHash;
             } else {
                 $mensaje = " Ocurrió un error al actualizar la contraseña";
                 $tipo_alerta = "danger";
             }
         }
+        // IMPORTANTE: NO redirigimos aquí
     }
 
     // Eliminar cuenta: borrar registro de la BD y (si todo sale bien) mostrar SweetAlert y redirigir con JS
@@ -171,12 +187,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
 }
+// ================== FIN Procesar cambios ==================
+
+
 
 if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_perfil'])) {
     $foto = $upload_web . $datos['imagen_perfil'];
 } else {
     $foto = $BASE_URL . "navbar/imagenes/usuario.png";
 }
+
 ?>
 
 <!-- el resto del HTML permanece igual -->
@@ -190,7 +210,6 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Perfil - Zentryx</title>
     <link rel="icon" href="../navbar/imagenes/logo.jpg" type="image/jpeg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -198,10 +217,9 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
 
     <link rel="stylesheet" href="estilo.css">
     <style>
-        /* ---------- Tipografía / título ---------- */
         .titulo-perfil {
             font-family: 'Ethnocentric', sans-serif;
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-size: 2rem;
             text-align: center;
             color: rgba(255, 0, 200, 0.75);
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.75), 0 0 16px rgba(204, 0, 255, 0.75), 0 0 24px rgba(110, 0, 92, 0.75);
@@ -358,11 +376,15 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
             }
         }
     </style>
+
 </head>
 
-<body class="bg-dark">
+<body>
+
+    <?php
+    ?>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-3" style="background-color: rgb(20,20,20);">
+    <nav class="navbar navbar-expand-lg shadow-sm py-3" style="background-color: rgb(20,20,20);">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold fs-4 text-white" href="../pagina-principal/Inicio.php#inicio" id="linkLogo">
                 <img src="../navbar/imagenes/logo.jpg" width="30" height="30" class="d-inline-block align-text-top"
@@ -375,6 +397,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Botones Inicio / Juegos -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link text-white" href="../pagina-principal/Inicio.php#inicio"
                             id="linkInicio">Inicio</a></li>
@@ -384,6 +407,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                             id="linkRanking">Ranking</a></li>
                 </ul>
 
+                <!-- Dropdown perfil -->
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle d-flex align-items-center text-white"
@@ -405,7 +429,9 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
         </div>
     </nav>
 
-    <main class="container py-4 text-white">
+
+
+    <div class="container mt-5 text-white">
         <h2 class="titulo-perfil">Configuración de Perfil</h2>
 
         <!-- GRID responsive: avatar a la izquierda (md+), ajustes a la derecha -->
@@ -477,7 +503,6 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                 </div>
             </div>
         </div>
-    </main>
 
     <!-- MODALS -->
     <!-- Imagen -->
@@ -500,7 +525,6 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                 </form>
             </div>
         </div>
-    </div>
 
     <!-- Usuario -->
     <div class="modal fade" id="modalUsuario" tabindex="-1" aria-hidden="true">
@@ -524,27 +548,34 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                 </form>
             </div>
         </div>
-    </div>
 
-    <!-- Password -->
-    <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="modalPasswordLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark text-white">
-                <form method="POST" action="" autocomplete="off">
+        <!-- Eliminar cuenta -->
+        <div class="card bg-dark mb-3 p-3 shadow-lg border border-danger">
+            <h5 class="text-danger">Eliminar Cuenta</h5>
+            <p class="mb-1 text-secondary">Borra permanentemente tu cuenta y todos tus datos</p>
+            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">
+                Eliminar Cuenta
+            </button>
+        </div>
+
+
+        <!-- MODALS -->
+        <!-- Imagen -->
+        <div class="modal fade" id="modalImagen" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-white">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalPasswordLabel">Cambiar Contraseña</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Cerrar"></button>
                     </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="accion" value="password">
-                        <div class="mb-3">
-                            <label class="form-label">Contraseña actual</label>
-                            <input type="password" class="form-control" name="contrasenia_actual" required>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="accion" value="imagen">
+                        <div class="modal-body">
+                            <input type="file" class="form-control" name="imagen" required>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Nueva contraseña</label>
-                            <input type="password" class="form-control" name="nueva_contrasenia" required>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Confirmar nueva contraseña</label>
@@ -589,7 +620,6 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                 </form>
             </div>
         </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <?php if ($accion_post === 'password' && !empty($mensaje)): ?>

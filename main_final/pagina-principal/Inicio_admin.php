@@ -7,13 +7,14 @@ if (!isset($_SESSION['usuario']) || $_SESSION['admin'] == false) {
 }
 $bd = new conexion_BD();
 $conexion = $bd->conectar("localhost", "root", "", "zentryx");  
+$id_admin = $bd->getIdUsuario($_SESSION['usuario']);
 if ($conexion->connect_error) die("Error al conectar: " . $conexion->connect_error);
 
 // Filtros de búsqueda
 $buscarId = isset($_GET['buscarId']) ? trim($_GET['buscarId']) : '';
 $buscarNombre = isset($_GET['buscarNombre']) ? trim($conexion->real_escape_string($_GET['buscarNombre'])) : '';
 
-$sql = "SELECT id_usuario, nom_usuario, imagen_perfil FROM usuarios WHERE 1";
+$sql = "SELECT id_usuario, nom_usuario, imagen_perfil FROM usuarios WHERE iniciar='1' AND id_usuario !={$id_admin}";
 if ($buscarId !== '') $sql .= " AND id_usuario = " . (int)$buscarId;
 if ($buscarNombre !== '') $sql .= " AND nom_usuario LIKE '%$buscarNombre%'";
 
@@ -345,16 +346,20 @@ if (isset($_GET['eliminar'])) {
                     </thead>
                     <tbody>
                         <?php while ($fila = $resultado->fetch_assoc()):
-                            $imagen = !empty($fila['imagen_perfil']) ? $fila['imagen_perfil'] : 'usuario.png';
-                            if (!file_exists(__DIR__ . '/uploads/perfiles/' . $imagen)) $imagen = 'usuario.png';
-                            $rutaImagen = 'uploads/perfiles/' . $imagen;
-                        ?>
+                              $imagen = $fila['imagen_perfil'] ?? '';
+
+                              $rutaFisica = __DIR__ . '/uploads/perfiles/' . $imagen;
+                              $rutaWeb = 'uploads/perfiles/' . $imagen;
+
+                              if (empty($imagen) || !file_exists($rutaFisica)) {
+                              $rutaWeb = '../navbar/imagenes/usuario.png';
+                              }
+                              ?>
                             <tr>
                                 <td><?php echo $fila['id_usuario']; ?></td>
                                 <td><?php echo htmlspecialchars($fila['nom_usuario']); ?></td>
                                 <td>
-                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" width="60" height="60" class="rounded-circle border border-info shadow-sm" alt="avatar">
-                                </td>
+                                   <img src="<?= htmlspecialchars($rutaWeb) ?>" width="60" height="60" class="rounded-circle border border-info shadow-sm" alt="avatar">
                                 <td class="acciones">
                                     <button type="button"
                                         class="btn btn-warning btn-sm btn-editar"
