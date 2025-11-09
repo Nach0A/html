@@ -346,16 +346,20 @@ if (isset($_GET['eliminar'])) {
                     </thead>
                     <tbody>
                         <?php while ($fila = $resultado->fetch_assoc()):
-                            $imagen = !empty($fila['imagen_perfil']) ? $fila['imagen_perfil'] : '../navbar/imagenes/usuario.png';
-                            if (!file_exists(__DIR__ . '/uploads/perfiles/' . $imagen)) $imagen = 'usuario.png';
-                            $rutaImagen = 'uploads/perfiles/' . $imagen;
-                        ?>
+                              $imagen = $fila['imagen_perfil'] ?? '';
+
+                              $rutaFisica = __DIR__ . '/uploads/perfiles/' . $imagen;
+                              $rutaWeb = 'uploads/perfiles/' . $imagen;
+
+                              if (empty($imagen) || !file_exists($rutaFisica)) {
+                              $rutaWeb = '../navbar/imagenes/usuario.png';
+                              }
+                              ?>
                             <tr>
                                 <td><?php echo $fila['id_usuario']; ?></td>
                                 <td><?php echo htmlspecialchars($fila['nom_usuario']); ?></td>
                                 <td>
-                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" width="60" height="60" class="rounded-circle border border-info shadow-sm" alt="avatar">
-                                </td>
+                                   <img src="<?= htmlspecialchars($rutaWeb) ?>" width="60" height="60" class="rounded-circle border border-info shadow-sm" alt="avatar">
                                 <td class="acciones">
                                     <button type="button"
                                         class="btn btn-warning btn-sm btn-editar"
