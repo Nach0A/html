@@ -128,13 +128,14 @@ if (!isset($_SESSION['usuario'])) {
             <div class="tarjeta-juego">
                 <h2>Mosqueta</h2>
                 <p>Intenta seguir el ritmo de los vasos sin perder de vista la pelota.</p>
+                <br><p><b>(NO COMPATIBLE CON CELULARES)</b></p>
                 <button class="play-btn" onclick="location.href='../mosqueta/mosqueta.php'">Jugar</button>
             </div>
 
             <div class="tarjeta-juego">
                 <h2>Juego de Monty</h2>
                 <p>Pon a prueba tu suerte y astucia para encontrar el premio.</p>
-                <button class="play-btn" onclick="location.href='../juego-de-monti/juego-de-monti.php'">Jugar</button>
+                <button class="play-btn" disabled onclick="location.href='../juego-de-monti/juego-de-monti.php'">Próximamente</button>
             </div>
             <!-- Más tarjetas a futuro -->
         </div>

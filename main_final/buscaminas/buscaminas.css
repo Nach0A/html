@@ -34,18 +34,26 @@ header {
 }
 
 header h1 {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 0.5rem;
-    font-family: 'Ethnocentric', sans-serif;
-    text-shadow:
-        0 0 15px #d253f8,
-        0 0 30px #ec5be0,
-        0 0 45px #c205c9;
-    animation: titleGlow 3s ease-in-out infinite alternate;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  font-family: 'Ethnocentric', sans-serif;
+  text-shadow:
+    0 0 15px #d253f8,
+    0 0 30px #ec5be0,
+    0 0 45px #c205c9;
+  animation: titleGlow 3s ease-in-out infinite alternate;
+
+  /* --- Responsividad y centrado --- */
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
+  line-height: 1.2;
+  font-size: clamp(1.4rem, 5vw, 2.5rem);
 }
 
 @keyframes titleGlow {
@@ -129,32 +137,71 @@ header h1 {
 }
 
 /* -------------------- Tablero -------------------- */
+/* -------------------- Tablero Responsive -------------------- */
+/* -------------------- Tablero Responsive Real -------------------- */
+/* ==================== TABLERO RESPONSIVE INTELIGENTE ==================== */
+/* -------------------- Tablero Responsive Final (sin rotación) -------------------- */
 #board {
-    display: grid;
-    gap: 0;
-    background: rgba(10, 0, 30, 0.95);
-
-    padding: 4px;
-    box-shadow: 0 0 25px rgba(162, 89, 255, 0.4);
-    margin: 0 auto;
+  display: grid;
+  justify-content: center;
+  align-content: start;
+  gap: 2px;
+  background: rgba(10, 0, 30, 0.95);
+  padding: 6px;
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(162, 89, 255, 0.4);
+  margin: 0 auto;
+  width: 95%;
+  max-width: 100%;
+  overflow-x: auto;
+  transition: all 0.4s ease;
 }
 
 .cell {
-    background-color: #0f0114;
-    border: 1px solid #6e3ad6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
-    font-family: 'Roboto Mono', monospace;
-    width: var(--cell-size, 32px);
-    height: var(--cell-size, 32px);
-    font-size: var(--font-size, 1.2em);
-    color: #fff;
-    transition: background 0.2s, box-shadow 0.2s;
+  background-color: #0f0114;
+  border: 1px solid #6e3ad6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.5rem, 1.2vw, 1rem);
+  color: #fff;
+  transition: background 0.2s, box-shadow 0.2s;
+  aspect-ratio: 1 / 1;
 }
+
+/* ====== Adaptaciones por dificultad ====== */
+#board.easy {
+  grid-template-columns: repeat(8, minmax(30px, 1fr));
+}
+
+#board.medium {
+  grid-template-columns: repeat(20, minmax(22px, 1fr));
+}
+
+#board.hard {
+  grid-template-columns: repeat(40, minmax(16px, 1fr));
+  overflow-x: scroll;
+  scrollbar-color: #a259ff #0a001d;
+  scrollbar-width: thin;
+}
+
+/* Scrollbar visible y elegante en modo difícil */
+#board.hard::-webkit-scrollbar {
+  height: 8px;
+}
+#board.hard::-webkit-scrollbar-thumb {
+  background: #a259ff;
+  border-radius: 4px;
+}
+#board.hard::-webkit-scrollbar-track {
+  background: #0a001d;
+}
+
+
 
 .cell.hidden:hover {
     background-color: #4a1e8a;
@@ -300,4 +347,18 @@ header h1 {
 @font-face {
     font-family: 'Roboto Mono';
     src: url('https://fonts.gstatic.com/s/robotomono/v13/L0xoKFOjNIPH9_jBfS2sYl_aU2Lh1y3Hj8B4.woff2') format('woff2');
+}
+@media (max-width: 600px) {
+  #board {
+    width: 95vw;
+  }
+  .cell {
+    font-size: clamp(0.5rem, 1.3vw, 0.9rem);
+  }
+}
+@media (max-width: 600px) {
+  .cell {
+    min-width: 14px;
+    min-height: 14px;
+  }
 }
