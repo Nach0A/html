@@ -7,13 +7,14 @@ if (!isset($_SESSION['usuario']) || $_SESSION['admin'] == false) {
 }
 $bd = new conexion_BD();
 $conexion = $bd->conectar("localhost", "root", "", "zentryx");  
+$id_admin = $bd->getIdUsuario($_SESSION['usuario']);
 if ($conexion->connect_error) die("Error al conectar: " . $conexion->connect_error);
 
 // Filtros de búsqueda
 $buscarId = isset($_GET['buscarId']) ? trim($_GET['buscarId']) : '';
 $buscarNombre = isset($_GET['buscarNombre']) ? trim($conexion->real_escape_string($_GET['buscarNombre'])) : '';
 
-$sql = "SELECT id_usuario, nom_usuario, imagen_perfil FROM usuarios WHERE 1";
+$sql = "SELECT id_usuario, nom_usuario, imagen_perfil FROM usuarios WHERE iniciar='1' AND id_usuario !={$id_admin}";
 if ($buscarId !== '') $sql .= " AND id_usuario = " . (int)$buscarId;
 if ($buscarNombre !== '') $sql .= " AND nom_usuario LIKE '%$buscarNombre%'";
 
@@ -345,7 +346,7 @@ if (isset($_GET['eliminar'])) {
                     </thead>
                     <tbody>
                         <?php while ($fila = $resultado->fetch_assoc()):
-                            $imagen = !empty($fila['imagen_perfil']) ? $fila['imagen_perfil'] : 'usuario.png';
+                            $imagen = !empty($fila['imagen_perfil']) ? $fila['imagen_perfil'] : '../navbar/imagenes/usuario.png';
                             if (!file_exists(__DIR__ . '/uploads/perfiles/' . $imagen)) $imagen = 'usuario.png';
                             $rutaImagen = 'uploads/perfiles/' . $imagen;
                         ?>
