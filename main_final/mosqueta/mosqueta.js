@@ -1,54 +1,54 @@
 /* ========= Configuración de dificultad ========= */
 const DIFFICULTY = {
-    easy:       { swaps:  6, speed:  900 },
-    normal:     { swaps:  10, speed: 600 },   // modo “Normal” velosidad cambiada para test
-    hard:       { swaps: 18, speed:  450 },
-    impossible: { swaps: 28, speed:  390 }
+    easy: { swaps: 6, speed: 900 },
+    normal: { swaps: 10, speed: 600 },   // modo “Normal” velosidad cambiada para test
+    hard: { swaps: 18, speed: 450 },
+    impossible: { swaps: 28, speed: 390 }
 };
 
 /* ========= Mensajes ========= */
 const WRONG_MESSAGES = [
-    '¡Fallaste! 😢','Te has equivocado.','No fue la opción correcta.','Esta vez no acertaste.',
-    'Uy, no era ahí.','¡Casi!','¡Ni cerca, campeón!','La bola estaba en otro vaso.',
-    'Errar es parte del juego. ¡Sigue! 💪','Ánimo, la próxima lo clavas!','¡Le pifiaste!',
-    'Te comiste el amague.','Te patinó la bocha.','¡Te falló la puntería!','Te fuiste con la finta.',
-    '¿Revanchita?','¿Otra ronda para redimirte?'
+    '¡Fallaste! 😢', 'Te has equivocado.', 'No fue la opción correcta.', 'Esta vez no acertaste.',
+    'Uy, no era ahí.', '¡Casi!', '¡Ni cerca, campeón!', 'La bola estaba en otro vaso.',
+    'Errar es parte del juego. ¡Sigue! 💪', 'Ánimo, la próxima lo clavas!', '¡Le pifiaste!',
+    'Te comiste el amague.', 'Te patinó la bocha.', '¡Te falló la puntería!', 'Te fuiste con la finta.',
+    '¿Revanchita?', '¿Otra ronda para redimirte?'
 ];
-const WIN_MESSAGES  = [
-    '¡Correcto! 🎉','¡Excelente jugada!','¡La clavaste!','¡Bien ahí!','¡Lo encontraste!',
-    '¡Impecable!','¡Genial, sigue así!','¡Eso es habilidad!','¡Durísimo! 💪','¡Crack total!',
-    '¡Maestro de la mosqueta!','¡Te salió redondo!','¡Golazo!','¡Perfecto!','¡Aplausos!',
-    '¡Brillante!','¡De diez!'
+const WIN_MESSAGES = [
+    '¡Correcto! 🎉', '¡Excelente jugada!', '¡La clavaste!', '¡Bien ahí!', '¡Lo encontraste!',
+    '¡Impecable!', '¡Genial, sigue así!', '¡Eso es habilidad!', '¡Durísimo! 💪', '¡Crack total!',
+    '¡Maestro de la mosqueta!', '¡Te salió redondo!', '¡Golazo!', '¡Perfecto!', '¡Aplausos!',
+    '¡Brillante!', '¡De diez!'
 ];
 
 /* ========= Referencias DOM ========= */
-const gameArea   = document.querySelector('.game-board');
-const cups       = Array.from(document.querySelectorAll('.cup'));
+const gameArea = document.querySelector('.game-board');
+const cups = Array.from(document.querySelectorAll('.cup'));
 const attemptsEl = document.getElementById('attempts');
-const winsEl     = document.getElementById('wins');
-const streakEl   = document.getElementById('streak');
-const resultEl   = document.getElementById('resultBanner');
+const winsEl = document.getElementById('wins');
+const streakEl = document.getElementById('streak');
+const resultEl = document.getElementById('resultBanner');
 const feedbackEl = document.getElementById('feedbackBanner');
-const nextEl     = document.getElementById('nextBanner');
+const nextEl = document.getElementById('nextBanner');
 
 /* ========= Estado ========= */
 let currentDiff = 'normal';
-let stage       = 'hide';
-let attempts    = 0;
-let wins        = 0;
-let streak      = 0;
-let ballIndex   = null;
+let stage = 'hide';
+let attempts = 0;
+let wins = 0;
+let streak = 0;
+let ballIndex = null;
 
 /* ========= Utilidades ========= */
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const rand  = arr => arr[Math.floor(Math.random() * arr.length)];
+const rand = arr => arr[Math.floor(Math.random() * arr.length)];
 
 const lockBoard = () => {                    // bloquea TODO
     gameArea.classList.add('no-hover');
     gameArea.style.pointerEvents = 'none';
 };
 const enableClicksOnly = () => {             // sólo clicks, sin hover
-    gameArea.style.pointerEvents = 'auto'; 
+    gameArea.style.pointerEvents = 'auto';
 };
 const unlockBoard = () => {                  // clicks + hover
     gameArea.classList.remove('no-hover');
@@ -79,18 +79,17 @@ const showNextBanner = () => {
 cups.forEach(c => c.addEventListener('click', handleCupClick));
 initDifficultyMenu();
 
-/* ========= Lógica principal ========= */
 async function handleCupClick(e) {
     if (stage === 'shuffling') return;
 
     const cup = e.currentTarget;
     const idx = cups.indexOf(cup);
 
-    /* Animación instantánea de click */
-    cup.classList.remove('raise','lower'); void cup.offsetWidth;
+    // Animación instantánea de click
+    cup.classList.remove('raise', 'lower'); void cup.offsetWidth;
     cup.classList.add('raise');
 
-    /* -------- Etapa 1: esconder la pelota -------- */
+    // -------- Etapa 1: esconder la pelota --------
     if (stage === 'hide') {
         lockBoard();
         ballIndex = idx;
@@ -107,7 +106,7 @@ async function handleCupClick(e) {
         return;
     }
 
-    /* -------- Etapa 2: adivinar -------- */
+    // -------- Etapa 2: adivinar --------
     if (stage === 'guess') {
         lockBoard();
         attempts++; attemptsEl.textContent = `Intentos: ${attempts}`;
@@ -119,6 +118,22 @@ async function handleCupClick(e) {
             streak++; streakEl.textContent = `Racha: ${streak}`;
             await liftCup(cup, true);
             await showResult(rand(WIN_MESSAGES));
+
+            // 🔽 Guardar puntaje SOLO si acertó (Mosqueta)
+            const body = new URLSearchParams({
+                puntos: String(wins),
+                intentos: String(attempts),
+                dificultad: currentDiff,
+                id_juego: "3"
+            }).toString();
+
+            fetch("guardar_puntaje_mosqueta.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body
+            }).then(r => r.text()).then(t => console.log("Guardado:", t))
+                .catch(err => console.error("Error guardando:", err));
+
         } else {
             streak = 0; streakEl.textContent = 'Racha: 0';
             await Promise.all([
@@ -131,12 +146,14 @@ async function handleCupClick(e) {
         await showFeedback(win);
         await showNextBanner();
         resetRound();
+        unlockBoard();
     }
 }
 
+
 /* ========= Animaciones de vasos ========= */
 async function liftCup(cup, showBall) {
-    cup.classList.remove('lower','cover');
+    cup.classList.remove('lower', 'cover');
     cup.classList.add('raise');
     if (showBall) cup.classList.add('show-ball');
 
@@ -195,7 +212,7 @@ function animateSwap(i, j, duration) {
             }
 
             /* Mantener array sincronizado */
-            swapNodes(A, B); 
+            swapNodes(A, B);
             [cups[i], cups[j]] = [cups[j], cups[i]];
             res();
         }, duration);
@@ -205,12 +222,12 @@ function animateSwap(i, j, duration) {
 /* ========= Reinicio de ronda ========= */
 function resetRound() {
     stage = 'hide';
-    cups.forEach(c => c.classList.remove('raise','lower','cover','show-ball'));
+    cups.forEach(c => c.classList.remove('raise', 'lower', 'cover', 'show-ball'));
 }
 
 /* ========= Menú de dificultad ========= */
 function initDifficultyMenu() {
-    const btn  = document.getElementById('difficultyBtn');
+    const btn = document.getElementById('difficultyBtn');
     const menu = document.getElementById('difficultyMenu');
 
     btn.addEventListener('click', () => {
