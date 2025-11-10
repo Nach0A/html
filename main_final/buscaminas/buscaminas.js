@@ -40,44 +40,36 @@ function setDifficulty(difficulty) {
   cols = config.cols;
   mines = config.mines;
 
-  // Aplicar estilos de tamaño al elemento raíz (html) y al tablero
-  document.documentElement.style.setProperty(
-    "--cell-size",
-    `${config.cellSize}px`
-  );
+  document.documentElement.style.setProperty("--cell-size", `${config.cellSize}px`);
   document.documentElement.style.setProperty("--font-size", config.fontSize);
   board.style.width = "95%";
   board.style.maxWidth = "900px";
   board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-  board.style.gridAutoRows = "1fr"; // altura automática por fila
+  board.style.gridAutoRows = "1fr";
 
-  // Actualizar botones de dificultad
   easyBtn.classList.remove("active");
   mediumBtn.classList.remove("active");
   hardBtn.classList.remove("active");
   document.getElementById(`${difficulty}-btn`).classList.add("active");
-  board.className = ""; // limpiar clases anteriores
-  board.classList.add(difficulty); // aplicar clase 'easy', 'medium' o 'hard'
+
+  board.className = "";
+  board.classList.add(difficulty);
 
   newGame();
-  
 }
 
 // Crear el tablero
 function createBoard() {
-  board.innerHTML = ""; // Limpiar tablero existente
-  grid = Array(rows)
-    .fill()
-    .map(() => Array(cols).fill(0));
+  board.innerHTML = "";
+  grid = Array(rows).fill().map(() => Array(cols).fill(0));
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       const cell = document.createElement("div");
-      cell.className = "cell hidden"; // Todas las celdas inician ocultas
+      cell.className = "cell hidden";
       cell.dataset.row = r;
       cell.dataset.col = c;
 
-      // Asegurar que el contenido (emoji/número) sea visible y centrado
       cell.style.display = "flex";
       cell.style.justifyContent = "center";
       cell.style.alignItems = "center";
@@ -89,14 +81,12 @@ function createBoard() {
   }
 }
 
-// Colocar minas en el tablero
+// Colocar minas
 function placeMines(initialRow, initialCol) {
   let minesPlaced = 0;
   while (minesPlaced < mines) {
     const r = Math.floor(Math.random() * rows);
     const c = Math.floor(Math.random() * cols);
-
-    // No colocar minas en la celda inicial ni en sus 8 adyacentes (3x3 seguro)
     if (
       grid[r][c] !== "mine" &&
       !(Math.abs(r - initialRow) <= 1 && Math.abs(c - initialCol) <= 1)
@@ -107,19 +97,16 @@ function placeMines(initialRow, initialCol) {
   }
 }
 
-// Calcular minas adyacentes a cada celda
+// Calcular minas adyacentes
 function calculateAdjacentMines() {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       if (grid[r][c] !== "mine") {
-        // Solo si no es una mina
         let count = 0;
-        // Revisar las 8 celdas alrededor
         for (let dr = -1; dr <= 1; dr++) {
           for (let dc = -1; dc <= 1; dc++) {
-            const nr = r + dr; // Neighbor row
-            const nc = c + dc; // Neighbor col
-            // Asegurarse de que la celda vecina esté dentro del tablero y sea una mina
+            const nr = r + dr;
+            const nc = c + dc;
             if (
               nr >= 0 &&
               nr < rows &&
@@ -145,26 +132,19 @@ function startGame(initialRow, initialCol) {
   startTimer();
 }
 
-// Manejar clic en celda
+// Clic izquierdo
 function handleCellClick(event) {
-  if (gameOver) return; // Si el juego terminó, no hacer nada
-
+  if (gameOver) return;
   const cell = event.target;
   const r = parseInt(cell.dataset.row);
   const c = parseInt(cell.dataset.col);
 
-  if (!gameStarted) {
-    startGame(r, c); // Si es el primer clic, iniciar el juego
-  }
+  if (!gameStarted) startGame(r, c);
 
-  // Si la celda ya está revelada o es una bandera, no hacer nada (excepto chord)
   if (cell.classList.contains("revealed")) {
-    // Implementación de la "Chord" (revelar adyacentes si num banderas = num minas)
     if (cell.textContent !== "") {
-      // Si la celda revelada tiene un número
-      const adjacentMines = parseInt(cell.dataset.mines); // El número de minas adyacentes
-      if (isNaN(adjacentMines) || adjacentMines === 0) return; // No es un número o es 0
-
+      const adjacentMines = parseInt(cell.dataset.mines);
+      if (isNaN(adjacentMines) || adjacentMines === 0) return;
       let adjacentFlags = 0;
       const neighbors = getNeighbors(r, c);
       for (const { nr, nc } of neighbors) {
@@ -175,14 +155,11 @@ function handleCellClick(event) {
           adjacentFlags++;
         }
       }
-
-      // Si el número de banderas alrededor coincide con el número de minas adyacentes
       if (adjacentFlags === adjacentMines) {
         for (const { nr, nc } of neighbors) {
           const neighborCell = board.querySelector(
             `.cell[data-row="${nr}"][data-col="${nc}"]`
           );
-          // Revelar solo las celdas ocultas que no tienen bandera
           if (
             neighborCell &&
             neighborCell.classList.contains("hidden") &&
@@ -193,92 +170,69 @@ function handleCellClick(event) {
         }
       }
     }
-    return; // Detener la ejecución si ya estaba revelada
+    return;
   }
 
-  if (cell.classList.contains("flag")) return; // No revelar si es una bandera
-
-  revealCell(r, c); // Revelar la celda al hacer clic
+  if (cell.classList.contains("flag")) return;
+  revealCell(r, c);
 }
 
-// Manejar clic derecho (banderas y signo de interrogación)
+// Clic derecho (banderas)
 function handleCellRightClick(event) {
-  event.preventDefault(); // Prevenir el menú contextual del navegador
+  event.preventDefault();
   if (gameOver) return;
 
   const cell = event.target;
-  // No permitir banderas en celdas ya reveladas
   if (cell.classList.contains("revealed")) return;
 
   if (cell.classList.contains("flag")) {
-    // Si ya tiene bandera, quitarla y poner signo de interrogación
     cell.classList.remove("flag");
     cell.classList.add("question");
     cell.textContent = "?";
     flagsPlaced--;
   } else if (cell.classList.contains("question")) {
-    // Si tiene signo de interrogación, quitarlo (dejar celda vacía/oculta)
     cell.classList.remove("question");
     cell.textContent = "";
   } else if (flagsPlaced < mines) {
-    // Si no tiene nada y quedan banderas, poner bandera
     cell.classList.add("flag");
     cell.textContent = "🚩";
     flagsPlaced++;
   }
-  updateMineCountDisplay(); // Actualizar el contador de minas restantes
+  updateMineCountDisplay();
 }
 
-// Revelar una celda
+// Revelar celda
 function revealCell(r, c) {
-  // Validar que las coordenadas estén dentro del tablero
   if (r < 0 || r >= rows || c < 0 || c >= cols) return;
 
   const cell = board.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
-  // Si la celda ya está revelada o es una bandera, no hacer nada
-  if (
-    !cell ||
-    cell.classList.contains("revealed") ||
-    cell.classList.contains("flag")
-  )
-    return;
+  if (!cell || cell.classList.contains("revealed") || cell.classList.contains("flag")) return;
 
-  cell.classList.remove("hidden", "question"); // Quitar clases de oculta/pregunta
-  cell.classList.add("revealed"); // Añadir clase de revelada
-  cell.textContent = ""; // Limpiar texto previo (bandera, ?)
-  revealedCells++; // Incrementar contador de celdas reveladas
-
-  // Asegurar que el contenido sea visible y centrado (aunque ya está en CSS general del .cell)
-  cell.style.display = "flex";
-  cell.style.justifyContent = "center";
-  cell.style.alignItems = "center";
+  cell.classList.remove("hidden", "question");
+  cell.classList.add("revealed");
+  cell.textContent = "";
+  revealedCells++;
 
   if (grid[r][c] === "mine") {
-    // Si es una mina, el juego termina
-    cell.classList.add("mine", "exploded-mine"); // Añadir clases para estilo de mina explotada
-    cell.textContent = "💣"; // Mostrar icono de bomba
-    endGame(false); // Terminar juego (perdió)
+    cell.classList.add("mine", "exploded-mine");
+    cell.textContent = "💣";
+    endGame(false);
     return;
   } else if (grid[r][c] > 0) {
-    // Si es un número (minas adyacentes > 0)
-    cell.textContent = grid[r][c]; // Mostrar el número
-    cell.dataset.mines = grid[r][c]; // Guardar el número en un data-attribute para CSS
+    cell.textContent = grid[r][c];
+    cell.dataset.mines = grid[r][c];
   } else {
-    // Si es una celda vacía (0 minas adyacentes), revelar celdas adyacentes recursivamente
     for (let dr = -1; dr <= 1; dr++) {
       for (let dc = -1; dc <= 1; dc++) {
-        if (dr !== 0 || dc !== 0) {
-          // Excluir la celda actual
-          revealCell(r + dr, c + dc); // Llamada recursiva
-        }
+        if (dr !== 0 || dc !== 0) revealCell(r + dr, c + dc);
       }
     }
   }
 
-  checkWin(); // Verificar si el jugador ganó después de cada revelación
+  checkWin();
 }
 
-// Obtener celdas vecinas (utilizado para la función chord)
+// Vecinos
 function getNeighbors(r, c) {
   const neighbors = [];
   for (let dr = -1; dr <= 1; dr++) {
@@ -295,20 +249,49 @@ function getNeighbors(r, c) {
   return neighbors;
 }
 
-// Verificar si el jugador ganó
+// Comprobar victoria
 function checkWin() {
-  // El jugador gana si todas las celdas que NO son minas han sido reveladas
   if (revealedCells === rows * cols - mines) {
-    endGame(true); // Terminar juego (ganó)
+    endGame(true);
   }
 }
 
-// Finalizar el juego
+// === Enviar puntaje y tiempo al servidor ===
+// ==== saveScore con logging y envio de cookies ====
+function saveScore(puntos, tiempo) {
+  const idJuego = 2; // ID del Buscaminas
+  const bodyStr = `puntos=${Math.round(puntos)}&tiempo=${tiempo}&intentos=0&id_juego=${idJuego}`;
+
+  console.log("[saveScore] Enviando ->", {
+    url: "../pagina-principal/guardar_puntaje.php",
+    body: bodyStr
+  });
+
+  fetch("../pagina-principal/guardar_puntaje.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    credentials: "include", // <- MUY IMPORTANTE si usás $_SESSION en PHP
+    body: bodyStr,
+  })
+    .then((res) => {
+      console.log("[saveScore] HTTP STATUS:", res.status, res.statusText);
+      return res.text();
+    })
+    .then((data) => {
+      console.log("[saveScore] Respuesta del servidor:", data);
+    })
+    .catch((err) => {
+      console.error("[saveScore] Error al guardar puntaje (fetch):", err);
+      if (typeof alert === "function") alert("Error fetch: " + err);
+    });
+}
+
+
+// Finalizar juego
 function endGame(won) {
   gameOver = true;
-  clearInterval(timerInterval); // Detener el temporizador
+  clearInterval(timerInterval);
 
-  // Desactivar eventos en todas las celdas para evitar más interacciones
   document.querySelectorAll(".cell").forEach((cell) => {
     cell.removeEventListener("click", handleCellClick);
     cell.removeEventListener("contextmenu", handleCellRightClick);
@@ -318,104 +301,89 @@ function endGame(won) {
     modalTitle.textContent = "¡VICTORIA!";
     finalTimeDisplay.textContent = String(timeElapsed).padStart(3, "0");
     modalMinesDisplay.textContent = mines;
-    winModal.classList.remove("hidden"); // Mostrar el modal de victoria
+    winModal.classList.remove("hidden");
 
-    // Comportamiento de Google al ganar:
-    // Solo revela las minas no marcadas con el icono de bomba,
-    // manteniendo las banderas que el jugador haya colocado.
+    let puntos = 0;
+    if (currentDifficulty === "easy") puntos = 4000 / timeElapsed;
+    else if (currentDifficulty === "medium") puntos = 16000 / timeElapsed;
+    else if (currentDifficulty === "hard") puntos = 64000 / timeElapsed;
+
+    saveScore(puntos, timeElapsed);
+
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const cell = board.querySelector(
-          `.cell[data-row="${r}"][data-col="${c}"]`
-        );
-        if (grid[r][c] === "mine") {
-          // Si es una mina y NO tiene una bandera puesta por el jugador
-          if (!cell.classList.contains("flag")) {
-            cell.classList.remove("hidden", "question"); // Quitar oculto/pregunta
-            cell.classList.add("revealed", "mine"); // Revelar como mina
-            cell.textContent = "💣"; // Mostrar icono de la bomba
-          }
-          // Si ya tenía una bandera (porque el jugador la puso), se mantiene como está
+        const cell = board.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+        if (grid[r][c] === "mine" && !cell.classList.contains("flag")) {
+          cell.classList.remove("hidden", "question");
+          cell.classList.add("revealed", "mine");
+          cell.textContent = "💣";
         }
       }
     }
-    mineCountDisplay.textContent = "000"; // Todas las minas han sido "encontradas"
+    mineCountDisplay.textContent = "000";
   } else {
-    resetButton.textContent = "💀"; // Cambiar el botón de reinicio a una calavera
-    // Mostrar todas las minas y las banderas incorrectas al perder
+    modalTitle.textContent = "💣 ¡PERDISTE!";
+    finalTimeDisplay.textContent = String(timeElapsed).padStart(3, "0");
+    modalMinesDisplay.textContent = mines;
+    winModal.classList.remove("hidden");
+
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const cell = board.querySelector(
-          `.cell[data-row="${r}"][data-col="${c}"]`
-        );
+        const cell = board.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
         if (grid[r][c] === "mine") {
-          // Revela la mina si no es la que explotó y no tiene ya una bandera
-          if (
-            !cell.classList.contains("flag") &&
-            !cell.classList.contains("exploded-mine")
-          ) {
-            cell.classList.remove("hidden", "question");
-            cell.classList.add("revealed", "mine");
-            cell.textContent = "💣";
-          }
-        } else if (cell.classList.contains("flag") && grid[r][c] !== "mine") {
-          // Si hay una bandera en una celda que NO es mina (bandera incorrecta)
-          cell.classList.remove("flag"); // Quitar la bandera
-          cell.classList.add("revealed", "wrong-flag"); // Marcar como bandera incorrecta
-          cell.textContent = "❌"; // Mostrar una "X"
+          cell.classList.remove("hidden", "question");
+          cell.classList.add("revealed", "mine");
+          cell.textContent = "💣";
         }
       }
     }
   }
 }
 
-// Iniciar temporizador
+// Temporizador
 function startTimer() {
   timeElapsed = 0;
-  timerDisplay.textContent = "000"; // Reiniciar visualmente el temporizador
+  timerDisplay.textContent = "000";
   timerInterval = setInterval(() => {
     timeElapsed++;
     if (timeElapsed > 999) {
-      // Limitar el temporizador a 999
       timeElapsed = 999;
       clearInterval(timerInterval);
     }
     timerDisplay.textContent = String(timeElapsed).padStart(3, "0");
-  }, 1000); // Actualizar cada segundo
+  }, 1000);
 }
 
-// Actualizar contador de minas restantes
+// Actualizar contador
 function updateMineCountDisplay() {
   const remainingMines = mines - flagsPlaced;
-  mineCountDisplay.textContent = String(Math.max(0, remainingMines)).padStart(
-    3,
-    "0"
-  );
+  mineCountDisplay.textContent = String(Math.max(0, remainingMines)).padStart(3, "0");
 }
 
 // Nuevo juego
 function newGame() {
-  clearInterval(timerInterval); // Detener cualquier temporizador activo
+  clearInterval(timerInterval);
   gameStarted = false;
   gameOver = false;
   timeElapsed = 0;
   revealedCells = 0;
   flagsPlaced = 0;
-  resetButton.textContent = "Reiniciar"; // Restaurar texto del botón
-  timerDisplay.textContent = "000"; // Reiniciar temporizador visual
-  winModal.classList.add("hidden"); // Ocultar el modal de victoria
-  updateMineCountDisplay(); // Actualizar contador de minas
-  createBoard(); // Recrear el tablero
+  resetButton.textContent = "Reiniciar";
+  timerDisplay.textContent = "000";
+  winModal.classList.add("hidden");
+  updateMineCountDisplay();
+  createBoard();
 }
 
-// Event listeners para los botones
+// Event listeners
 easyBtn.addEventListener("click", () => setDifficulty("easy"));
 mediumBtn.addEventListener("click", () => setDifficulty("medium"));
 hardBtn.addEventListener("click", () => setDifficulty("hard"));
 resetButton.addEventListener("click", newGame);
 playAgainButton.addEventListener("click", newGame);
 
-// Inicializar el juego al cargar la página (establece dificultad por defecto y crea el tablero)
+// Inicializar
 document.addEventListener("DOMContentLoaded", () => {
-  setDifficulty(currentDifficulty); // Iniciar con la dificultad 'easy'
+  setDifficulty(currentDifficulty);
 });
+
