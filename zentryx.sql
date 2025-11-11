@@ -291,11 +291,11 @@ ALTER TABLE juega
 ADD COLUMN dificultad VARCHAR(20) DEFAULT NULL,
 ADD COLUMN intentos INT DEFAULT NULL;
 
--- 1) permitir NULL en tiempo (o podés poner DEFAULT 0 si preferís)
+
 ALTER TABLE juega 
   MODIFY tiempo INT NULL;
 
--- 2) permitir 1 registro por (usuario, juego, dificultad)
+
 ALTER TABLE juega 
   DROP PRIMARY KEY,
   ADD PRIMARY KEY (id_juego, id_usuario, dificultad);

@@ -381,12 +381,12 @@ if (isset($_GET['eliminar'])) {
                         <?php endwhile; ?>
                     </tbody>
                 </table>
-            </div> <!-- .table-responsive cerrada -->
+            </div>
             
 
         </div>
     </section>
-    <!-- Modal único de edición (UNA SOLA COPIA) -->
+    <!-- Modal único de edición -->
             <div class="modal fade" id="editarModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content" style="background:#111; color:white;">
@@ -420,7 +420,7 @@ if (isset($_GET['eliminar'])) {
     <script>
         // listener para rellenar el modal cuando se abre
         document.addEventListener("DOMContentLoaded", function() {
-            // delegación: si en el futuro las filas cambian dinámicamente, sigue funcionando
+            // si en el futuro las filas cambian dinámicamente, sigue funcionando
             document.querySelector('table').addEventListener('click', function(e) {
                 const btn = e.target.closest('.btn-editar');
                 if (!btn) return;
@@ -429,16 +429,14 @@ if (isset($_GET['eliminar'])) {
                 const nombre = btn.dataset.nombre || '';
                 document.getElementById('editId').value = id;
                 document.getElementById('editNombre').value = nombre;
-                document.getElementById('editPass').value = ''; // por seguridad
+                document.getElementById('editPass').value = '';
             });
 
-            // Asegurar que si por algún motivo quedan backdrops huérfanos, se limpien al cerrar
             const editarModalEl = document.getElementById('editarModal');
             if (editarModalEl) {
                 editarModalEl.addEventListener('hidden.bs.modal', function() {
-                    // eliminar cualquier backdrop sobrante accidental
                     document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
-                    document.body.classList.remove('modal-open'); // quitar bloqueo de scroll si quedó
+                    document.body.classList.remove('modal-open');
                 });
             }
         });
@@ -493,7 +491,6 @@ if (isset($_GET['eliminar'])) {
             setTimeout(() => pre.style.display = "none", 400);
             mostrarSeccion("mainContent");
         });
-        // Mantener en sección de administración si se usó búsqueda o acciones
         if (window.location.search.includes("buscar") || window.location.search.includes("eliminar")) {
             mostrarSeccion("adminContent");
         }

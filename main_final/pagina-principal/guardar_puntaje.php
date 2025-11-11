@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 require_once "../pagina-principal/Conexion_BD.php";
 session_start();
 
-// Log de lo que llegó (fecha, POST, COOKIES, SESSION)
+// log de lo que llegó (fecha, POST, COOKIES, SESSION)
 $logfile = __DIR__ . '/guardar_debug.log';
 $entry = date('c') . " - REMOTE_ADDR: " . ($_SERVER['REMOTE_ADDR'] ?? 'N/A') . PHP_EOL;
 $entry .= "POST: " . json_encode($_POST) . PHP_EOL;

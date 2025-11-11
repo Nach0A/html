@@ -80,7 +80,7 @@ if (!isset($_SESSION['usuario'])) {
         </div>
     </nav>
 
-    <!-- SECCIÓN INICIO: NUEVA PANTALLA DE BIENVENIDA -->
+    <!-- BIENVENIDA INICIO -->
     <div id="mainContent" class="inicio-fullscreen" style="display: none;">
         <div class="overlay-tech"></div>
 
@@ -99,7 +99,7 @@ if (!isset($_SESSION['usuario'])) {
             </div>
         </div>
 
-        <!-- Fondo tecnológico -->
+        <!-- Fondo -->
         <div class="grid-anim" aria-hidden="true"></div>
         <div class="tech-particles" aria-hidden="true"></div>
 

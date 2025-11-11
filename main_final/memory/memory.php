@@ -89,7 +89,7 @@ $id_usuario = $bd->getIdUsuario($user);
             </div>
         </div>
     </nav>
-    <!-- CONTENIDO GENERAL (sin login) -->
+    <!-- CONTENIDO GENERAL -->
     <div class="Contenido" id="Contenido">
         <div id="mainContent" class="container mt-5" style="display: none;"></div>
         <div class="container mt-5 position-relative" id="juegosContent" style="display: none;"></div>

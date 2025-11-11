@@ -27,11 +27,11 @@ $mail = new Correo();
 $mail->enviarCorreo(); // esto setea $_SESSION['codigo']
 
 // Config de expiración de código y cooldown de reenvío
-$_SESSION['codigo_expires_at'] = time() + 10 * 60; // 10 minutos
+$_SESSION['codigo_expires_at'] = time() + 10 * 60; 
 $_SESSION['last_code_sent_at'] = time();
-$_SESSION['resend_wait_seconds'] = 60;            // primer cooldown: 60s
+$_SESSION['resend_wait_seconds'] = 60; 
 $_SESSION['resend_count'] = 0;
-$_SESSION['resend_limit'] = 5;                    // máximo 5 reenvíos
+$_SESSION['resend_limit'] = 5; 
 
 header("Location: recuperacion.php");
 exit();

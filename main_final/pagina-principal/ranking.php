@@ -189,7 +189,7 @@ $record = $stmt2->get_result()->fetch_assoc();
                 <div class="text-center my-4">
                     <?php if ($id_juego == 3): ?>
                         <h4 class="text-warning fw-bold">
-                            🏆 Récord general de Mosqueta:
+                            Récord general de Mosqueta:
                             <?php echo htmlspecialchars($record['nom_usuario']); ?> —
                             <?php echo $record['puntos']; ?> pts ·
                             dificultad: <?php echo htmlspecialchars($record['dificultad']); ?> ·
@@ -197,7 +197,7 @@ $record = $stmt2->get_result()->fetch_assoc();
                         </h4>
                     <?php else: ?>
                         <h4 class="text-warning fw-bold">
-                            🏆 Récord general de <?php echo htmlspecialchars($juegos[$id_juego]); ?>:
+                            Récord general de <?php echo htmlspecialchars($juegos[$id_juego]); ?>:
                             <?php echo htmlspecialchars($record['nom_usuario']); ?> —
                             <?php echo $record['puntos']; ?> pts en
                             <?php echo $record['tiempo']; ?> seg

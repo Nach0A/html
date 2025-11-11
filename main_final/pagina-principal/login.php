@@ -2,7 +2,7 @@
 require_once "./Conexion_BD.php";
 session_start();
 
-// Si ya hay sesión, vamos a Inicio
+// Si ya hay sesión, va a Inicio
 if (isset($_SESSION['usuario'])) {
     header("Location: Inicio.php");
     exit();

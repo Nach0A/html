@@ -27,14 +27,12 @@ if ($count >= $limit) {
 // Enviar un nuevo código
 require_once "Correo.php";
 $mail = new Correo();
-$mail->enviarCorreo(); // re-genera $_SESSION['codigo']
+$mail->enviarCorreo(); 
 
-// Actualizar timers (opcional: backoff exponencial hasta 5 min)
+// Actualizar timers 
 $_SESSION['last_code_sent_at']  = $now;
 $_SESSION['resend_count']       = $count + 1;
-$_SESSION['resend_wait_seconds']= min($wait * 2, 300); // 60 -> 120 -> 240 -> 300...
-
-// Opcional: renovar expiración del código al reenviar (si querés):
+$_SESSION['resend_wait_seconds']= min($wait * 2, 300); // aumenta x2
 $_SESSION['codigo_expires_at']  = time() + 10 * 60;
 
 echo json_encode(['ok' => true, 'cooldown' => $_SESSION['resend_wait_seconds']]);

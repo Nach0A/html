@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["usuario"] = $nuevo_usuario;
             $usuario_actual = $nuevo_usuario;
         }
-        // Para estas acciones SÍ redirigimos
         header("Location: perfil.php");
         exit();
     }
@@ -55,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!empty($_FILES["imagen"]["name"])) {
             $nombre_imagen = $usuario_actual . "_" . basename($_FILES["imagen"]["name"]);
 
-            // Aseguramos carpeta
             if (!is_dir($upload_dir)) {
                 mkdir($upload_dir, 0775, true);
             }
@@ -63,13 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $destino_fs = $upload_dir . $nombre_imagen; // ruta física para move_uploaded_file
 
             if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $destino_fs)) {
-                // Guardamos solo el nombre en la BD
                 $update_img = "UPDATE usuarios SET imagen_perfil=? WHERE nom_usuario=?";
                 $stmt = $conexion->prepare($update_img);
                 $stmt->bind_param("ss", $nombre_imagen, $usuario_actual);
                 $stmt->execute();
 
-                // Guardar en sesión la RUTA WEB (no la ruta física)
+                // guardar en sesión la ruta web
                 $_SESSION["foto"] = $upload_web . $nombre_imagen;
             } else {
                 // opcional: mensaje de error
@@ -109,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mensaje = " La nueva contraseña no puede ser igual a la actual";
             $tipo_alerta = "danger";
         }
-        // 5. Todo bien → actualizar
+        // 5. Todo bien -> actualizar
         else {
             $nuevaHash = hash("sha256", $nueva_contrasenia);
             $update_pass = "UPDATE usuarios SET passwd=? WHERE nom_usuario=?";
@@ -118,25 +115,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($stmt->execute()) {
                 $mensaje = " Contraseña actualizada correctamente";
                 $tipo_alerta = "success";
-                // Actualizamos el dato en memoria para siguientes validaciones en esta carga
                 $datos["passwd"] = $nuevaHash;
             } else {
                 $mensaje = " Ocurrió un error al actualizar la contraseña";
                 $tipo_alerta = "danger";
             }
         }
-        // IMPORTANTE: NO redirigimos aquí
     }
 
-    // Eliminar cuenta: borrar registro de la BD y (si todo sale bien) mostrar SweetAlert y redirigir con JS
-    // Eliminar cuenta con borrado manual en cascada
     if ($accion === "eliminar") {
         $accion_post = 'eliminar';
 
         try {
             $conexion->begin_transaction();
 
-            // 1) Borrar dependencias (todas referencian usuarios.id_usuario)
             $stmt = $conexion->prepare("DELETE FROM administra WHERE id_usuario = ?");
             $stmt->bind_param("i", $datos['id_usuario']);
             $stmt->execute();
@@ -145,7 +137,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bind_param("i", $datos['id_usuario']);
             $stmt->execute();
 
-            // habla: dos FKs (emisor y receptor)
             $stmt = $conexion->prepare("DELETE FROM habla WHERE id_usuario_emisor = ? OR id_usuario_receptor = ?");
             $stmt->bind_param("ii", $datos['id_usuario'], $datos['id_usuario']);
             $stmt->execute();
@@ -154,7 +145,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bind_param("i", $datos['id_usuario']);
             $stmt->execute();
 
-            // 2) Borrar el usuario por id (más robusto que por nombre)
             $stmt = $conexion->prepare("DELETE FROM usuarios WHERE id_usuario = ?");
             $stmt->bind_param("i", $datos['id_usuario']);
             $stmt->execute();
@@ -163,7 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 throw new Exception("No se pudo eliminar el usuario (0 filas).");
             }
 
-            // 3) Borrar imagen física (opcional)
             if (!empty($datos['imagen_perfil'])) {
                 $path_img = $upload_dir . $datos['imagen_perfil'];
                 if (is_file($path_img)) {
@@ -173,7 +162,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $conexion->commit();
 
-            // 4) Cerrar sesión (redirigimos con SweetAlert en el front)
             session_unset();
             session_destroy();
             $eliminar_ok = true;
@@ -198,12 +186,6 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
 }
 
 ?>
-
-<!-- el resto del HTML permanece igual -->
-
-
-<!-- el resto del HTML permanece igual -->
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -295,7 +277,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
             }
         }
 
-        /* ---------- Card ---------- */
+        /* ---------- carta ---------- */
         .card {
             background: linear-gradient(145deg, #141414, #1f1f1f);
             border: 1px solid rgba(0, 255, 255, 0.2);
@@ -308,7 +290,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
             box-shadow: 0 0 15px rgba(206, 2, 162, 0.64);
         }
 
-        /* ---------- Botones ---------- */
+        /* ---------- botones ---------- */
         .btn-outline-light {
             border: 1px solid rgba(252, 6, 198, 0.86);
             color: rgba(238, 32, 193, 0.86);
@@ -332,7 +314,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
             box-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444;
         }
 
-        /* ---------- Modales ---------- */
+        /* ---------- modals ---------- */
         .modal-content {
             border-radius: 15px;
             border: 1px solid rgba(255, 0, 255, 0.86);
@@ -356,7 +338,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
             text-shadow: 0 0 10px #ff4444;
         }
 
-        /* ---------- Navbar toggler visible ---------- */
+        /* ---------- navbar ---------- */
         .navbar-dark .navbar-toggler {
             border-color: rgba(255, 255, 255, .2);
         }
@@ -365,7 +347,6 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
-        /* ---------- Helpers ---------- */
         .stack-gap>* {
             margin-bottom: 1rem;
         }
@@ -434,7 +415,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
     <div class="container mt-5 text-white">
         <h2 class="titulo-perfil">Configuración de Perfil</h2>
 
-        <!-- GRID responsive: avatar a la izquierda (md+), ajustes a la derecha -->
+        <!-- grid -->
         <div class="row g-4 align-items-stretch">
             <div class="col-12 col-md-5 col-lg-4">
                 <div class="card h-100 p-3 d-flex flex-column justify-content-between">
@@ -454,7 +435,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
 
             <div class="col-12 col-md-7 col-lg-8">
                 <div class="stack-gap">
-                    <!-- Nombre de usuario -->
+                    <!-- nombre de usuario -->
                     <div class="card p-3 h-100">
                         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
                             <div class="me-sm-3">
@@ -472,7 +453,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                         </div>
                     </div>
 
-                    <!-- Contraseña -->
+                    <!-- contraseña -->
                     <div class="card p-3 h-100">
                         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
                             <div class="me-sm-3">
@@ -486,7 +467,7 @@ if (!empty($datos['imagen_perfil']) && file_exists($upload_dir . $datos['imagen_
                         </div>
                     </div>
 
-                    <!-- Eliminar cuenta -->
+                    <!-- eliminar cuenta -->
                     <div class="card p-3 border border-danger h-100">
                         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
                             <div class="me-sm-3">

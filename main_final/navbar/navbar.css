@@ -47,7 +47,7 @@ body {
   font-style: normal;
 }
 
-/* ================== NAVBAR ZENTRYX ================== */
+/* ================== NAVBAR ================== */
 @font-face {
   font-family: 'Ethnocentric';
   src: url('./letra/EthnocentricRg.otf') format('opentype');
@@ -180,7 +180,7 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
-/* ================== RESPONSIVE (centrado en móvil) ================== */
+/* ================== RESPONSIVE ================== */
 @media (max-width: 991.98px) {
   .navbar-collapse {
     text-align: center;
@@ -223,23 +223,22 @@ body {
 .navbar-dark .navbar-toggler:focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.15);
 }
-/* ======== Toggler igual al de inicio.php ======== */
 .navbar-dark .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-/* Fuerza el ícono del “sandwich” a ser blanco, como en inicio.php */
+
 .navbar-dark .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
   filter: none !important;  /* elimina cualquier filtro gris */
   opacity: 1 !important;
 }
 
-/* Pequeño hover violeta igual que los links */
+
 .navbar-dark .navbar-toggler:hover .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(214,196,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
-/* ======== CORRECCIÓN FINAL DEL COLOR DEL SANDWICH (MISMO QUE INICIO.PHP) ======== */
+/* ======== COLOR HAMBURGUESA ======== */
 
 /* Asegura que la regla tenga prioridad */
 .navbar.navbar-dark .navbar-toggler-icon {
@@ -251,7 +250,7 @@ body {
   background-size: 100%;
 }
 
-/* Hover: color violeta igual que los links */
+
 .navbar.navbar-dark .navbar-toggler:hover .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(214,196,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }

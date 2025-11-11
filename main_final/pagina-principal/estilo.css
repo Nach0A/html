@@ -131,7 +131,7 @@ body {
     color: #d6c4ff !important
 }
 
-/* Toggler accesible y visible */
+/* Toggler */
 .navbar-dark .navbar-toggler {
     border-color: rgba(255, 255, 255, .25)
 }
@@ -400,7 +400,7 @@ body {
     box-shadow: 0 0 25px #ea00ff, 0 0 50px #a64bf4;
 }
 
-/* Rayo luminoso al hacer clic */
+/* efecto al hacer click */
 #loginForm button::after,
 #registerSection button::after {
     content: "";
@@ -419,7 +419,7 @@ body {
     left: 125%;
 }
 
-/* Pequeño “glow” de texto */
+/* brillo de texto */
 #loginForm button span,
 #registerSection button span {
     position: relative;
@@ -508,7 +508,6 @@ body {
     transform: scale(1.02);
 }
 
-/* Botón igual que el login */
 #recoverForm button {
     position: relative;
     overflow: hidden;
@@ -549,14 +548,12 @@ body {
     left: 125%;
 }
 
-/* Texto del botón */
 #recoverForm button span {
     position: relative;
     z-index: 2;
     text-shadow: 0 0 5px #fff, 0 0 10px #fff;
 }
 
-/* Enlace "Volver al inicio de sesión" */
 #recoverForm .forgot-password-link {
     display: inline-block;
     margin-top: 15px;
@@ -604,7 +601,7 @@ body {
     margin-bottom: 50px
 }
 
-/* Grid fluido: 1→2→3→4 columnas según ancho */
+/* grid */
 .grid-juegos {
     display: grid;
     gap: 40px;
@@ -708,7 +705,8 @@ body {
     position: relative;
     z-index: 1
 }
-/* ======== Alinear los botones "JUGAR" al mismo nivel ======== */
+
+/* ======== alineación botones "jugar" ======== */
 .grid-juegos {
     display: grid;
     gap: 40px;
@@ -716,24 +714,24 @@ body {
     padding: 20px;
 }
 
-/* Estructura flexible para igualar alturas */
+/* igualar alturas */
 .tarjeta-juego {
     display: flex;
-    flex-direction: column;         /* apila título, texto y botón */
-    justify-content: space-between; /* distribuye el espacio vertical */
-    height: 100%;                   /* permite igualar alturas dentro del grid */
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
-/* El texto ocupa el espacio variable */
+/* texto ocupa el espacio q falta*/
 .tarjeta-juego p {
-    flex-grow: 1;                   /* empuja el botón hacia abajo */
+    flex-grow: 1;
     margin-bottom: 20px;
 }
 
-/* El botón queda siempre al final */
+/* botón queda siempre al final */
 .play-btn {
-    align-self: center;             /* centra el botón horizontalmente */
-    margin-top: auto;               /* asegura que quede al fondo */
+    align-self: center;
+    margin-top: auto;
 }
 
 
@@ -820,7 +818,6 @@ body {
     position: relative;
     width: 100%;
     height: calc(100vh - 70px);
-    /* resta la altura del navbar */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -830,7 +827,7 @@ body {
     user-select: none;
 }
 
-/* Capa tenue de fondo */
+/* capa de fondo */
 .overlay-tech {
     position: absolute;
     inset: 0;
@@ -839,7 +836,7 @@ body {
     z-index: 1;
 }
 
-/* Contenedor central del texto */
+/* contenedor central del texto */
 .welcome-container {
     position: relative;
     z-index: 2;
@@ -892,7 +889,7 @@ body {
     text-shadow: 0 0 8px rgba(234, 0, 255, 0.3);
 }
 
-/* Líneas tecnológicas */
+/* líneas para decoración (removidas) */
 .tech-lines {
     position: absolute;
     inset: 0;
@@ -944,7 +941,7 @@ body {
     }
 }
 
-/* Partículas flotantes */
+/* partículas flotantes */
 .tech-particles {
     position: absolute;
     inset: 0;
@@ -954,12 +951,12 @@ body {
     transition: transform 0.15s ease-out;
 }
 
-/* Evitar scroll cuando está activa */
+/* evitar scroll cuando está activa */
 body.no-scroll {
     overflow: hidden;
 }
 
-/* Responsivo */
+/* responsivo */
 @media (max-width: 768px) {
     .welcome-inner {
         padding: 35px 25px;
@@ -978,9 +975,9 @@ body.no-scroll {
     }
 }
 
-/* ================== NUEVO DISEÑO CENTRADO Y DECORACIÓN EN ESQUINAS ================== */
+/* ================== DISEÑO CENTRADO Y DECORACIÓN EN ESQUINAS (REMOVIDO) ================== */
 
-/* Asegura que el modal esté perfectamente centrado */
+
 .inicio-fullscreen {
     position: relative;
     width: 100%;
@@ -993,7 +990,6 @@ body.no-scroll {
     animation: fadeInInicio 1s ease;
 }
 
-/* Contenedor del contenido */
 .welcome-container {
     z-index: 2;
     text-align: center;
@@ -1032,7 +1028,6 @@ body.no-scroll {
     margin-bottom: 35px;
 }
 
-/* ======== NUEVAS DECORACIONES EN LAS ESQUINAS ======== */
 .corner-decor {
     position: absolute;
     width: 120px;
@@ -1102,7 +1097,6 @@ body.no-scroll {
     }
 }
 
-/* Partículas con movimiento sutil al cursor */
 .tech-particles {
     position: absolute;
     inset: 0;
@@ -1134,7 +1128,6 @@ body.no-scroll {
 }
 
 /* ================== DETALLES ESTILO BIENVENIDA ================== */
-/* === Corrección de centrado y altura sin scroll === */
 :root {
     --nav-h: 70px;
 }
@@ -1142,12 +1135,9 @@ body.no-scroll {
 .inicio-fullscreen {
     position: relative;
     width: 100%;
-    /* usar dvh/svh para móviles y restar navbar */
     height: calc(100dvh - var(--nav-h));
     display: grid;
-    /* centrado absoluto real */
     place-items: center;
-    /* centra horizontal y vertical */
     overflow: hidden;
     background:
         radial-gradient(circle at 50% 50%, #0b0010 0%, #000 85%);
@@ -1159,7 +1149,6 @@ body.no-scroll {
     /* evita "rebote" en móviles */
 }
 
-/* Caja del mensaje: ancho fluido, centrada y responsive */
 .welcome-container {
     z-index: 3;
     width: min(900px, 92vw);
@@ -1190,7 +1179,7 @@ body.no-scroll {
     font-size: clamp(.95rem, 2vw, 1.1rem);
 }
 
-/* === Grid de fondo animado (circuito sutil) === */
+/* === grid de fondo animado (circuito sutil) === */
 .grid-anim {
     position: absolute;
     inset: 0;
@@ -1214,7 +1203,7 @@ body.no-scroll {
     }
 }
 
-/* Partículas (parallax) */
+/* partículas (parallax) */
 .tech-particles {
     position: absolute;
     inset: 0;
@@ -1294,12 +1283,10 @@ body.no-scroll {
     box-shadow: 0 0 24px #ea00ff;
 }
 
-/* ===== PARCHE: centrado exacto bajo el navbar + esquinas correctas ===== */
 :root {
     --nav-h: 70px;
 }
 
-/* La pantalla de inicio se fija debajo del navbar y ocupa el resto → sin scroll */
 body #mainContent.inicio-fullscreen {
     position: relative;
     min-height: calc(100dvh - var(--nav-h));
@@ -1310,7 +1297,6 @@ body #mainContent.inicio-fullscreen {
     padding: 20px;
 }
 
-/* El contenido (modal) sigue centrado y responsive */
 body #mainContent .welcome-container {
     width: min(900px, 92vw);
     padding-inline: 16px;
@@ -1328,7 +1314,6 @@ body #mainContent .welcome-inner {
     box-shadow: 0 0 28px rgba(166, 75, 244, .28), inset 0 0 22px rgba(166, 75, 244, .08);
 }
 
-/* Fondo animado (se mantiene) */
 body #mainContent .grid-anim {
     position: absolute;
     inset: 0;
@@ -1362,7 +1347,6 @@ body #mainContent .tech-particles {
     transition: transform .15s ease-out;
 }
 
-/* ORIENTACIÓN CORRECTA DE CADA ESQUINA (forzamos con !important) */
 body #mainContent .corner-svg {
     position: absolute;
     width: 160px;
@@ -1411,14 +1395,13 @@ body #mainContent .corner-br {
     }
 }
 
-/* Bloqueo real de scroll cuando estás en Inicio */
 body.no-scroll {
     overflow: hidden !important;
     height: 100dvh;
 }
 
 
-/* ================== RANKING OSCURO ZENTRYX ================== */
+/* ================== RANKING ================== */
 .ranking-main {
     min-height: 100vh;
     display: flex;
@@ -1456,7 +1439,7 @@ body.no-scroll {
     margin-top: 10px;
 }
 
-/* Selector de juego */
+/* selector de juego */
 .ranking-select {
     background: #0e0e0e;
     border: 1.5px solid #a64bf4;
@@ -1476,7 +1459,7 @@ body.no-scroll {
     outline: none;
 }
 
-/* Contenedor translúcido */
+/* contenedor translúcido */
 .ranking-board {
     margin-top: 40px;
     width: 100%;
@@ -1493,7 +1476,7 @@ body.no-scroll {
     box-shadow: 0 0 20px rgba(166, 75, 244, 0.15);
 }
 
-/* Tabla principal */
+/* tabla principal */
 .ranking-table {
     width: 100%;
     border-collapse: collapse;
@@ -1522,7 +1505,7 @@ body.no-scroll {
     background: rgba(100, 0, 255, 0.08);
 }
 
-/* Colores por posición */
+/* colores por posición */
 .gold td {
     color: #ffc400;
     text-shadow: 0 0 10px #ffffff33;
@@ -1538,7 +1521,7 @@ body.no-scroll {
     text-shadow: 0 0 10px #cd7f3255;
 }
 
-/* Scroll */
+/* scroll */
 .ranking-table-wrapper::-webkit-scrollbar {
     height: 8px;
 }
@@ -1552,7 +1535,7 @@ body.no-scroll {
     background: transparent;
 }
 
-/* Responsive */
+/* responsive */
 @media (max-width: 768px) {
     .ranking-title {
         font-size: 1.8rem;
@@ -1581,7 +1564,7 @@ body.no-scroll {
 }
 
 /* ================== RESPONSIVE GLOBAL ================== */
-/* md */
+/* mediano */
 @media (max-width: 992px) {
     body {
         padding-top: 60px
@@ -1615,7 +1598,7 @@ body.no-scroll {
     }
 }
 
-/* sm */
+/* chico */
 @media (max-width: 768px) {
     .navbar-brand img {
         width: 25px;
@@ -1665,7 +1648,7 @@ body.no-scroll {
     }
 }
 
-/* xs */
+/* diminuto */
 @media (max-width: 480px) {
     body {
         font-size: 14px
@@ -1748,7 +1731,7 @@ body.no-scroll {
     box-shadow: 0 0 15px #ff33cc;
 }
 
-/* Scroll horizontal */
+/* scroll horizontal */
 .ranking-scroll {
     overflow-x: auto;
     scrollbar-width: thin;
@@ -1772,14 +1755,14 @@ body.no-scroll {
     background: transparent;
 }
 
-/* Tabla */
+/* tabla */
 .table th {
     background-color: #1a0026 !important;
     color: #ff99ff !important;
     font-family: 'Orbitron', sans-serif;
 }
 
-/* Animación de entrada */
+/* animación de entrada */
 .fade-in-up {
     animation: fadeInUp 0.7s ease forwards;
 }
@@ -1796,7 +1779,7 @@ body.no-scroll {
     }
 }
 
-/* Responsive */
+/* responsive */
 @media (max-width: 768px) {
     .game-select {
         width: 90%;
@@ -1810,7 +1793,6 @@ body.no-scroll {
     }
 }
 
-/* --- Corrección: ocultar completamente el fondo de inicio al cambiar de sección --- */
 #mainContent[style*="display: none"] {
     opacity: 0;
     pointer-events: none;
@@ -1833,23 +1815,19 @@ body.no-scroll {
 section,
 .juegos-wrapper {
     scroll-margin-top: 80px;
-    /* evita que el navbar tape los títulos */
 }
 
-/* ======== CORRECCIÓN DE DESBORDAMIENTO DEL MODAL DE BIENVENIDA ======== */
+/* corrección desbordamiento */
 .welcome-inner {
     overflow-wrap: break-word;
-    /* Corta palabras largas */
     word-break: break-word;
     white-space: normal;
-    /* Asegura saltos de línea normales */
     max-width: min(92vw, 850px);
-    /* Limita el ancho sin romper el diseño */
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Hace que el contenedor crezca si hay mucho texto */
+/* hace que el contenedor crezca si hay mucho texto */
 .welcome-container {
     display: flex;
     justify-content: center;
@@ -1859,7 +1837,7 @@ section,
     padding: clamp(20px, 4vw, 40px);
 }
 
-/* Ajuste responsivo del texto interno */
+/* ajuste responsivo del texto interno */
 .welcome-title,
 .welcome-subtitle,
 .welcome-text {
@@ -1868,7 +1846,7 @@ section,
     margin-inline: auto;
 }
 
-/* Títulos y texto se reducen progresivamente */
+/* títulos y texto se reducen progresivamente */
 @media (max-width: 768px) {
     .welcome-title {
         font-size: clamp(1.4rem, 4.5vw, 2.2rem);
@@ -1894,38 +1872,37 @@ section,
         font-size: 0.9rem;
     }
 }
-/* ======== CENTRAR LINKS EN NAVBAR RESPONSIVE (sin superponer avatar) ======== */
-@media (max-width: 991.98px) { /* modo colapsado Bootstrap */
-  .navbar-collapse {
-    text-align: center;
-  }
 
-  .navbar-nav.me-auto {
-    margin: 0 auto !important;      /* centra horizontalmente */
-    display: flex;
-    flex-direction: column;
-    align-items: center;            /* centra los enlaces */
-    gap: 8px;
-  }
+/* ======== centrar links en responsive (navbar) ======== */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        text-align: center;
+    }
 
-  .navbar-nav.me-auto .nav-item {
-    width: auto;
-  }
+    .navbar-nav.me-auto {
+        margin: 0 auto !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
 
-  .navbar-nav.me-auto .nav-link {
-    display: inline-block;
-    width: auto;
-    padding: 10px 0;
-  }
+    .navbar-nav.me-auto .nav-item {
+        width: auto;
+    }
 
-  /* 🔧 el avatar ya no es absoluto, se mantiene al final del colapso */
-  .navbar-nav:last-child {
-    position: static;
-    margin-top: 10px;
-  }
+    .navbar-nav.me-auto .nav-link {
+        display: inline-block;
+        width: auto;
+        padding: 10px 0;
+    }
 
-  /* mejora visual en menú móvil */
-  .navbar-collapse.show {
-    padding-bottom: 15px;
-  }
+    .navbar-nav:last-child {
+        position: static;
+        margin-top: 10px;
+    }
+
+    .navbar-collapse.show {
+        padding-bottom: 15px;
+    }
 }

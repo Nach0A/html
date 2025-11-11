@@ -5,13 +5,13 @@ if (!isset($_SESSION['correo_ing'])) {
     exit();
 }
 
-// Calcular segundos restantes del cooldown
+// calcular segundos restantes del cooldown
 $now = time();
 $last = $_SESSION['last_code_sent_at'] ?? 0;
 $wait = $_SESSION['resend_wait_seconds'] ?? 60;
 $remaining = max(0, ($last + $wait) - $now);
 
-// Opcional: mascar el correo para mostrarlo
+// mascar el correo para mostrarlo
 function mask_email($email) {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) return $email;
     list($user, $domain) = explode("@", $email);
@@ -100,7 +100,7 @@ window.addEventListener("load", () => {
     pre.style.pointerEvents = "none";
 });
 
-// Countdown y reenvío
+// countdown y reenvío
 (function(){
     let remaining = <?php echo (int)$remaining; ?>;
     const btn = document.getElementById('btnReenviar');

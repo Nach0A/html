@@ -1,4 +1,4 @@
-// ==== Obtener referencias (pueden NO existir en algunas páginas) ====
+// ==== Obtener referencias ====
 const userMenu = document.getElementById("userMenu");
 const mainContent = document.getElementById("mainContent");
 const juegosContent = document.getElementById("juegosContent");
@@ -6,12 +6,12 @@ const juegosContent = document.getElementById("juegosContent");
 // ==== Renderiza el menú de usuario ====
 function renderMenu() {
 
-    // Si no existe userMenu, significa que esta página NO usa este menú
+    // si no existe userMenu, esta pagina no usa este menu
     if (!userMenu) return;
 
     const loggedInUser = localStorage.getItem("loggedInUser");
 
-    // Oculta secciones SOLO si existen
+    // oculta secciones si existen
     if (mainContent) mainContent.style.display = "none";
     if (juegosContent) juegosContent.style.display = "none";
 
@@ -83,7 +83,7 @@ window.addEventListener("load", () => {
     // Render menu solo si aplica
     renderMenu();
 
-    // Hash (solo si existen las secciones)
+    // Hash 
     const hash = location.hash;
     if (hash === "#juegos") {
         mostrarJuegos();

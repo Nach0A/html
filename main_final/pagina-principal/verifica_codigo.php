@@ -26,12 +26,12 @@ if ($codigo_ingresado !== $_SESSION['codigo']) {
     exit();
 }
 
-// Código correcto: cambiamos contraseña
+// cambiamos contraseña
 $bd = new conexion_BD();
 $correo = $_SESSION['correo_ing'];
 $bd->cambiarContrasenia($correo, $nueva_pass);
 
-// Limpiar datos de recuperación en sesión
+// limpiar datos de recuperación en sesión
 unset($_SESSION['codigo'], $_SESSION['codigo_expires_at'], $_SESSION['last_code_sent_at'],
       $_SESSION['resend_wait_seconds'], $_SESSION['resend_count'], $_SESSION['resend_limit']);
 
