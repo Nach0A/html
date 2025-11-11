@@ -22,3 +22,19 @@ SESSION: {"id_usuario":55,"usuario":"111","correo":"668caacd70e3dabd3fb5beec642d
 2025-11-10T22:37:20+01:00 -> Validado usuario: 111, id_juego: 2, puntos: 167, tiempo: 24
 2025-11-10T22:37:20+01:00 -> id_usuario: 55, correo: 668caacd70e3dabd3fb5beec642d23505814778aa9d66eea6952737ba22044c8
 2025-11-10T22:37:20+01:00 -> UPDATE OK
+2025-11-11T01:01:57+01:00 - REMOTE_ADDR: ::1
+POST: {"puntos":"51","tiempo":"78","intentos":"0","id_juego":"2"}
+COOKIES: {"PHPSESSID":"mc5j4ql8umtnnfe3gtkgjqjb71"}
+SESSION: {"id_usuario":61,"usuario":"000","correo":"be7ab64c6dd385b93d8699b90178097c14e4999f6ca3bf539b54362e8739edc7","foto":"\/PlataformaLudica\/main_final\/navbar\/imagenes\/usuario.png","admin":false}
+
+2025-11-11T01:01:57+01:00 -> Validado usuario: 000, id_juego: 2, puntos: 51, tiempo: 78
+2025-11-11T01:01:57+01:00 -> id_usuario: 61, correo: be7ab64c6dd385b93d8699b90178097c14e4999f6ca3bf539b54362e8739edc7
+2025-11-11T01:01:57+01:00 -> INSERT OK
+2025-11-11T01:08:23+01:00 - REMOTE_ADDR: ::1
+POST: {"puntos":"67","tiempo":"240","intentos":"0","id_juego":"2"}
+COOKIES: {"PHPSESSID":"mc5j4ql8umtnnfe3gtkgjqjb71"}
+SESSION: {"id_usuario":61,"usuario":"000","correo":"be7ab64c6dd385b93d8699b90178097c14e4999f6ca3bf539b54362e8739edc7","foto":"\/PlataformaLudica\/main_final\/navbar\/imagenes\/usuario.png","admin":false}
+
+2025-11-11T01:08:23+01:00 -> Validado usuario: 000, id_juego: 2, puntos: 67, tiempo: 240
+2025-11-11T01:08:23+01:00 -> id_usuario: 61, correo: be7ab64c6dd385b93d8699b90178097c14e4999f6ca3bf539b54362e8739edc7
+2025-11-11T01:08:23+01:00 -> UPDATE OK

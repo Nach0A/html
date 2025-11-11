@@ -26,21 +26,26 @@ $id_juego = isset($_GET['id_juego']) && array_key_exists(intval($_GET['id_juego'
 // CONSULTA PRINCIPAL
 // ==========================
 if ($id_juego == 3) {
+
     // MOSQUETA → dificultad + intentos
     $stmt = $conn->prepare("
-        SELECT nom_usuario, MAX(puntos) AS mejor_puntaje,
+        SELECT nom_usuario, 
+               MAX(puntos) AS mejor_puntaje,
                MIN(intentos) AS mejor_intentos,
                dificultad
         FROM juega
-        WHERE id_juego = 3
+        WHERE id_juego = 3 AND dificultad IS NOT NULL
         GROUP BY nom_usuario, dificultad
         ORDER BY mejor_puntaje DESC, mejor_intentos ASC
         LIMIT 20
     ");
+
 } else {
+
     // Memory / Buscaminas → puntos + tiempo
     $stmt = $conn->prepare("
-        SELECT nom_usuario, MAX(puntos) AS mejor_puntaje,
+        SELECT nom_usuario, 
+               MAX(puntos) AS mejor_puntaje,
                MIN(tiempo) AS mejor_tiempo
         FROM juega
         WHERE id_juego = ?
@@ -54,7 +59,6 @@ if (!$stmt) {
     die("Error al preparar consulta: " . $conn->error);
 }
 
-// bind_param solo cuando hay ?
 if ($id_juego != 3) {
     $stmt->bind_param("i", $id_juego);
 }
@@ -66,14 +70,17 @@ $result = $stmt->get_result();
 // CONSULTA RÉCORD GENERAL
 // ==========================
 if ($id_juego == 3) {
+
     $stmt2 = $conn->prepare("
         SELECT nom_usuario, puntos, intentos, dificultad
         FROM juega
-        WHERE id_juego = 3
+        WHERE id_juego = 3 AND dificultad IS NOT NULL
         ORDER BY puntos DESC, intentos ASC
         LIMIT 1
     ");
+
 } else {
+
     $stmt2 = $conn->prepare("
         SELECT nom_usuario, puntos, tiempo
         FROM juega
@@ -81,12 +88,14 @@ if ($id_juego == 3) {
         ORDER BY puntos DESC, tiempo ASC
         LIMIT 1
     ");
+
     $stmt2->bind_param("i", $id_juego);
 }
 
 $stmt2->execute();
 $record = $stmt2->get_result()->fetch_assoc();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
