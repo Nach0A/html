@@ -1,14 +1,4 @@
 <?php
-require_once "./Conexion_BD.php";
-session_start();
-if (!isset($_SESSION['usuario']) || $_SESSION['admin'] == false) {
-    header("Location: ../pagina-principal/login.php");
-    exit();
-}
-$bd = new conexion_BD();
-$conexion = $bd->conectar("localhost", "root", "", "zentryx");  
-$id_admin = $bd->getIdUsuario($_SESSION['usuario']);
-if ($conexion->connect_error) die("Error al conectar: " . $conexion->connect_error);
 
 // Filtros de búsqueda
 $buscarId = isset($_GET['buscarId']) ? trim($_GET['buscarId']) : '';
